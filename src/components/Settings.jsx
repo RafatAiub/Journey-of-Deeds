@@ -1,20 +1,37 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { useApp } from '../App';
 import { translations } from '../utils/language';
 import { exportData, importData, resetData } from '../utils/storage';
-import { Settings as SettingsIcon, Download, Upload, Trash2, Globe, Info } from 'lucide-react';
+import { Settings as SettingsIcon, Download, Upload, Trash2, Globe, Info, CheckCircle, AlertCircle } from 'lucide-react';
+import ConfirmModal from './ConfirmModal';
+import { useToast } from './Toast';
 
+/**
+ * Settings — app settings page.
+ * Fixes applied:
+ *  - Replaced native alert() and confirm() with custom Toast + ConfirmModal
+ *  - Added inline status messages for export/import feedback
+ */
 const Settings = () => {
     const { appData, setAppData, language, changeLanguage } = useApp();
+    const { showToast } = useToast();
     const t = (key) => translations[language][key] || key;
     const fileInputRef = useRef(null);
+
+    const [showResetConfirm, setShowResetConfirm] = useState(false);
 
     const handleExport = () => {
         const success = exportData(appData);
         if (success) {
-            alert(language === 'bn' ? 'ডেটা সফলভাবে এক্সপোর্ট হয়েছে!' : 'Data exported successfully!');
+            showToast(
+                language === 'bn' ? 'ডেটা সফলভাবে এক্সপোর্ট হয়েছে!' : 'Data exported successfully!',
+                'success'
+            );
         } else {
-            alert(language === 'bn' ? 'এক্সপোর্ট করতে সমস্যা হয়েছে' : 'Error exporting data');
+            showToast(
+                language === 'bn' ? 'এক্সপোর্ট করতে সমস্যা হয়েছে' : 'Error exporting data',
+                'error'
+            );
         }
     };
 
@@ -25,23 +42,23 @@ const Settings = () => {
         try {
             const data = await importData(file);
             setAppData(data);
-            alert(language === 'bn' ? 'ডেটা সফলভাবে ইমপোর্ট হয়েছে!' : 'Data imported successfully!');
-            window.location.reload();
-        } catch (error) {
-            alert(language === 'bn' ? 'ইমপোর্ট করতে সমস্যা হয়েছে' : 'Error importing data');
+            showToast(
+                language === 'bn' ? 'ডেটা সফলভাবে ইমপোর্ট হয়েছে!' : 'Data imported successfully!',
+                'success'
+            );
+            setTimeout(() => window.location.reload(), 1200);
+        } catch {
+            showToast(
+                language === 'bn' ? 'ইমপোর্ট করতে সমস্যা হয়েছে' : 'Error importing data',
+                'error'
+            );
         }
     };
 
-    const handleReset = () => {
-        const confirmMsg = language === 'bn'
-            ? 'সব ডেটা মুছে ফেলবেন? এটি পূর্বাবস্থায় ফেরানো যাবে না!'
-            : 'Delete all data? This cannot be undone!';
-
-        if (confirm(confirmMsg)) {
-            const success = resetData();
-            if (success) {
-                window.location.reload();
-            }
+    const doReset = () => {
+        const success = resetData();
+        if (success) {
+            window.location.reload();
         }
     };
 
@@ -50,7 +67,7 @@ const Settings = () => {
     };
 
     return (
-        <div className="max-w-2xl mx-auto p-4 space-y-6 animate-fade-in">
+        <div className="max-w-2xl mx-auto p-4 space-y-6 animate-fade-in pb-32">
             {/* Header */}
             <div className="text-center mb-8">
                 <div className="flex items-center justify-center gap-3 mb-4">
@@ -60,6 +77,8 @@ const Settings = () => {
                     </h1>
                 </div>
             </div>
+
+            {/* Header */}
 
             {/* Language */}
             <div className="card">
@@ -116,9 +135,9 @@ const Settings = () => {
                         </button>
                     </div>
 
-                    {/* Reset */}
+                    {/* Reset — now uses ConfirmModal instead of native confirm() */}
                     <button
-                        onClick={handleReset}
+                        onClick={() => setShowResetConfirm(true)}
                         className="w-full rounded-xl px-6 py-3 font-medium bg-red-50 text-red-600 ring-2 ring-red-200 hover:bg-red-100 active:scale-95 transition-all duration-200 flex items-center justify-center gap-2"
                     >
                         <Trash2 className="w-5 h-5" />
@@ -158,6 +177,20 @@ const Settings = () => {
                     </p>
                 </div>
             </div>
+
+            {/* Custom Reset Confirmation Modal */}
+            <ConfirmModal
+                isOpen={showResetConfirm}
+                title={language === 'bn' ? 'সব ডেটা মুছে ফেলবেন?' : 'Delete all data?'}
+                message={language === 'bn'
+                    ? 'এটি পূর্বাবস্থায় ফেরানো যাবে না! আগে ডেটা এক্সপোর্ট করুন।'
+                    : 'This cannot be undone! Export your data first.'}
+                confirmLabel={language === 'bn' ? 'হ্যাঁ, সব মুছুন' : 'Yes, Delete All'}
+                cancelLabel={language === 'bn' ? 'বাতিল' : 'Cancel'}
+                onConfirm={doReset}
+                onCancel={() => setShowResetConfirm(false)}
+                danger={true}
+            />
         </div>
     );
 };

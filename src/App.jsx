@@ -8,6 +8,8 @@ import CalendarView from './components/CalendarView';
 import Settings from './components/Settings';
 import Navigation from './components/Navigation';
 
+import { ToastProvider } from './components/Toast';
+
 // Create App Context
 export const AppContext = createContext();
 
@@ -18,6 +20,10 @@ export const useApp = () => {
     }
     return context;
 };
+
+// Re-export useToast for convenience, or just let components import it directly.
+// We'll let components import useToast directly from ./components/Toast
+
 
 function App() {
     const [appData, setAppData] = useState(null);
@@ -72,26 +78,28 @@ function App() {
     };
 
     return (
-        <AppContext.Provider value={contextValue}>
-            <Router>
-                <div className="min-h-screen pb-20">
-                    {!appData?.profile?.onboardingComplete ? (
-                        <Onboarding />
-                    ) : (
-                        <>
-                            <Routes>
-                                <Route path="/" element={<TodayDashboard />} />
-                                <Route path="/day/:dateKey" element={<TodayDashboard />} />
-                                <Route path="/calendar" element={<CalendarView />} />
-                                <Route path="/settings" element={<Settings />} />
-                                <Route path="*" element={<Navigate to="/" replace />} />
-                            </Routes>
-                            <Navigation />
-                        </>
-                    )}
-                </div>
-            </Router>
-        </AppContext.Provider>
+        <ToastProvider>
+            <AppContext.Provider value={contextValue}>
+                <Router>
+                    <div className="min-h-screen pb-20">
+                        {!appData?.profile?.onboardingComplete ? (
+                            <Onboarding />
+                        ) : (
+                            <>
+                                <Routes>
+                                    <Route path="/" element={<TodayDashboard />} />
+                                    <Route path="/day/:dateKey" element={<TodayDashboard />} />
+                                    <Route path="/calendar" element={<CalendarView />} />
+                                    <Route path="/settings" element={<Settings />} />
+                                    <Route path="*" element={<Navigate to="/" replace />} />
+                                </Routes>
+                                <Navigation />
+                            </>
+                        )}
+                    </div>
+                </Router>
+            </AppContext.Provider>
+        </ToastProvider>
     );
 }
 

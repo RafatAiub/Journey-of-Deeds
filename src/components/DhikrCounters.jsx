@@ -1,11 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useApp } from '../App';
 import { translations } from '../utils/language';
 import { RotateCcw } from 'lucide-react';
+import ConfirmModal from './ConfirmModal';
 
+/**
+ * DhikrCounters — Tasbih counter for Subhanallah, Alhamdulillah, Allahu Akbar, and custom dhikr.
+ * Fixes applied:
+ *  - Replaced native confirm() with custom ConfirmModal
+ *  - Localized "Tap to count" text
+ *  - Input validation: prevents negative manual entry
+ */
 const DhikrCounters = ({ dhikrData, onUpdate }) => {
     const { language } = useApp();
     const t = (key) => translations[language][key] || key;
+    const [showResetConfirm, setShowResetConfirm] = useState(false);
 
     const counters = [
         { key: 'subhanallah', label: t('subhanallah'), color: 'emerald', icon: '✨' },
@@ -28,15 +37,23 @@ const DhikrCounters = ({ dhikrData, onUpdate }) => {
         });
     };
 
-    const resetAll = () => {
-        if (confirm(language === 'bn' ? 'সব কাউন্টার রিসেট করবেন?' : 'Reset all counters?')) {
-            onUpdate({
-                subhanallah: 0,
-                alhamdulillah: 0,
-                allahuakbar: 0,
-                custom: { ...dhikrData.custom, count: 0 }
-            });
-        }
+    const handleManual = (key, rawValue) => {
+        const v = Math.max(0, parseInt(rawValue) || 0);
+        onUpdate({ ...dhikrData, [key]: v });
+    };
+
+    const handleCustomManual = (rawValue) => {
+        const v = Math.max(0, parseInt(rawValue) || 0);
+        onUpdate({ ...dhikrData, custom: { ...dhikrData.custom, count: v } });
+    };
+
+    const doReset = () => {
+        onUpdate({
+            subhanallah: 0,
+            alhamdulillah: 0,
+            allahuakbar: 0,
+            custom: { ...dhikrData.custom, count: 0 }
+        });
     };
 
     return (
@@ -44,10 +61,12 @@ const DhikrCounters = ({ dhikrData, onUpdate }) => {
             <header className="flex items-center justify-between mb-10 px-2">
                 <div>
                     <h2 className="text-2xl font-black text-slate-900 tracking-tight">{t('dhikr')}</h2>
-                    <p className="text-slate-400 text-xs font-bold uppercase tracking-widest">{language === 'bn' ? 'স্মরণ ও তাসবিহ' : 'Remembrance'}</p>
+                    <p className="text-slate-400 text-xs font-bold uppercase tracking-widest">
+                        {language === 'bn' ? 'স্মরণ ও তাসবিহ' : 'Remembrance'}
+                    </p>
                 </div>
                 <button
-                    onClick={resetAll}
+                    onClick={() => setShowResetConfirm(true)}
                     className="p-3 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-2xl transition-all group"
                     title={t('resetAll')}
                 >
@@ -62,7 +81,8 @@ const DhikrCounters = ({ dhikrData, onUpdate }) => {
                         {...c}
                         count={dhikrData[c.key] || 0}
                         onUpdate={(d) => handleUpdate(c.key, d)}
-                        onManual={(v) => onUpdate({ ...dhikrData, [c.key]: v })}
+                        onManual={(v) => handleManual(c.key, v)}
+                        language={language}
                     />
                 ))}
 
@@ -73,14 +93,27 @@ const DhikrCounters = ({ dhikrData, onUpdate }) => {
                     icon="📿"
                     count={dhikrData.custom?.count || 0}
                     onUpdate={handleCustomUpdate}
-                    onManual={(v) => onUpdate({ ...dhikrData, custom: { ...dhikrData.custom, count: v } })}
+                    onManual={handleCustomManual}
+                    language={language}
                 />
             </div>
+
+            {/* Custom ConfirmModal instead of native confirm() */}
+            <ConfirmModal
+                isOpen={showResetConfirm}
+                title={language === 'bn' ? 'সব কাউন্টার রিসেট করবেন?' : 'Reset all counters?'}
+                message={language === 'bn' ? 'এটি পূর্বাবস্থায় ফেরানো যাবে না।' : 'This cannot be undone.'}
+                confirmLabel={language === 'bn' ? 'হ্যাঁ, রিসেট করুন' : 'Yes, Reset'}
+                cancelLabel={language === 'bn' ? 'বাতিল' : 'Cancel'}
+                onConfirm={doReset}
+                onCancel={() => setShowResetConfirm(false)}
+                danger={true}
+            />
         </section>
     );
 };
 
-const TasbihCard = ({ label, count, color, icon, onUpdate, onManual }) => {
+const TasbihCard = ({ label, count, color, icon, onUpdate, onManual, language }) => {
     const colorMap = {
         emerald: 'from-emerald-400 to-teal-500 shadow-emerald-100',
         teal: 'from-teal-400 to-cyan-500 shadow-teal-100',
@@ -107,8 +140,9 @@ const TasbihCard = ({ label, count, color, icon, onUpdate, onManual }) => {
                     <div className="flex-1 text-center">
                         <input
                             type="number"
+                            min="0"
                             value={count}
-                            onChange={(e) => onManual(parseInt(e.target.value) || 0)}
+                            onChange={(e) => onManual(e.target.value)}
                             className="w-full text-5xl font-black text-slate-900 bg-transparent text-center outline-none"
                         />
                     </div>
@@ -125,13 +159,14 @@ const TasbihCard = ({ label, count, color, icon, onUpdate, onManual }) => {
                     onClick={() => onUpdate(1)}
                     className={`mt-6 w-full py-8 rounded-[2rem] bg-gradient-to-br ${colorMap[color]} text-white shadow-2xl transition-all active:scale-[0.98] active:brightness-90 flex flex-col items-center gap-1 group/btn`}
                 >
-                    <span className="text-xs font-black uppercase tracking-widest opacity-60 group-hover/btn:opacity-100 transition-opacity">Tap to count</span>
+                    <span className="text-xs font-black uppercase tracking-widest opacity-60 group-hover/btn:opacity-100 transition-opacity">
+                        {language === 'bn' ? 'ট্যাপ করুন' : 'Tap to count'}
+                    </span>
                     <span className="text-3xl">🤲</span>
                 </button>
             </div>
         </div>
     );
 };
-
 
 export default DhikrCounters;

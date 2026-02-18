@@ -1,0 +1,24 @@
+{
+    "name": "রমজান প্ল্যানার",
+    "short_name": "রমজান",
+    "description": "A privacy-first Ramadan planner to track your daily prayers, Quran reading, dhikr, and reflections.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#fcfdfd",
+    "theme_color": "#10b981",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "/vite.svg",
+            "sizes": "any",
+            "type": "image/svg+xml",
+            "purpose": "any maskable"
+        }
+    ],
+    "categories": [
+        "lifestyle",
+        "productivity"
+    ],
+    "lang": "bn",
+    "dir": "ltr"
+}

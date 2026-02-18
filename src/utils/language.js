@@ -76,9 +76,16 @@ export const translations = {
         dayUnlocked: 'আনলক করা',
         rewardClaimed: 'পুরস্কার সংগ্রহ করা হয়েছে!',
         levelUp: 'অভিনন্দন! আপনি লেভেল আপ করেছেন!',
-        totalXp: 'মোট সওয়াব পয়েন্ট',
+        totalXp: 'ইস্তিকামাত পয়েন্ট',
         currentLevel: 'বর্তমান লেভেল',
         badges: 'অর্জিত ব্যাজসমূহ',
+        tapToCount: 'ট্যাপ করুন',
+        savedIndicator: 'সংরক্ষিত',
+        welcomeBack: 'আলহামদুলিল্লাহ, আপনি ফিরে এসেছেন!',
+        confirmReset: 'হ্যাঁ, রিসেট করুন',
+        cancelReset: 'বাতিল',
+        levelLabel: 'লেভেল',
+        notEnoughProgress: 'আরেকটু বাকি!',
 
         // Detailed Ibadah
         fard: 'ফরজ',
@@ -273,9 +280,16 @@ export const translations = {
         dayUnlocked: 'Unlocked',
         rewardClaimed: 'Reward Claimed!',
         levelUp: 'Congratulations! Level Up!',
-        totalXp: 'Total Spiritual XP',
+        totalXp: 'Consistency Points',
         currentLevel: 'Current Level',
         badges: 'Earned Badges',
+        tapToCount: 'Tap to count',
+        savedIndicator: 'Saved',
+        welcomeBack: 'Alhamdulillah, you\'re back!',
+        confirmReset: 'Yes, Reset',
+        cancelReset: 'Cancel',
+        levelLabel: 'Level',
+        notEnoughProgress: 'Almost there!',
 
         // Detailed Ibadah
         fard: 'Fard',
@@ -306,25 +320,25 @@ export const translations = {
         selfAssessmentComplete: 'Completed',
 
         // Behavior & Character
-        behaviorAndCharacter: '💬 Behavior & Character',
+        behaviorAndCharacter: 'Behavior & Character',
         avoidBadBehavior: 'Did I avoid bad behavior with anyone today?',
         avoidBackbiting: 'Did I avoid backbiting (criticism behind someone\'s back) today?',
         controlAnger: 'Did I try to control my pride or anger today?',
         wasForgiving: 'Was I forgiving towards someone today?',
 
         // Worldly Control
-        worldlyControl: '📱 Worldly Control',
+        worldlyControl: 'Worldly Control',
         avoidUnnecessaryMobile: 'Did I avoid unnecessary mobile usage today?',
         avoidSocialMedia: 'Did I avoid wasting time on social media today?',
         protectedFromBad: 'Did I protect myself from seeing anything bad or inappropriate today?',
 
         // Charity & Compassion
-        charityAndCompassion: '💰 Charity & Compassion',
+        charityAndCompassion: 'Charity & Compassion',
         gaveCharity: 'Did I give any charity today (money, food, help)?',
         helpedSomeone: 'Did I help someone today?',
 
         // Intention & Self-Improvement
-        intentionAndImprovement: '🧠 Intention & Self-Improvement',
+        intentionAndImprovement: 'Intention & Self-Improvement',
         repentedToAllah: 'Did I repent to Allah for any mistake today?',
         triedGoodHabit: 'Did I try to build at least one good habit today?',
         expressedGratitudeToday: 'Did I express gratitude for today?',

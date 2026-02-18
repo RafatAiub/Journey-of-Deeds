@@ -1,8 +1,13 @@
 import React from 'react';
 import { useApp } from '../App';
 import { translations } from '../utils/language';
-import { Check, Users, Moon, Star } from 'lucide-react';
+import { Check, Users, Moon, Star, Sun } from 'lucide-react';
 
+/**
+ * SalahGrid — tracks daily prayers (Fard, Sunnah, Jamaat) and extra prayers.
+ * Additions:
+ *  - Ishraq and Chasht toggle cards (existed in data model, now have UI)
+ */
 const SalahGrid = ({ salahData, extraPrayers, onUpdate, onExtraUpdate }) => {
     const { language } = useApp();
     const t = (key) => translations[language][key] || key;
@@ -43,6 +48,7 @@ const SalahGrid = ({ salahData, extraPrayers, onUpdate, onExtraUpdate }) => {
                 </div>
             </header>
 
+            {/* 5 Fard Prayers */}
             <div className="space-y-4">
                 {prayers.map((prayer) => {
                     const data = getPrayerData(prayer);
@@ -83,7 +89,10 @@ const SalahGrid = ({ salahData, extraPrayers, onUpdate, onExtraUpdate }) => {
                 })}
             </div>
 
+            {/* Extra Prayers: Tarawih, Tahajjud, Ishraq, Chasht */}
             <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6 pt-10 border-t border-slate-100">
+
+                {/* Tarawih */}
                 <div className={`p-8 rounded-[2rem] transition-all border-2 ${extraPrayers.tarawih > 0 ? 'bg-indigo-50 border-indigo-100 shadow-inner' : 'bg-slate-50 border-slate-50'}`}>
                     <div className="flex items-center justify-between mb-6">
                         <h4 className="text-xl font-black text-slate-800 flex items-center gap-3">
@@ -101,13 +110,14 @@ const SalahGrid = ({ salahData, extraPrayers, onUpdate, onExtraUpdate }) => {
                     />
                 </div>
 
+                {/* Tahajjud */}
                 <div
                     onClick={() => onExtraUpdate({ ...extraPrayers, tahajjud: !extraPrayers.tahajjud })}
                     className={`p-8 rounded-[2rem] cursor-pointer transition-all border-2 group ${extraPrayers.tahajjud ? 'bg-amber-50 border-amber-100 shadow-inner' : 'bg-slate-50 border-slate-50'}`}
                 >
                     <div className="flex items-center justify-between mb-4">
                         <h4 className="text-xl font-black text-slate-800 flex items-center gap-3">
-                            <Star className={`${extraPrayers.tahajjud ? 'text-amber-600 fill-amber-600 animate-spin-slow' : 'text-slate-400'}`} />
+                            <Star className={`${extraPrayers.tahajjud ? 'text-amber-600 fill-amber-600' : 'text-slate-400'}`} />
                             {t('tahajjud')}
                         </h4>
                         <div className={`w-8 h-8 rounded-full border-4 transition-all ${extraPrayers.tahajjud ? 'bg-amber-500 border-amber-200 scale-110 shadow-lg shadow-amber-200' : 'border-slate-200'}`}></div>
@@ -115,6 +125,44 @@ const SalahGrid = ({ salahData, extraPrayers, onUpdate, onExtraUpdate }) => {
                     <p className={`text-sm italic font-medium leading-relaxed ${extraPrayers.tahajjud ? 'text-amber-800' : 'text-slate-400'}`}>
                         "{t('tahajjudMotivation')}"
                     </p>
+                </div>
+
+                {/* Ishraq — was in data model but had no UI */}
+                <div
+                    onClick={() => onExtraUpdate({ ...extraPrayers, ishraq: !extraPrayers.ishraq })}
+                    className={`p-6 rounded-[2rem] cursor-pointer transition-all border-2 group ${extraPrayers.ishraq ? 'bg-orange-50 border-orange-100 shadow-inner' : 'bg-slate-50 border-slate-50 hover:border-orange-100'}`}
+                >
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                            <Sun className={`w-6 h-6 ${extraPrayers.ishraq ? 'text-orange-500' : 'text-slate-400'}`} />
+                            <div>
+                                <h4 className="text-lg font-black text-slate-800">{t('ishraq')}</h4>
+                                <p className={`text-xs font-bold ${extraPrayers.ishraq ? 'text-orange-600' : 'text-slate-400'}`}>
+                                    {language === 'bn' ? 'সূর্যোদয়ের পর' : 'After sunrise'}
+                                </p>
+                            </div>
+                        </div>
+                        <div className={`w-8 h-8 rounded-full border-4 transition-all ${extraPrayers.ishraq ? 'bg-orange-500 border-orange-200 scale-110 shadow-lg shadow-orange-200' : 'border-slate-200'}`}></div>
+                    </div>
+                </div>
+
+                {/* Chasht — was in data model but had no UI */}
+                <div
+                    onClick={() => onExtraUpdate({ ...extraPrayers, chasht: !extraPrayers.chasht })}
+                    className={`p-6 rounded-[2rem] cursor-pointer transition-all border-2 group ${extraPrayers.chasht ? 'bg-yellow-50 border-yellow-100 shadow-inner' : 'bg-slate-50 border-slate-50 hover:border-yellow-100'}`}
+                >
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                            <Sun className={`w-6 h-6 ${extraPrayers.chasht ? 'text-yellow-500' : 'text-slate-400'}`} />
+                            <div>
+                                <h4 className="text-lg font-black text-slate-800">{t('chasht')}</h4>
+                                <p className={`text-xs font-bold ${extraPrayers.chasht ? 'text-yellow-600' : 'text-slate-400'}`}>
+                                    {language === 'bn' ? 'চাশতের সময়' : 'Forenoon prayer'}
+                                </p>
+                            </div>
+                        </div>
+                        <div className={`w-8 h-8 rounded-full border-4 transition-all ${extraPrayers.chasht ? 'bg-yellow-500 border-yellow-200 scale-110 shadow-lg shadow-yellow-200' : 'border-slate-200'}`}></div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -142,6 +190,5 @@ const PrayerCircle = ({ active, onClick, icon, label, color }) => {
         </button>
     );
 };
-
 
 export default SalahGrid;

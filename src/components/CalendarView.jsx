@@ -264,7 +264,7 @@ const CalendarView = () => {
                                     className="group card !p-5 flex items-center gap-5 hover:scale-[1.02] active:scale-95 border-none shadow-[0_4px_20px_rgba(0,0,0,0.03)]"
                                 >
                                     <div className={`w-16 h-16 rounded-2xl flex flex-col items-center justify-center text-white shadow-xl rotate-3 group-hover:rotate-0 transition-transform ${dayProgress >= 80 ? 'bg-gradient-to-br from-emerald-400 to-teal-600' : 'bg-gradient-to-br from-slate-400 to-slate-600'}`}>
-                                        <span className="text-[10px] font-black uppercase opacity-60 leading-none mb-1">Day</span>
+                                        <span className="text-[10px] font-black uppercase opacity-60 leading-none mb-1">{t('day')}</span>
                                         <span className="text-2xl font-black leading-none">{ramadanDay}</span>
                                     </div>
 
