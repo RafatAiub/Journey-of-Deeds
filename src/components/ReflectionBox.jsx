@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import { useApp } from '../App';
 import { translations } from '../utils/language';
-import { PenLine, Heart, Trophy, BookOpen } from 'lucide-react';
+import { PenLine, Heart, Trophy, BookOpen, CheckCircle, Shield } from 'lucide-react';
 
 /**
  * ReflectionBox — daily reflection, achievement, and gratitude journal.
- * Fix: Added missing `note` field ("আজ কী শিখলেন?") that existed in data model but had no UI.
+ * Auto-save visual feedback: shows a brief "Saved" indicator after each change.
  */
 const ReflectionBox = ({ reflectionData, onUpdate }) => {
     const { language } = useApp();
     const t = (key) => translations[language][key] || key;
+    const [showSaved, setShowSaved] = useState(false);
+    const saveTimerRef = useRef(null);
 
     const data = {
         note: reflectionData.note || '',
@@ -19,9 +21,14 @@ const ReflectionBox = ({ reflectionData, onUpdate }) => {
         gratitude3: reflectionData.gratitude3 || '',
     };
 
-    const handleChange = (field, value) => {
+    const handleChange = useCallback((field, value) => {
         onUpdate({ ...reflectionData, [field]: value });
-    };
+
+        // Show saved indicator
+        setShowSaved(true);
+        if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
+        saveTimerRef.current = setTimeout(() => setShowSaved(false), 2000);
+    }, [reflectionData, onUpdate]);
 
     return (
         <section className="card !p-8 border-transparent bg-gradient-to-br from-purple-50 to-pink-50/50">
@@ -29,16 +36,25 @@ const ReflectionBox = ({ reflectionData, onUpdate }) => {
                 <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center shadow-lg shadow-purple-100">
                     <PenLine className="text-white w-7 h-7" />
                 </div>
-                <div>
+                <div className="flex-1">
                     <h2 className="text-2xl font-black text-slate-900 tracking-tight">{t('todaysReflection')}</h2>
                     <p className="text-slate-400 text-xs font-bold uppercase tracking-widest">
                         {language === 'bn' ? 'ব্যক্তিগত ভাবনার প্রতিফলন' : 'Mindful Reflection'}
                     </p>
                 </div>
+
+                {/* Auto-save indicator */}
+                <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all duration-500 ${showSaved
+                        ? 'opacity-100 bg-emerald-50 text-emerald-600 border border-emerald-200'
+                        : 'opacity-0'
+                    }`}>
+                    <CheckCircle className="w-3.5 h-3.5" />
+                    {language === 'bn' ? 'সংরক্ষিত' : 'Saved'}
+                </div>
             </header>
 
             <div className="space-y-6">
-                {/* What did you learn today? — was missing from UI, exists in data model */}
+                {/* What did you learn today? */}
                 <div className="bg-white rounded-[2rem] p-6 shadow-xl shadow-purple-100/30 border border-purple-100 relative overflow-hidden group">
                     <div className="absolute top-0 left-0 w-2 h-full bg-purple-400"></div>
                     <label className="flex items-center gap-3 text-slate-800 font-black mb-4 px-2">
@@ -99,6 +115,14 @@ const ReflectionBox = ({ reflectionData, onUpdate }) => {
                         ))}
                     </div>
                 </div>
+            </div>
+
+            {/* Persistent auto-save notice */}
+            <div className="mt-6 flex items-center justify-center gap-2 text-xs text-slate-400 font-medium">
+                <Shield className="w-3.5 h-3.5" />
+                {language === 'bn'
+                    ? 'আপনার সব তথ্য ব্রাউজারে স্বয়ংক্রিয়ভাবে সংরক্ষিত হয়'
+                    : 'All your data is auto-saved locally on your device'}
             </div>
         </section>
     );
