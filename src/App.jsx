@@ -1,0 +1,98 @@
+import React, { useState, useEffect, createContext, useContext } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { loadData, saveData } from './utils/storage';
+import { detectLanguage } from './utils/language';
+import Onboarding from './components/Onboarding';
+import TodayDashboard from './components/TodayDashboard';
+import CalendarView from './components/CalendarView';
+import Settings from './components/Settings';
+import Navigation from './components/Navigation';
+
+// Create App Context
+export const AppContext = createContext();
+
+export const useApp = () => {
+    const context = useContext(AppContext);
+    if (!context) {
+        throw new Error('useApp must be used within AppProvider');
+    }
+    return context;
+};
+
+function App() {
+    const [appData, setAppData] = useState(null);
+    const [language, setLanguage] = useState(() => {
+        const saved = localStorage.getItem('language');
+        return saved || detectLanguage();
+    });
+    const [loading, setLoading] = useState(true);
+
+    // Load data on mount
+    useEffect(() => {
+        const data = loadData();
+        setAppData(data);
+        setLoading(false);
+    }, []);
+
+    // Save data whenever it changes
+    useEffect(() => {
+        if (appData) {
+            saveData(appData);
+        }
+    }, [appData]);
+
+    // Change language
+    const changeLanguage = (lang) => {
+        setLanguage(lang);
+        localStorage.setItem('language', lang);
+    };
+
+    // Update app data
+    const updateData = (updates) => {
+        setAppData(prev => ({ ...prev, ...updates }));
+    };
+
+    if (loading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center">
+                <div className="text-center">
+                    <div className="w-16 h-16 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+                    <p className="text-emerald-700 font-medium">Loading...</p>
+                </div>
+            </div>
+        );
+    }
+
+    const contextValue = {
+        appData,
+        setAppData,
+        updateData,
+        language,
+        changeLanguage
+    };
+
+    return (
+        <AppContext.Provider value={contextValue}>
+            <Router>
+                <div className="min-h-screen pb-20">
+                    {!appData?.profile?.onboardingComplete ? (
+                        <Onboarding />
+                    ) : (
+                        <>
+                            <Routes>
+                                <Route path="/" element={<TodayDashboard />} />
+                                <Route path="/day/:dateKey" element={<TodayDashboard />} />
+                                <Route path="/calendar" element={<CalendarView />} />
+                                <Route path="/settings" element={<Settings />} />
+                                <Route path="*" element={<Navigate to="/" replace />} />
+                            </Routes>
+                            <Navigation />
+                        </>
+                    )}
+                </div>
+            </Router>
+        </AppContext.Provider>
+    );
+}
+
+export default App;
