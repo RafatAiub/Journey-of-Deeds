@@ -74,9 +74,9 @@ const CalendarView = () => {
             }
 
             // Quran
-            if ((dayData.quran?.pagesRead || 0) > 0) {
+            if ((Number(dayData.quran?.pagesRead) || 0) > 0) {
                 earnedPoints += 10;
-                totalQuranPages += dayData.quran.pagesRead;
+                totalQuranPages += Number(dayData.quran.pagesRead);
                 categoryData[2].value++;
             }
 
@@ -254,7 +254,7 @@ const CalendarView = () => {
                             const prayers = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'];
                             prayers.forEach(p => { if ((typeof dayData.salah?.[p] === 'object' && dayData.salah?.[p].fard) || dayData.salah?.[p] === true) ePoints += 10; });
                             if (dayData.roza) ePoints += 20;
-                            if ((dayData.quran?.pagesRead || 0) > 0) ePoints += 10;
+                            if ((Number(dayData.quran?.pagesRead) || 0) > 0) ePoints += 10;
                             const dayProgress = Math.min(100, ePoints);
 
                             return (

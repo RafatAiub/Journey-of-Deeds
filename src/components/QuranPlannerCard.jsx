@@ -23,9 +23,9 @@ const QuranPlannerCard = ({
     const t = (key) => translations[language][key] || key;
 
     const data = {
-        pagesRead: quranData.pagesRead || 0,
-        ayahCount: quranData.ayahCount || 0,
-        paraNumber: quranData.paraNumber || 0,
+        pagesRead: Number(quranData.pagesRead) || 0,
+        ayahCount: Number(quranData.ayahCount) || 0,
+        paraNumber: Number(quranData.paraNumber) || 0,
     };
 
     const [inputPages, setInputPages] = useState('');
@@ -35,11 +35,14 @@ const QuranPlannerCard = ({
     const [error, setError] = useState('');
 
     // Calculate today's recommended target
-    const todayTarget = computeQuranTodayTarget(
-        appData,
-        startDate,
-        currentDate
-    );
+    const quranTarget = computeQuranTodayTarget({
+        totalPages: appData.profile?.quranTotalPages || 604,
+        startDateISO: startDate,
+        totalDays: appData.ramadanPlan?.targetFinishDays || 30,
+        dateISO: currentDate,
+        pagesReadSoFar: calculateTotalPagesRead(appData)
+    });
+    const todayTargetPages = quranTarget.todayTarget || 0;
 
     const totalPagesRead = calculateTotalPagesRead(appData);
     const totalGoal = appData.profile?.quranTotalPages || 604;
@@ -59,8 +62,8 @@ const QuranPlannerCard = ({
 
         onUpdate({
             ...quranData,
-            pagesRead: data.pagesRead + rawPages,
-            ayahCount: Math.max(0, parseInt(inputAyah) || data.ayahCount),
+            pagesRead: Number(data.pagesRead) + Number(rawPages),
+            ayahCount: Math.max(0, parseInt(inputAyah) || Number(data.ayahCount)),
             paraNumber: clampedPara,
         });
 
@@ -114,13 +117,13 @@ const QuranPlannerCard = ({
             </div>
 
             {/* Today's Target */}
-            {todayTarget > 0 && (
+            {todayTargetPages > 0 && (
                 <div className="mb-6 flex items-center gap-3 px-5 py-4 bg-amber-50 border border-amber-100 rounded-2xl">
                     <Target className="w-5 h-5 text-amber-500 flex-shrink-0" />
                     <p className="text-sm font-bold text-amber-800">
                         {language === 'bn'
-                            ? `আজকের লক্ষ্য: ${todayTarget} পৃষ্ঠা পড়ুন`
-                            : `Today's target: Read ${todayTarget} pages`}
+                            ? `আজকের লক্ষ্য: ${todayTargetPages} পৃষ্ঠা পড়ুন`
+                            : `Today's target: Read ${todayTargetPages} pages`}
                     </p>
                 </div>
             )}
@@ -184,8 +187,8 @@ const QuranPlannerCard = ({
                 onClick={handleSave}
                 disabled={justSaved}
                 className={`w-full btn-gradient !py-5 flex justify-center items-center gap-3 transition-all hover:scale-[1.01] disabled:opacity-70 disabled:cursor-not-allowed disabled:scale-100 ${justSaved
-                        ? 'bg-gradient-to-r from-emerald-500 to-teal-600 shadow-emerald-200/50'
-                        : 'bg-gradient-to-r from-sky-600 to-blue-700 shadow-sky-200/50'
+                    ? 'bg-gradient-to-r from-emerald-500 to-teal-600 shadow-emerald-200/50'
+                    : 'bg-gradient-to-r from-sky-600 to-blue-700 shadow-sky-200/50'
                     }`}
             >
                 {justSaved ? (

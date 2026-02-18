@@ -82,7 +82,7 @@ const TodayDashboard = () => {
         if (dayData.roza) earnedPoints += 20;
 
         // 3. Quran: 10 pts
-        if ((dayData.quran?.pagesRead || 0) > 0) earnedPoints += 10;
+        if ((Number(dayData.quran?.pagesRead) || 0) > 0) earnedPoints += 10;
 
         // 4. Tarawih: 10 pts
         if ((dayData.extraPrayers?.tarawih || 0) > 0) earnedPoints += 10;
@@ -170,8 +170,8 @@ const TodayDashboard = () => {
 
                 {/* Auto-save indicator */}
                 <div className={`absolute -right-2 top-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all duration-500 ${savedIndicator
-                        ? 'opacity-100 bg-emerald-50 text-emerald-600 border border-emerald-100'
-                        : 'opacity-0'
+                    ? 'opacity-100 bg-emerald-50 text-emerald-600 border border-emerald-100'
+                    : 'opacity-0'
                     }`}>
                     <CheckCircle className="w-3.5 h-3.5" />
                     {language === 'bn' ? 'সংরক্ষিত' : 'Saved'}
@@ -261,8 +261,8 @@ const TodayDashboard = () => {
                 <div
                     onClick={() => updateDay({ roza: !dayData.roza })}
                     className={`card cursor-pointer transition-all duration-500 select-none ${dayData.roza
-                            ? 'bg-gradient-to-br from-teal-500 to-emerald-600 border-transparent shadow-2xl shadow-teal-200 scale-[1.01]'
-                            : 'bg-gradient-to-br from-teal-50 to-emerald-50 border border-teal-100 hover:shadow-xl hover:shadow-teal-100'
+                        ? 'bg-gradient-to-br from-teal-500 to-emerald-600 border-transparent shadow-2xl shadow-teal-200 scale-[1.01]'
+                        : 'bg-gradient-to-br from-teal-50 to-emerald-50 border border-teal-100 hover:shadow-xl hover:shadow-teal-100'
                         }`}
                 >
                     <div className="flex items-center justify-between">
@@ -365,8 +365,8 @@ const DailySummaryCard = ({ dayData, language, t }) => {
         return (typeof pd === 'object' && pd?.fard) || pd === true;
     }).length;
 
-    const pagesRead = dayData.quran?.pagesRead || 0;
-    const dhikrTotal = (dayData.dhikr?.subhanallah || 0) + (dayData.dhikr?.alhamdulillah || 0) + (dayData.dhikr?.allahuakbar || 0);
+    const pagesRead = Number(dayData.quran?.pagesRead) || 0;
+    const dhikrTotal = (Number(dayData.dhikr?.subhanallah) || 0) + (Number(dayData.dhikr?.alhamdulillah) || 0) + (Number(dayData.dhikr?.allahuakbar) || 0);
     const deedsDone = Object.values(dayData.selfAssessment || {}).filter(Boolean).length;
 
     const stats = [

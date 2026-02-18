@@ -23,7 +23,7 @@ export const calculateTotalPagesRead = (data, upToDate) => {
 
     Object.keys(data.days).forEach(key => {
         if (key <= dateKey && data.days[key].quran) {
-            total += data.days[key].quran.pagesRead || 0;
+            total += Number(data.days[key].quran.pagesRead) || 0;
         }
     });
 
@@ -93,10 +93,10 @@ export const calculateDayProgress = (dayData) => {
 
     // 5. Dhikr & Reflection: 10 points
     totalPoints += 10;
-    const dhikrTotal = (dayData.dhikr?.subhanallah || 0) +
-        (dayData.dhikr?.alhamdulillah || 0) +
-        (dayData.dhikr?.allahuakbar || 0) +
-        (dayData.dhikr?.custom?.count || 0);
+    const dhikrTotal = (Number(dayData.dhikr?.subhanallah) || 0) +
+        (Number(dayData.dhikr?.alhamdulillah) || 0) +
+        (Number(dayData.dhikr?.allahuakbar) || 0) +
+        (Number(dayData.dhikr?.custom?.count) || 0);
 
     const hasReflection = dayData.reflection?.note ||
         dayData.reflection?.gratitude ||

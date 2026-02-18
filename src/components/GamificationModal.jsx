@@ -36,7 +36,7 @@ export const BADGES = [
         descEn: 'Read 100 pages of Quran',
         check: (appData) => {
             const total = Object.values(appData.days || {}).reduce(
-                (sum, d) => sum + (d.quran?.pagesRead || 0), 0
+                (sum, d) => sum + (Number(d.quran?.pagesRead) || 0), 0
             );
             return total >= 100;
         },

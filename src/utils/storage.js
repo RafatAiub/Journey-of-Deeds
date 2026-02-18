@@ -90,13 +90,55 @@ export const getDefaultDayData = () => ({
     }
 });
 
+// Sanitize numeric fields that may have been corrupted by string concatenation
+const sanitizeData = (data) => {
+    if (data.days) {
+        Object.keys(data.days).forEach(key => {
+            const day = data.days[key];
+            // Fix Quran fields
+            if (day.quran) {
+                day.quran.pagesRead = Number(day.quran.pagesRead) || 0;
+                day.quran.ayahCount = Number(day.quran.ayahCount) || 0;
+                day.quran.paraNumber = Number(day.quran.paraNumber) || 0;
+                // Clamp to sane maximums (e.g. 604 total pages, para 1-30)
+                if (day.quran.pagesRead > 604) day.quran.pagesRead = 0;
+                if (day.quran.paraNumber > 30) day.quran.paraNumber = 0;
+            }
+            // Fix Dhikr fields
+            if (day.dhikr) {
+                day.dhikr.subhanallah = Number(day.dhikr.subhanallah) || 0;
+                day.dhikr.alhamdulillah = Number(day.dhikr.alhamdulillah) || 0;
+                day.dhikr.allahuakbar = Number(day.dhikr.allahuakbar) || 0;
+                if (day.dhikr.custom) {
+                    day.dhikr.custom.count = Number(day.dhikr.custom.count) || 0;
+                }
+                // Clamp to sane maximums (no one does 100k dhikr in a day)
+                ['subhanallah', 'alhamdulillah', 'allahuakbar'].forEach(k => {
+                    if (day.dhikr[k] > 100000) day.dhikr[k] = 0;
+                });
+            }
+            // Fix extraPrayers
+            if (day.extraPrayers) {
+                day.extraPrayers.tarawih = Number(day.extraPrayers.tarawih) || 0;
+                if (day.extraPrayers.tarawih > 20) day.extraPrayers.tarawih = 0;
+            }
+        });
+    }
+    // Fix profile XP
+    if (data.profile) {
+        data.profile.totalXp = Number(data.profile.totalXp) || 0;
+        data.profile.level = Number(data.profile.level) || 1;
+    }
+    return data;
+};
+
 // Load data from localStorage
 export const loadData = () => {
     try {
         const stored = localStorage.getItem(STORAGE_KEY);
         if (stored) {
             const data = JSON.parse(stored);
-            return { ...getDefaultData(), ...data };
+            return sanitizeData({ ...getDefaultData(), ...data });
         }
     } catch (error) {
         console.error('Error loading data:', error);
