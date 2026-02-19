@@ -35,48 +35,48 @@ const SalahGrid = ({ salahData, extraPrayers, onUpdate, onExtraUpdate }) => {
     };
 
     return (
-        <section className="card !p-8">
-            <header className="flex items-center justify-between mb-10 px-2">
-                <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-100">
-                        <Moon className="text-white w-6 h-6" />
+        <section className="card !p-4 sm:!p-8">
+            <header className="flex items-center justify-between mb-6 sm:mb-10 px-1 sm:px-2">
+                <div className="flex items-center gap-3 sm:gap-4">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-100">
+                        <Moon className="text-white w-5 h-5 sm:w-6 sm:h-6" />
                     </div>
                     <div>
-                        <h2 className="text-2xl font-black text-slate-900 tracking-tight">{t('salah')}</h2>
+                        <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">{t('salah')}</h2>
                         <p className="text-slate-400 text-xs font-bold uppercase tracking-widest">{language === 'bn' ? 'দৈনিক ইবাদত' : 'Daily Prayers'}</p>
                     </div>
                 </div>
             </header>
 
             {/* 5 Fard Prayers */}
-            <div className="space-y-4">
+            <div className="space-y-3">
                 {prayers.map((prayer) => {
                     const data = getPrayerData(prayer);
                     return (
-                        <div key={prayer} className="group flex flex-col sm:flex-row sm:items-center justify-between p-5 rounded-[2rem] bg-slate-50 border border-slate-100/50 hover:bg-white hover:shadow-xl hover:shadow-slate-200/50 transition-all duration-300">
-                            <div className="flex items-center gap-4 mb-4 sm:mb-0">
-                                <div className={`w-3 h-3 rounded-full ${data.fard ? 'bg-emerald-500 animate-pulse' : 'bg-slate-200'}`}></div>
-                                <h4 className="text-xl font-black text-slate-800 capitalize leading-none">{t(prayer)}</h4>
+                        <div key={prayer} className="group flex items-center justify-between p-4 sm:p-5 rounded-2xl sm:rounded-[2rem] bg-slate-50 border border-slate-100/50 hover:bg-white hover:shadow-xl hover:shadow-slate-200/50 transition-all duration-300">
+                            <div className="flex items-center gap-3">
+                                <div className={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${data.fard ? 'bg-emerald-500 animate-pulse' : 'bg-slate-200'}`}></div>
+                                <h4 className="text-base sm:text-xl font-black text-slate-800 capitalize leading-none">{t(prayer)}</h4>
                             </div>
 
-                            <div className="flex items-center gap-3">
+                            <div className="flex items-center gap-2 sm:gap-3">
                                 <PrayerCircle
                                     active={data.fard}
                                     onClick={() => handlePrayerToggle(prayer, 'fard')}
-                                    icon={<Check size={18} />}
+                                    icon={<Check size={16} />}
                                     label={t('fard')}
                                     color="emerald"
                                 />
                                 <PrayerCircle
                                     active={data.jamaat}
                                     onClick={() => handlePrayerToggle(prayer, 'jamaat')}
-                                    icon={<Users size={18} />}
+                                    icon={<Users size={16} />}
                                     label={t('jamaat')}
                                     color="blue"
                                 />
                                 <button
                                     onClick={() => handlePrayerToggle(prayer, 'sunnah')}
-                                    className={`px-6 py-2 rounded-xl text-sm font-black transition-all border-2 ${data.sunnah
+                                    className={`px-3 sm:px-6 py-2 rounded-xl text-xs sm:text-sm font-black transition-all border-2 ${data.sunnah
                                         ? 'bg-amber-500 border-amber-500 text-white shadow-lg shadow-amber-200 scale-105'
                                         : 'bg-white border-slate-100 text-slate-400 hover:border-amber-300 hover:text-amber-500'
                                         }`}
@@ -90,15 +90,15 @@ const SalahGrid = ({ salahData, extraPrayers, onUpdate, onExtraUpdate }) => {
             </div>
 
             {/* Extra Prayers: Tarawih, Tahajjud, Ishraq, Chasht */}
-            <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6 pt-10 border-t border-slate-100">
+            <div className="mt-6 sm:mt-12 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 pt-6 sm:pt-10 border-t border-slate-100">
 
                 {/* Tarawih */}
-                <div className={`p-8 rounded-[2rem] transition-all border-2 ${extraPrayers.tarawih > 0 ? 'bg-indigo-50 border-indigo-100 shadow-inner' : 'bg-slate-50 border-slate-50'}`}>
-                    <div className="flex items-center justify-between mb-6">
-                        <h4 className="text-xl font-black text-slate-800 flex items-center gap-3">
-                            <Moon className="text-indigo-600" /> {t('tarawih')}
+                <div className={`p-5 sm:p-8 rounded-2xl sm:rounded-[2rem] transition-all border-2 ${extraPrayers.tarawih > 0 ? 'bg-indigo-50 border-indigo-100 shadow-inner' : 'bg-slate-50 border-slate-50'}`}>
+                    <div className="flex items-center justify-between mb-4 sm:mb-6">
+                        <h4 className="text-base sm:text-xl font-black text-slate-800 flex items-center gap-2 sm:gap-3">
+                            <Moon className="text-indigo-600 w-5 h-5" /> {t('tarawih')}
                         </h4>
-                        <span className="text-2xl font-black text-indigo-600 bg-white px-4 py-2 rounded-2xl shadow-sm">
+                        <span className="text-xl sm:text-2xl font-black text-indigo-600 bg-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-2xl shadow-sm">
                             {extraPrayers.tarawih || 0}
                         </span>
                     </div>
@@ -113,11 +113,11 @@ const SalahGrid = ({ salahData, extraPrayers, onUpdate, onExtraUpdate }) => {
                 {/* Tahajjud */}
                 <div
                     onClick={() => onExtraUpdate({ ...extraPrayers, tahajjud: !extraPrayers.tahajjud })}
-                    className={`p-8 rounded-[2rem] cursor-pointer transition-all border-2 group ${extraPrayers.tahajjud ? 'bg-amber-50 border-amber-100 shadow-inner' : 'bg-slate-50 border-slate-50'}`}
+                    className={`p-5 sm:p-8 rounded-2xl sm:rounded-[2rem] cursor-pointer transition-all border-2 group ${extraPrayers.tahajjud ? 'bg-amber-50 border-amber-100 shadow-inner' : 'bg-slate-50 border-slate-50'}`}
                 >
-                    <div className="flex items-center justify-between mb-4">
-                        <h4 className="text-xl font-black text-slate-800 flex items-center gap-3">
-                            <Star className={`${extraPrayers.tahajjud ? 'text-amber-600 fill-amber-600' : 'text-slate-400'}`} />
+                    <div className="flex items-center justify-between mb-3 sm:mb-4">
+                        <h4 className="text-base sm:text-xl font-black text-slate-800 flex items-center gap-2 sm:gap-3">
+                            <Star className={`w-5 h-5 ${extraPrayers.tahajjud ? 'text-amber-600 fill-amber-600' : 'text-slate-400'}`} />
                             {t('tahajjud')}
                         </h4>
                         <div className={`w-8 h-8 rounded-full border-4 transition-all ${extraPrayers.tahajjud ? 'bg-amber-500 border-amber-200 scale-110 shadow-lg shadow-amber-200' : 'border-slate-200'}`}></div>

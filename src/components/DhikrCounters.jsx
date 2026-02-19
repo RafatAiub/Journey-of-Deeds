@@ -57,10 +57,10 @@ const DhikrCounters = ({ dhikrData, onUpdate }) => {
     };
 
     return (
-        <section className="card !p-8 border-transparent bg-slate-50/50">
-            <header className="flex items-center justify-between mb-10 px-2">
+        <section className="card !p-4 sm:!p-8 border-transparent bg-slate-50/50">
+            <header className="flex items-center justify-between mb-6 sm:mb-10 px-1 sm:px-2">
                 <div>
-                    <h2 className="text-2xl font-black text-slate-900 tracking-tight">{t('dhikr')}</h2>
+                    <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">{t('dhikr')}</h2>
                     <p className="text-slate-400 text-xs font-bold uppercase tracking-widest">
                         {language === 'bn' ? 'স্মরণ ও তাসবিহ' : 'Remembrance'}
                     </p>
@@ -74,7 +74,7 @@ const DhikrCounters = ({ dhikrData, onUpdate }) => {
                 </button>
             </header>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-2 gap-3 sm:gap-6">
                 {counters.map((c) => (
                     <TasbihCard
                         key={c.key}
@@ -122,17 +122,17 @@ const TasbihCard = ({ label, count, color, icon, onUpdate, onManual, language })
     };
 
     return (
-        <div className="group bg-white rounded-[2.5rem] p-6 border border-slate-100 shadow-xl shadow-slate-200/40 hover:shadow-2xl hover:shadow-slate-300/50 transition-all duration-500">
-            <div className="flex items-center gap-3 mb-6 px-2">
-                <span className="text-2xl drop-shadow-sm">{icon}</span>
-                <h4 className="text-sm font-black text-slate-900 group-hover:text-emerald-600 transition-colors uppercase tracking-tight">{label}</h4>
+        <div className="group bg-white rounded-[2rem] p-4 sm:p-6 border border-slate-100 shadow-xl shadow-slate-200/40 hover:shadow-2xl hover:shadow-slate-300/50 transition-all duration-500">
+            <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6 px-1 sm:px-2">
+                <span className="text-xl sm:text-2xl drop-shadow-sm">{icon}</span>
+                <h4 className="text-xs sm:text-sm font-black text-slate-900 group-hover:text-emerald-600 transition-colors uppercase tracking-tight">{label}</h4>
             </div>
 
             <div className="relative flex flex-col items-center">
-                <div className="flex items-center justify-between w-full gap-4">
+                <div className="flex items-center justify-between w-full gap-2 sm:gap-4">
                     <button
                         onClick={() => onUpdate(-1)}
-                        className="w-12 h-12 rounded-2xl bg-slate-50 text-slate-400 flex items-center justify-center font-black text-2xl hover:bg-slate-100 transition-colors active:scale-95"
+                        className="w-9 h-9 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-slate-50 text-slate-400 flex items-center justify-center font-black text-xl sm:text-2xl hover:bg-slate-100 transition-colors active:scale-95"
                     >
                         -
                     </button>
@@ -143,13 +143,13 @@ const TasbihCard = ({ label, count, color, icon, onUpdate, onManual, language })
                             min="0"
                             value={count}
                             onChange={(e) => onManual(e.target.value)}
-                            className="w-full text-5xl font-black text-slate-900 bg-transparent text-center outline-none"
+                            className="w-full text-3xl sm:text-5xl font-black text-slate-900 bg-transparent text-center outline-none"
                         />
                     </div>
 
                     <button
                         onClick={() => onUpdate(1)}
-                        className="w-12 h-12 rounded-2xl bg-slate-50 text-slate-400 flex items-center justify-center font-black text-2xl hover:bg-slate-100 transition-colors active:scale-95"
+                        className="w-9 h-9 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-slate-50 text-slate-400 flex items-center justify-center font-black text-xl sm:text-2xl hover:bg-slate-100 transition-colors active:scale-95"
                     >
                         +
                     </button>
@@ -157,12 +157,12 @@ const TasbihCard = ({ label, count, color, icon, onUpdate, onManual, language })
 
                 <button
                     onClick={() => onUpdate(1)}
-                    className={`mt-6 w-full py-8 rounded-[2rem] bg-gradient-to-br ${colorMap[color]} text-white shadow-2xl transition-all active:scale-[0.98] active:brightness-90 flex flex-col items-center gap-1 group/btn`}
+                    className={`mt-4 sm:mt-6 w-full py-5 sm:py-8 rounded-[2rem] bg-gradient-to-br ${colorMap[color]} text-white shadow-2xl transition-all active:scale-[0.98] active:brightness-90 flex flex-col items-center gap-1 group/btn`}
                 >
                     <span className="text-xs font-black uppercase tracking-widest opacity-60 group-hover/btn:opacity-100 transition-opacity">
                         {language === 'bn' ? 'ট্যাপ করুন' : 'Tap to count'}
                     </span>
-                    <span className="text-3xl">🤲</span>
+                    <span className="text-2xl sm:text-3xl">🤲</span>
                 </button>
             </div>
         </div>

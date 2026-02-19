@@ -3,13 +3,20 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
   body {
     @apply bg-[#fcfdfd] min-h-screen text-slate-800 selection:bg-emerald-100 selection:text-emerald-900;
     font-family: 'Noto Sans Bengali', 'Inter', sans-serif;
+    overscroll-behavior: none;
   }
 
   * {
     @apply antialiased;
+    -webkit-tap-highlight-color: transparent;
   }
 }
 

@@ -76,14 +76,14 @@ const QuranPlannerCard = ({
     };
 
     return (
-        <section className="card !p-8 bg-gradient-to-br from-white to-sky-50/30 border-sky-100">
-            <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 mb-10">
-                <div className="flex items-center gap-4">
-                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-sky-500 to-blue-600 flex items-center justify-center shadow-lg shadow-sky-200">
-                        <BookOpen className="text-white w-7 h-7" />
+        <section className="card !p-4 sm:!p-8 bg-gradient-to-br from-white to-sky-50/30 border-sky-100">
+            <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 sm:gap-6 mb-6 sm:mb-10">
+                <div className="flex items-center gap-3 sm:gap-4">
+                    <div className="w-11 h-11 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-sky-500 to-blue-600 flex items-center justify-center shadow-lg shadow-sky-200">
+                        <BookOpen className="text-white w-5 h-5 sm:w-7 sm:h-7" />
                     </div>
                     <div>
-                        <h2 className="text-2xl font-black text-slate-900 tracking-tight">{t('quranTracker')}</h2>
+                        <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">{t('quranTracker')}</h2>
                         <div className="flex items-center gap-2 mt-1">
                             <div className="w-2 h-2 rounded-full bg-sky-500"></div>
                             <p className="text-xs font-bold text-sky-600 uppercase tracking-widest leading-none">
@@ -93,7 +93,7 @@ const QuranPlannerCard = ({
                     </div>
                 </div>
 
-                <div className="flex gap-2">
+                <div className="flex gap-2 flex-wrap">
                     <SummaryTag label={t('pages')} value={data.pagesRead} color="sky" />
                     <SummaryTag label={t('para')} value={data.paraNumber || '-'} color="blue" />
                 </div>

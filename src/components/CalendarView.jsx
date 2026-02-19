@@ -131,43 +131,43 @@ const CalendarView = () => {
     };
 
     return (
-        <div className="max-w-5xl mx-auto p-6 space-y-10 animate-fade-in pb-32">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-8 sm:space-y-10 animate-fade-in pb-32">
 
-            <header className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <header className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 sm:gap-6">
                 <div>
-                    <h1 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-lg shadow-emerald-200">
-                            <BarChart3 className="text-white w-7 h-7" />
+                    <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 tracking-tight flex items-center gap-3 sm:gap-4">
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-lg shadow-emerald-200">
+                            <BarChart3 className="text-white w-5 h-5 sm:w-7 sm:h-7" />
                         </div>
                         {language === 'bn' ? 'আমার ড্যাশবোর্ড' : 'Insights'}
                     </h1>
-                    <p className="text-slate-500 mt-3 text-lg font-medium">
+                    <p className="text-slate-500 mt-2 sm:mt-3 text-base sm:text-lg font-medium">
                         {language === 'bn' ? 'আপনার রমজানের অগ্রগতির সূক্ষ্ম বিশ্লেষণ' : 'Reflecting on your spiritual journey'}
                     </p>
                 </div>
 
                 {stats && (
-                    <div className="flex items-center gap-3 px-6 py-3 bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100">
-                        <CalendarIcon size={20} className="text-emerald-500" />
-                        <span className="text-slate-600 font-bold">
+                    <div className="flex items-center gap-3 px-4 sm:px-6 py-3 bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 self-start sm:self-auto">
+                        <CalendarIcon size={18} className="text-emerald-500" />
+                        <span className="text-slate-600 font-bold text-sm sm:text-base">
                             {stats.chartData.length} {language === 'bn' ? 'দিন সম্পন্ন' : 'Days Recorded'}
                         </span>
                     </div>
                 )}
             </header>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                <div className="lg:col-span-8 card !p-8">
-                    <div className="flex items-center justify-between mb-8">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6">
+                <div className="lg:col-span-8 card !p-5 sm:!p-8">
+                    <div className="flex items-center justify-between mb-5 sm:mb-8">
                         <div>
-                            <h3 className="text-xl font-black text-slate-800 tracking-tight">
+                            <h3 className="text-lg sm:text-xl font-black text-slate-800 tracking-tight">
                                 {language === 'bn' ? 'অগ্রগতি ইতিহাস' : 'Progress History'}
                             </h3>
                             <p className="text-slate-400 text-sm mt-1">{language === 'bn' ? 'বিগত ৩০ দিনের আমলের পরিবর্তন' : 'Daily progress visualizer'}</p>
                         </div>
                     </div>
 
-                    <div className="h-[300px] w-full">
+                    <div className="h-[200px] sm:h-[300px] w-full">
                         <ResponsiveContainer width="100%" height="100%">
                             <AreaChart data={stats?.chartData || []}>
                                 <defs>
@@ -181,19 +181,19 @@ const CalendarView = () => {
                                     dataKey="day"
                                     axisLine={false}
                                     tickLine={false}
-                                    tick={{ fontSize: 12, fill: '#64748b', fontWeight: 600 }}
+                                    tick={{ fontSize: 11, fill: '#64748b', fontWeight: 600 }}
                                     dy={15}
                                 />
                                 <YAxis hide domain={[0, 100]} />
                                 <Tooltip
-                                    contentStyle={{ borderRadius: '1rem', border: 'none', boxShadow: '0 20px 50px rgba(0,0,0,0.1)', padding: '1rem' }}
+                                    contentStyle={{ borderRadius: '1rem', border: 'none', boxShadow: '0 20px 50px rgba(0,0,0,0.1)', padding: '0.75rem' }}
                                     cursor={{ stroke: '#10b981', strokeWidth: 2, strokeDasharray: '5 5' }}
                                 />
                                 <Area
                                     type="monotone"
                                     dataKey="score"
                                     stroke="#10b981"
-                                    strokeWidth={4}
+                                    strokeWidth={3}
                                     fillOpacity={1}
                                     fill="url(#chartGradient)"
                                     animationDuration={2000}
@@ -203,16 +203,16 @@ const CalendarView = () => {
                     </div>
                 </div>
 
-                <div className="lg:col-span-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
+                <div className="lg:col-span-4 grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-1 gap-3 sm:gap-4">
                     <PremiumStat icon={Flame} value={stats?.currentStreak || 0} unit={language === 'bn' ? 'দিনের স্ট্রিক' : 'Day Streak'} color="orange" />
                     <PremiumStat icon={Star} value={stats?.perfectDays || 0} unit={language === 'bn' ? 'পূর্ণাঙ্গ দিন' : 'Perfect Days'} color="emerald" />
                     <PremiumStat icon={BookOpen} value={stats?.totalQuranPages || 0} unit={language === 'bn' ? 'পৃষ্ঠা খতম' : 'Quran Pages'} color="amber" />
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
                 <section className="lg:col-span-1 glass-card overflow-hidden">
-                    <h3 className="text-xl font-black text-slate-800 mb-8 px-2">
+                    <h3 className="text-lg sm:text-xl font-black text-slate-800 mb-6 sm:mb-8 px-2">
                         {language === 'bn' ? 'আমল বিশ্লেষণ' : 'Activity Focus'}
                     </h3>
                     <div className="space-y-6">

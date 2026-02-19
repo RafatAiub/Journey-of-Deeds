@@ -135,16 +135,16 @@ const TodayDashboard = () => {
     };
 
     return (
-        <div className="max-w-3xl mx-auto px-6 py-10 space-y-12 pb-32 animate-fade-in relative">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-6 sm:py-10 space-y-8 sm:space-y-12 pb-32 animate-fade-in relative">
 
             {/* Welcome-back banner for users who skipped days */}
             {hasSkippedDays && (
-                <div className="bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-100 rounded-[2rem] p-6 flex items-start gap-4 animate-fade-in">
-                    <div className="w-12 h-12 rounded-2xl bg-emerald-100 flex items-center justify-center flex-shrink-0 text-2xl">
+                <div className="bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-100 rounded-[2rem] p-5 flex items-start gap-4 animate-fade-in">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-emerald-100 flex items-center justify-center flex-shrink-0 text-xl sm:text-2xl">
                         🌙
                     </div>
                     <div>
-                        <p className="font-black text-emerald-800 text-lg">
+                        <p className="font-black text-emerald-800 text-base sm:text-lg">
                             {language === 'bn' ? 'আলহামদুলিল্লাহ, আপনি ফিরে এসেছেন!' : 'Alhamdulillah, you\'re back!'}
                         </p>
                         <p className="text-emerald-600 text-sm font-medium mt-1">
@@ -157,19 +157,19 @@ const TodayDashboard = () => {
             )}
 
             {/* Header with Date & Progress */}
-            <div className="text-center relative">
+            <div className="text-center relative pt-2">
                 {!isToday && (
                     <Link
                         to="/calendar"
-                        className="absolute -left-2 top-0 p-3 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-2xl transition-all flex items-center gap-2 text-sm font-bold group"
+                        className="absolute -left-1 sm:-left-2 top-0 p-2 sm:p-3 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-2xl transition-all flex items-center gap-1 sm:gap-2 text-sm font-bold group"
                     >
-                        <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
-                        {language === 'bn' ? 'পিছনে' : 'Back'}
+                        <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
+                        <span className="hidden sm:inline">{language === 'bn' ? 'পিছনে' : 'Back'}</span>
                     </Link>
                 )}
 
                 {/* Auto-save indicator */}
-                <div className={`absolute -right-2 top-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all duration-500 ${savedIndicator
+                <div className={`absolute right-0 top-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all duration-500 ${savedIndicator
                     ? 'opacity-100 bg-emerald-50 text-emerald-600 border border-emerald-100'
                     : 'opacity-0'
                     }`}>
@@ -177,22 +177,22 @@ const TodayDashboard = () => {
                     {language === 'bn' ? 'সংরক্ষিত' : 'Saved'}
                 </div>
 
-                <h1 className="text-5xl font-black text-slate-900 tracking-tight mb-4 animate-float">
+                <h1 className="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight mb-3 sm:mb-4 animate-float">
                     {t('ramadanDay')} <span className="text-gradient underline decoration-emerald-200 underline-offset-8 decoration-4">{ramadanDay}</span>
                 </h1>
 
-                <div className="inline-flex items-center gap-2 px-6 py-2 bg-emerald-50 text-emerald-700 rounded-full font-bold text-sm shadow-sm border border-emerald-100/50">
-                    <CalendarIcon size={16} />
+                <div className="inline-flex items-center gap-2 px-4 sm:px-6 py-2 bg-emerald-50 text-emerald-700 rounded-full font-bold text-xs sm:text-sm shadow-sm border border-emerald-100/50">
+                    <CalendarIcon size={14} />
                     {format(new Date(activeDateKey), 'EEEE, dd MMMM yyyy', { locale: language === 'bn' ? bn : undefined })}
                 </div>
 
                 {/* Progress Hub */}
-                <div className="mt-12 group cursor-pointer">
+                <div className="mt-8 sm:mt-12 group cursor-pointer">
                     <div className="flex justify-between items-end mb-3 px-2">
                         <span className="text-slate-400 text-xs font-black uppercase tracking-widest leading-none">
                             {language === 'bn' ? 'আজকের আমল' : 'Daily Completion'}
                         </span>
-                        <span className="text-4xl font-black text-slate-900 leading-none">
+                        <span className="text-3xl sm:text-4xl font-black text-slate-900 leading-none">
                             {progress}<small className="text-lg opacity-30">%</small>
                         </span>
                     </div>
