@@ -1,7 +1,6 @@
 import React, { useState, useEffect, createContext, useContext } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { loadData, saveData } from './utils/storage';
-import { detectLanguage } from './utils/language';
 import Onboarding from './components/Onboarding';
 import TodayDashboard from './components/TodayDashboard';
 import CalendarView from './components/CalendarView';
@@ -29,7 +28,7 @@ function App() {
     const [appData, setAppData] = useState(null);
     const [language, setLanguage] = useState(() => {
         const saved = localStorage.getItem('language');
-        return saved || detectLanguage();
+        return saved || 'bn';
     });
     const [loading, setLoading] = useState(true);
 
