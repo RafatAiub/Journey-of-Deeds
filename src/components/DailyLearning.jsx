@@ -2,6 +2,8 @@ import React from 'react';
 import { useApp } from '../App';
 import { translations } from '../utils/language';
 import { BookOpen, Scroll, Moon, Sun, Heart, AlertCircle } from 'lucide-react';
+import SawabBadge from './SawabBadge';
+import { getSawab } from '../data/sawabData';
 
 const DailyLearning = ({ learningData, onUpdate, dayNumber }) => {
     const { language } = useApp();
@@ -130,6 +132,16 @@ const DailyLearning = ({ learningData, onUpdate, dayNumber }) => {
                     ))}
                 </div>
             </header>
+
+            {/* Sawab motivation */}
+            {(() => {
+                const s = getSawab('dailyLearning', language);
+                return s && (
+                    <div className="mb-6">
+                        <SawabBadge reward={s.reward} source={s.source} detail={s.detail} color="emerald" />
+                    </div>
+                );
+            })()}
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
                 <LearningItem id="ayah" icon={BookOpen} title={t('dailyAyah')} content={todayContent.ayah} color="emerald" />

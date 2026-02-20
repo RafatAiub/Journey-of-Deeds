@@ -7,6 +7,8 @@ import { useParams, Link } from 'react-router-dom';
 import { getDayData } from '../utils/storage';
 import { getRamadanDayNumber, getDateKey } from '../utils/quranCalculator';
 import { ArrowLeft, Calendar as CalendarIcon, Trophy, Moon, CheckCircle, AlertCircle, Sparkles } from 'lucide-react';
+import SawabBadge from './SawabBadge';
+import { getSawab } from '../data/sawabData';
 import SalahGrid from './SalahGrid';
 import QuranPlannerCard from './QuranPlannerCard';
 import DhikrCounters from './DhikrCounters';
@@ -289,6 +291,10 @@ const TodayDashboard = () => {
                                 }`} />
                         </div>
                     </div>
+                    {dayData.roza && (() => {
+                        const s = getSawab('rozaRamadan', language);
+                        return s && <SawabBadge reward={s.reward} source={s.source} detail={s.detail} color="teal" />;
+                    })()}
                 </div>
 
                 {/* 3. Daily Learning */}

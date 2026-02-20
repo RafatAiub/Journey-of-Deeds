@@ -3,6 +3,8 @@ import { useApp } from '../App';
 import { translations } from '../utils/language';
 import { RotateCcw } from 'lucide-react';
 import ConfirmModal from './ConfirmModal';
+import SawabBadge from './SawabBadge';
+import { getSawab } from '../data/sawabData';
 
 /**
  * DhikrCounters — Tasbih counter for Subhanallah, Alhamdulillah, Allahu Akbar, and custom dhikr.
@@ -83,6 +85,7 @@ const DhikrCounters = ({ dhikrData, onUpdate }) => {
                         onUpdate={(d) => handleUpdate(c.key, d)}
                         onManual={(v) => handleManual(c.key, v)}
                         language={language}
+                        sawabKey={c.key}
                     />
                 ))}
 
@@ -95,6 +98,7 @@ const DhikrCounters = ({ dhikrData, onUpdate }) => {
                     onUpdate={handleCustomUpdate}
                     onManual={handleCustomManual}
                     language={language}
+                    sawabKey="istighfar"
                 />
             </div>
 
@@ -113,7 +117,7 @@ const DhikrCounters = ({ dhikrData, onUpdate }) => {
     );
 };
 
-const TasbihCard = ({ label, count, color, icon, onUpdate, onManual, language }) => {
+const TasbihCard = ({ label, count, color, icon, onUpdate, onManual, language, sawabKey }) => {
     const colorMap = {
         emerald: 'from-emerald-400 to-teal-500 shadow-emerald-100',
         teal: 'from-teal-400 to-cyan-500 shadow-teal-100',
@@ -123,10 +127,19 @@ const TasbihCard = ({ label, count, color, icon, onUpdate, onManual, language })
 
     return (
         <div className="group bg-white rounded-[2rem] p-4 sm:p-6 border border-slate-100 shadow-xl shadow-slate-200/40 hover:shadow-2xl hover:shadow-slate-300/50 transition-all duration-500">
-            <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6 px-1 sm:px-2">
+            <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3 px-1 sm:px-2">
                 <span className="text-xl sm:text-2xl drop-shadow-sm">{icon}</span>
                 <h4 className="text-xs sm:text-sm font-black text-slate-900 group-hover:text-emerald-600 transition-colors uppercase tracking-tight">{label}</h4>
             </div>
+            {/* Sawab info */}
+            {count > 0 && sawabKey && (() => {
+                const s = getSawab(sawabKey, language);
+                return s && (
+                    <div className="mb-3 px-1">
+                        <SawabBadge reward={s.reward} source={s.source} color={color} compact />
+                    </div>
+                );
+            })()}
 
             <div className="relative flex flex-col items-center">
                 <div className="flex items-center justify-between w-full gap-2 sm:gap-4">

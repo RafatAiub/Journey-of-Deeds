@@ -2,6 +2,8 @@ import React from 'react';
 import { useApp } from '../App';
 import { translations } from '../utils/language';
 import { Check, Users, Moon, Star, Sun } from 'lucide-react';
+import SawabBadge from './SawabBadge';
+import { getSawab } from '../data/sawabData';
 
 /**
  * SalahGrid — tracks daily prayers (Fard, Sunnah, Jamaat) and extra prayers.
@@ -48,42 +50,78 @@ const SalahGrid = ({ salahData, extraPrayers, onUpdate, onExtraUpdate }) => {
                 </div>
             </header>
 
+            {/* Sawab Motivation Banner */}
+            {(() => {
+                const sawab = getSawab('salahFard', language);
+                return sawab && (
+                    <SawabBadge
+                        reward={sawab.reward}
+                        source={sawab.source}
+                        detail={sawab.detail}
+                        color="blue"
+                    />
+                );
+            })()}
+
+            <div className="mt-4"></div>
+
             {/* 5 Fard Prayers */}
             <div className="space-y-3">
                 {prayers.map((prayer) => {
                     const data = getPrayerData(prayer);
-                    return (
-                        <div key={prayer} className="group flex items-center justify-between p-4 sm:p-5 rounded-2xl sm:rounded-[2rem] bg-slate-50 border border-slate-100/50 hover:bg-white hover:shadow-xl hover:shadow-slate-200/50 transition-all duration-300">
-                            <div className="flex items-center gap-3">
-                                <div className={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${data.fard ? 'bg-emerald-500 animate-pulse' : 'bg-slate-200'}`}></div>
-                                <h4 className="text-base sm:text-xl font-black text-slate-800 capitalize leading-none">{t(prayer)}</h4>
-                            </div>
+                    // Show prayer-specific sawab for fajr & isha
+                    const prayerSawab = (prayer === 'fajr' || prayer === 'isha') ? getSawab(prayer, language) : null;
+                    const jamaatSawab = data.jamaat ? getSawab('salahJamaat', language) : null;
+                    const sunnahSawab = data.sunnah ? getSawab('salahSunnah', language) : null;
 
-                            <div className="flex items-center gap-2 sm:gap-3">
-                                <PrayerCircle
-                                    active={data.fard}
-                                    onClick={() => handlePrayerToggle(prayer, 'fard')}
-                                    icon={<Check size={16} />}
-                                    label={t('fard')}
-                                    color="emerald"
-                                />
-                                <PrayerCircle
-                                    active={data.jamaat}
-                                    onClick={() => handlePrayerToggle(prayer, 'jamaat')}
-                                    icon={<Users size={16} />}
-                                    label={t('jamaat')}
-                                    color="blue"
-                                />
-                                <button
-                                    onClick={() => handlePrayerToggle(prayer, 'sunnah')}
-                                    className={`px-3 sm:px-6 py-2 rounded-xl text-xs sm:text-sm font-black transition-all border-2 ${data.sunnah
-                                        ? 'bg-amber-500 border-amber-500 text-white shadow-lg shadow-amber-200 scale-105'
-                                        : 'bg-white border-slate-100 text-slate-400 hover:border-amber-300 hover:text-amber-500'
-                                        }`}
-                                >
-                                    {t('sunnah')}
-                                </button>
+                    return (
+                        <div key={prayer}>
+                            <div className="group flex items-center justify-between p-4 sm:p-5 rounded-2xl sm:rounded-[2rem] bg-slate-50 border border-slate-100/50 hover:bg-white hover:shadow-xl hover:shadow-slate-200/50 transition-all duration-300">
+                                <div className="flex items-center gap-3">
+                                    <div className={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${data.fard ? 'bg-emerald-500 animate-pulse' : 'bg-slate-200'}`}></div>
+                                    <h4 className="text-base sm:text-xl font-black text-slate-800 capitalize leading-none">{t(prayer)}</h4>
+                                </div>
+
+                                <div className="flex items-center gap-2 sm:gap-3">
+                                    <PrayerCircle
+                                        active={data.fard}
+                                        onClick={() => handlePrayerToggle(prayer, 'fard')}
+                                        icon={<Check size={16} />}
+                                        label={t('fard')}
+                                        color="emerald"
+                                    />
+                                    <PrayerCircle
+                                        active={data.jamaat}
+                                        onClick={() => handlePrayerToggle(prayer, 'jamaat')}
+                                        icon={<Users size={16} />}
+                                        label={t('jamaat')}
+                                        color="blue"
+                                    />
+                                    <button
+                                        onClick={() => handlePrayerToggle(prayer, 'sunnah')}
+                                        className={`px-3 sm:px-6 py-2 rounded-xl text-xs sm:text-sm font-black transition-all border-2 ${data.sunnah
+                                            ? 'bg-amber-500 border-amber-500 text-white shadow-lg shadow-amber-200 scale-105'
+                                            : 'bg-white border-slate-100 text-slate-400 hover:border-amber-300 hover:text-amber-500'
+                                            }`}
+                                    >
+                                        {t('sunnah')}
+                                    </button>
+                                </div>
                             </div>
+                            {/* Show sawab when prayer is done */}
+                            {data.fard && prayerSawab && (
+                                <SawabBadge reward={prayerSawab.reward} source={prayerSawab.source} color={prayer === 'fajr' ? 'amber' : 'indigo'} compact />
+                            )}
+                            {jamaatSawab && (
+                                <div className="mt-1">
+                                    <SawabBadge reward={jamaatSawab.reward} source={jamaatSawab.source} color="blue" compact />
+                                </div>
+                            )}
+                            {sunnahSawab && (
+                                <div className="mt-1">
+                                    <SawabBadge reward={sunnahSawab.reward} source={sunnahSawab.source} color="amber" compact />
+                                </div>
+                            )}
                         </div>
                     );
                 })}
@@ -108,6 +146,10 @@ const SalahGrid = ({ salahData, extraPrayers, onUpdate, onExtraUpdate }) => {
                         onChange={(e) => onExtraUpdate({ ...extraPrayers, tarawih: parseInt(e.target.value) })}
                         className="w-full h-3 bg-indigo-200 rounded-full appearance-none cursor-pointer accent-indigo-600 hover:accent-indigo-700 transition-all"
                     />
+                    {extraPrayers.tarawih > 0 && (() => {
+                        const s = getSawab('tarawih', language);
+                        return s && <SawabBadge reward={s.reward} source={s.source} detail={s.detail} color="indigo" />;
+                    })()}
                 </div>
 
                 {/* Tahajjud */}
@@ -125,6 +167,10 @@ const SalahGrid = ({ salahData, extraPrayers, onUpdate, onExtraUpdate }) => {
                     <p className={`text-sm italic font-medium leading-relaxed ${extraPrayers.tahajjud ? 'text-amber-800' : 'text-slate-400'}`}>
                         "{t('tahajjudMotivation')}"
                     </p>
+                    {extraPrayers.tahajjud && (() => {
+                        const s = getSawab('tahajjud', language);
+                        return s && <SawabBadge reward={s.reward} source={s.source} detail={s.detail} color="amber" />;
+                    })()}
                 </div>
 
                 {/* Ishraq — was in data model but had no UI */}
@@ -144,6 +190,10 @@ const SalahGrid = ({ salahData, extraPrayers, onUpdate, onExtraUpdate }) => {
                         </div>
                         <div className={`w-8 h-8 rounded-full border-4 transition-all ${extraPrayers.ishraq ? 'bg-orange-500 border-orange-200 scale-110 shadow-lg shadow-orange-200' : 'border-slate-200'}`}></div>
                     </div>
+                    {extraPrayers.ishraq && (() => {
+                        const s = getSawab('ishraq', language);
+                        return s && <SawabBadge reward={s.reward} source={s.source} detail={s.detail} color="orange" />;
+                    })()}
                 </div>
 
                 {/* Chasht — was in data model but had no UI */}
@@ -163,6 +213,10 @@ const SalahGrid = ({ salahData, extraPrayers, onUpdate, onExtraUpdate }) => {
                         </div>
                         <div className={`w-8 h-8 rounded-full border-4 transition-all ${extraPrayers.chasht ? 'bg-yellow-500 border-yellow-200 scale-110 shadow-lg shadow-yellow-200' : 'border-slate-200'}`}></div>
                     </div>
+                    {extraPrayers.chasht && (() => {
+                        const s = getSawab('chasht', language);
+                        return s && <SawabBadge reward={s.reward} source={s.source} detail={s.detail} color="amber" />;
+                    })()}
                 </div>
             </div>
         </section>

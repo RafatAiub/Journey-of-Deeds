@@ -3,6 +3,8 @@ import { useApp } from '../App';
 import { translations } from '../utils/language';
 import { computeQuranTodayTarget, calculateTotalPagesRead } from '../utils/quranCalculator';
 import { BookOpen, TrendingUp, CheckCircle, Hash, Bookmark, Target, AlertCircle } from 'lucide-react';
+import SawabBadge from './SawabBadge';
+import { getSawab } from '../data/sawabData';
 
 /**
  * QuranPlannerCard — tracks daily Quran reading progress.
@@ -98,6 +100,17 @@ const QuranPlannerCard = ({
                     <SummaryTag label={t('para')} value={data.paraNumber || '-'} color="blue" />
                 </div>
             </header>
+
+            {/* Sawab motivation */}
+            {(() => {
+                const s = getSawab('quranReading', language);
+                return s && <SawabBadge reward={s.reward} source={s.source} detail={s.detail} color="sky" />;
+            })()}
+
+            {data.pagesRead > 0 && (() => {
+                const s = getSawab('quranKhatm', language);
+                return s && <SawabBadge reward={s.reward} source={s.source} detail={s.detail} color="blue" />;
+            })()}
 
             {/* Overall Progress Bar */}
             <div className="mb-8 bg-sky-50 rounded-2xl p-5 border border-sky-100">

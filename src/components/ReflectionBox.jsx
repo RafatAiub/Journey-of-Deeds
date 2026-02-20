@@ -2,6 +2,8 @@ import React, { useState, useCallback, useRef } from 'react';
 import { useApp } from '../App';
 import { translations } from '../utils/language';
 import { PenLine, Heart, Trophy, BookOpen, CheckCircle, Shield } from 'lucide-react';
+import SawabBadge from './SawabBadge';
+import { getSawab } from '../data/sawabData';
 
 /**
  * ReflectionBox — daily reflection, achievement, and gratitude journal.
@@ -45,13 +47,23 @@ const ReflectionBox = ({ reflectionData, onUpdate }) => {
 
                 {/* Auto-save indicator */}
                 <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all duration-500 ${showSaved
-                        ? 'opacity-100 bg-emerald-50 text-emerald-600 border border-emerald-200'
-                        : 'opacity-0'
+                    ? 'opacity-100 bg-emerald-50 text-emerald-600 border border-emerald-200'
+                    : 'opacity-0'
                     }`}>
                     <CheckCircle className="w-3.5 h-3.5" />
                     {language === 'bn' ? 'সংরক্ষিত' : 'Saved'}
                 </div>
             </header>
+
+            {/* Sawab motivation */}
+            {(() => {
+                const s = getSawab('reflection', language);
+                return s && (
+                    <div className="mb-6">
+                        <SawabBadge reward={s.reward} source={s.source} detail={s.detail} color="purple" />
+                    </div>
+                );
+            })()}
 
             <div className="space-y-6">
                 {/* What did you learn today? */}
