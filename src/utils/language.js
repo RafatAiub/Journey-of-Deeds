@@ -111,6 +111,27 @@ export const translations = {
         // Deed of the Day
         deedOfDay: 'আজকের ছোট কাজ',
 
+        // Taraweeh Guide
+        taraweehGuide: 'তারাবীহ গাইড',
+        tonightsJuz: 'আজ রাতের জুজ',
+        tonightsPreview: 'আজ রাতের প্রিভিউ',
+        themes: 'থিম',
+        keyWordsLabel: 'মূল শব্দ',
+        featuredAyah: 'নির্বাচিত আয়াত',
+        smallAmol: 'ছোট আমল',
+        reflectTitle: 'রিফ্লেকশন',
+        reflectionQuestion: 'রিফ্লেকশন প্রশ্ন',
+        tomorrowNiyyah: 'কালকের নিয়ত',
+        niyyahPlaceholder: 'কালকের জন্য ১টি ছোট নিয়ত লিখুন...',
+        reflectionNotePlaceholder: 'আপনার ভাবনা লিখুন...',
+        juzProgress: 'জুজ অগ্রগতি',
+        amolDone: 'আমল করেছি',
+        previewSeen: 'প্রিভিউ দেখেছি',
+        juzSummaryLabel: 'আজকের সারসংক্ষেপ',
+        extraAyatsLabel: 'গভীরভাবে জানুন',
+        themeFocusLabel: 'আজকের ইবাদতের ফোকাস বেছে নিন',
+        themeSelectionReflection: 'আপনার আজকের ফোকাস:',
+
         // Daily Self-Assessment
         dailySelfAssessment: 'দৈনিক আত্ম-মূল্যায়ন',
         selfAssessmentComplete: 'সম্পন্ন হয়েছে',
@@ -314,6 +335,27 @@ export const translations = {
 
         // Deed of the Day
         deedOfDay: 'Deed of the Day',
+
+        // Taraweeh Guide
+        taraweehGuide: 'Taraweeh Guide',
+        tonightsJuz: 'Tonight\'s Juz',
+        tonightsPreview: 'Tonight\'s Preview',
+        themes: 'Themes',
+        keyWordsLabel: 'Key Words',
+        featuredAyah: 'Featured Ayah',
+        smallAmol: 'Small Deed',
+        reflectTitle: 'Reflection',
+        reflectionQuestion: 'Reflection Question',
+        tomorrowNiyyah: 'Tomorrow\'s Intention',
+        niyyahPlaceholder: 'Write a small intention for tomorrow...',
+        reflectionNotePlaceholder: 'Write your thoughts...',
+        juzProgress: 'Juz Progress',
+        amolDone: 'Deed Done',
+        previewSeen: 'Preview Seen',
+        juzSummaryLabel: 'Juz Overview',
+        extraAyatsLabel: 'Deep Dive Wisdom',
+        themeFocusLabel: 'Pick your focus for tonight',
+        themeSelectionReflection: 'Your focus today:',
 
         // Daily Self-Assessment
         dailySelfAssessment: 'Daily Self-Assessment',

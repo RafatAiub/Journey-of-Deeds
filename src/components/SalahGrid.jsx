@@ -130,28 +130,6 @@ const SalahGrid = ({ salahData, extraPrayers, onUpdate, onExtraUpdate }) => {
             {/* Extra Prayers: Tarawih, Tahajjud, Ishraq, Chasht */}
             <div className="mt-6 sm:mt-12 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 pt-6 sm:pt-10 border-t border-slate-100">
 
-                {/* Tarawih */}
-                <div className={`p-5 sm:p-8 rounded-2xl sm:rounded-[2rem] transition-all border-2 ${extraPrayers.tarawih > 0 ? 'bg-indigo-50 border-indigo-100 shadow-inner' : 'bg-slate-50 border-slate-50'}`}>
-                    <div className="flex items-center justify-between mb-4 sm:mb-6">
-                        <h4 className="text-base sm:text-xl font-black text-slate-800 flex items-center gap-2 sm:gap-3">
-                            <Moon className="text-indigo-600 w-5 h-5" /> {t('tarawih')}
-                        </h4>
-                        <span className="text-xl sm:text-2xl font-black text-indigo-600 bg-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-2xl shadow-sm">
-                            {extraPrayers.tarawih || 0}
-                        </span>
-                    </div>
-                    <input
-                        type="range" min="0" max="20" step="2"
-                        value={extraPrayers.tarawih || 0}
-                        onChange={(e) => onExtraUpdate({ ...extraPrayers, tarawih: parseInt(e.target.value) })}
-                        className="w-full h-3 bg-indigo-200 rounded-full appearance-none cursor-pointer accent-indigo-600 hover:accent-indigo-700 transition-all"
-                    />
-                    {extraPrayers.tarawih > 0 && (() => {
-                        const s = getSawab('tarawih', language);
-                        return s && <SawabBadge reward={s.reward} source={s.source} detail={s.detail} color="indigo" />;
-                    })()}
-                </div>
-
                 {/* Tahajjud */}
                 <div
                     onClick={() => onExtraUpdate({ ...extraPrayers, tahajjud: !extraPrayers.tahajjud })}

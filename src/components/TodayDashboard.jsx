@@ -16,6 +16,7 @@ import ReflectionBox from './ReflectionBox';
 import DeedOfDayCard from './DeedOfDayCard';
 import ProgressBar from './ProgressBar';
 import DailyLearning from './DailyLearning';
+import TaraweehGuide from './TaraweehGuide';
 import GamificationModal, { checkNewBadges, calculateLevel } from './GamificationModal';
 import DailySelfAssessment from './DailySelfAssessment';
 import ConfirmModal from './ConfirmModal';
@@ -61,11 +62,16 @@ const TodayDashboard = () => {
         const updatedDay = { ...dayData, ...updates };
         setDayData(updatedDay);
 
-        const newAppData = { ...appData };
-        newAppData.days[activeDateKey] = updatedDay;
-        setAppData(newAppData);
+        // Update central app state via functional update to avoid race conditions
+        updateData({
+            days: {
+                ...appData.days,
+                [activeDateKey]: updatedDay
+            }
+        });
+
         flashSaved();
-    }, [dayData, appData, activeDateKey, setAppData, flashSaved]);
+    }, [dayData, appData, activeDateKey, updateData, flashSaved]);
 
     // Calculate Progress (0-100)
     const calculateProgress = () => {
@@ -89,7 +95,7 @@ const TodayDashboard = () => {
         // 4. Tarawih: 10 pts
         if ((dayData.extraPrayers?.tarawih || 0) > 0) earnedPoints += 10;
 
-        // 5. Learning & Dhikr: up to 10 pts
+        // 5. Learning, Dhikr & Focus: up to 10 pts
         let bonus = 0;
         ['ayah', 'hadith', 'dua', 'sunnah', 'iman'].forEach(l => {
             if (dayData.dailyLearning?.[l]) bonus += 1;
@@ -97,6 +103,11 @@ const TodayDashboard = () => {
         const dhikrCount = (dayData.dhikr?.subhanallah || 0) + (dayData.dhikr?.alhamdulillah || 0) + (dayData.dhikr?.allahuakbar || 0);
         if (dhikrCount > 100) bonus += 5;
         else if (dhikrCount > 0) bonus += 2;
+
+        // New: Taraweeh Focus & Preview
+        if (dayData.taraweehGuide?.selectedTheme) bonus += 2;
+        if (dayData.taraweehGuide?.previewSeen) bonus += 1;
+
         earnedPoints += Math.min(10, bonus);
 
         return Math.min(100, earnedPoints);
@@ -257,6 +268,17 @@ const TodayDashboard = () => {
                     extraPrayers={dayData.extraPrayers || {}}
                     onUpdate={(salah) => updateDay({ salah })}
                     onExtraUpdate={(extraPrayers) => updateDay({ extraPrayers })}
+                />
+
+                {/* 1.5. Taraweeh Guide — The new interactive attraction system */}
+                <TaraweehGuide
+                    ramadanDay={ramadanDay}
+                    taraweehData={dayData.taraweehGuide || {}}
+                    tarawihRakats={dayData.extraPrayers?.tarawih || 0}
+                    onUpdate={(taraweehGuide) => updateDay({ taraweehGuide })}
+                    onTarawihUpdate={(tarawih) => updateDay({
+                        extraPrayers: { ...dayData.extraPrayers, tarawih }
+                    })}
                 />
 
                 {/* 2. Fasting (Roza) — full-width celebration card */}

@@ -45,6 +45,14 @@ export const getDefaultDayData = () => ({
         juz: 0,
         ayahCount: 0
     },
+    taraweehGuide: {
+        previewSeen: false,
+        reflectionDone: false,
+        reflectionNote: '',
+        tomorrowNiyyah: '',
+        amolDone: false,
+        selectedTheme: ''
+    },
     dailyLearning: {
         ayah: false,
         hadith: false,
@@ -173,6 +181,7 @@ export const getDayData = (data, dateKey) => {
         dhikr: { ...defaultData.dhikr, ...(storedData.dhikr || {}) },
         reflection: { ...defaultData.reflection, ...(storedData.reflection || {}) },
         selfAssessment: { ...defaultData.selfAssessment, ...(storedData.selfAssessment || {}) },
+        taraweehGuide: { ...defaultData.taraweehGuide, ...(storedData.taraweehGuide || {}) },
     };
 
     // Store back if it was missing to fill gaps immediately
