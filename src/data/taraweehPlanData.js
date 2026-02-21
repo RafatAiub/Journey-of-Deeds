@@ -944,8 +944,9 @@ export const taraweehPlan = [
  * @returns {TaraweehDay | null}
  */
 export const getTaraweehDay = (dayNumber) => {
-    if (dayNumber < 1 || dayNumber > 30) return null;
-    return taraweehPlan.find(d => d.day === (dayNumber - 1)) || null;
+    // Allow 0 for Chand Raat, up to 30 for late month days
+    if (dayNumber < 0 || dayNumber > 30) return null;
+    return taraweehPlan.find(d => d.day === dayNumber) || null;
 };
 
 /**
@@ -981,11 +982,11 @@ export const getJuzProgress = (dayNumber) => {
     if (dayNumber <= 0) return { completed: 0, total: 30, percent: 0 };
 
     let completed;
-    const idx = dayNumber - 1;
+    const idx = dayNumber;
     if (idx <= 5) {
-        completed = Math.min((idx + 1) * 1.5, 9);
+        completed = Math.min(idx * 1.5, 9);
     } else if (idx <= 26) {
-        completed = 9 + (idx - 5);
+        completed = 9 + (idx - 6);
     } else {
         completed = 30;
     }
