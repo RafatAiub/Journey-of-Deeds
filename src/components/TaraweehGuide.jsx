@@ -157,7 +157,7 @@ const TaraweehGuide = ({ ramadanDay, taraweehData, tarawihRakats, onUpdate, onTa
                                 {t('tonightsJuz')}
                             </span>
                             <span className={`
-                                ${dayPlan.juz.length > 12 ? 'text-xs' : dayPlan.juz.length > 6 ? 'text-sm' : 'text-4xl'} 
+                                ${dayPlan.juz.length > 20 ? 'text-[10px]' : dayPlan.juz.length > 12 ? 'text-xs' : dayPlan.juz.length > 6 ? 'text-base' : 'text-3xl sm:text-4xl'} 
                                 font-black leading-tight tracking-tighter text-white drop-shadow-lg
                             `}>
                                 {(() => {
@@ -316,7 +316,7 @@ const TaraweehGuide = ({ ramadanDay, taraweehData, tarawihRakats, onUpdate, onTa
                                             <button
                                                 key={i}
                                                 onClick={() => handleUpdate('selectedTheme', isSelected ? '' : theme)}
-                                                className={`group relative flex items-center gap-3 px-6 py-4 rounded-[1.5rem] text-sm font-black transition-all duration-500 border-2 ${isSelected
+                                                className={`group relative flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-3 sm:py-4 rounded-[1.2rem] sm:rounded-[1.5rem] text-xs sm:text-sm font-black transition-all duration-500 border-2 ${isSelected
                                                     ? `${ps.iconBg} text-white border-transparent shadow-2xl scale-105 z-10`
                                                     : 'bg-white text-slate-500 border-slate-100 hover:border-slate-300 hover:text-slate-800'
                                                     }`}

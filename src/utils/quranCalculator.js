@@ -63,28 +63,35 @@ export const computeQuranTodayTarget = ({
 
 // Calculate daily progress percentage (0-100) — Single source of truth for all Amols
 export const calculateDayProgress = (dayData, appData, dateKey) => {
-    if (!dayData) return 0;
+    const breakdown = calculateDayProgressBreakdown(dayData, appData, dateKey);
+    return Math.min(100, Math.round(breakdown.salah + breakdown.roza + breakdown.quran + breakdown.others));
+};
 
-    let earnedPoints = 0;
+// Calculate detailed breakdown for granular charts
+export const calculateDayProgressBreakdown = (dayData, appData, dateKey) => {
+    if (!dayData) return { salah: 0, roza: 0, quran: 0, others: 0, total: 0 };
+
+    let salah = 0;
+    let roza = 0;
+    let quran = 0;
+    let others = 0;
 
     // 1. Salah (Total 50 pts)
     const prayers = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'];
     prayers.forEach(p => {
         const pData = dayData.salah?.[p];
-        if (pData?.fard || pData === true) earnedPoints += 7; // 35 pts total
-        if (pData?.sunnah) earnedPoints += 1.5; // 7.5 pts total
-        if (pData?.jamaat) earnedPoints += 1.5; // 7.5 pts total
+        if (pData?.fard || pData === true) salah += 7;
+        if (pData?.sunnah) salah += 1.5;
+        if (pData?.jamaat) salah += 1.5;
     });
 
     // 2. Fasting (Total 10 pts)
-    if (dayData.roza) earnedPoints += 10;
+    if (dayData.roza) roza += 10;
 
     // 3. Quran (Total 10 pts)
     const pagesRead = Number(dayData.quran?.pagesRead) || 0;
     if (pagesRead > 0) {
-        earnedPoints += 5; // Base points for reading
-
-        // Target tracking (if appData available)
+        quran += 5;
         if (appData?.ramadanPlan?.startDate) {
             const quranTarget = computeQuranTodayTarget({
                 totalPages: appData.profile?.quranTotalPages || 604,
@@ -93,51 +100,56 @@ export const calculateDayProgress = (dayData, appData, dateKey) => {
                 dateISO: dateKey,
                 pagesReadSoFar: calculateTotalPagesRead(appData, dateKey) - pagesRead
             });
-            if (pagesRead >= (quranTarget.todayTarget || 4)) earnedPoints += 5;
-        } else {
-            // Fallback: if no plan, give points for significant reading
-            if (pagesRead >= 4) earnedPoints += 5;
+            if (pagesRead >= (quranTarget.todayTarget || 4)) quran += 5;
+        } else if (pagesRead >= 4) {
+            quran += 5;
         }
     }
 
-    // 4. Taraweeh & Night Prayer (Total 10 pts)
+    // 4. Others: Taraweeh, Nafal, Dhikr, Learning, SA (Total 30 pts)
+    // Taraweeh (10)
     const trRakats = Number(dayData.extraPrayers?.tarawih) || 0;
-    if (trRakats > 0) earnedPoints += 4;
-    if (dayData.taraweehGuide?.selectedTheme) earnedPoints += 2;
-    if (dayData.taraweehGuide?.previewSeen) earnedPoints += 2;
-    if (dayData.taraweehGuide?.amolDone) earnedPoints += 2;
+    if (trRakats > 0) others += 4;
+    if (dayData.taraweehGuide?.selectedTheme) others += 2;
+    if (dayData.taraweehGuide?.previewSeen) others += 2;
+    if (dayData.taraweehGuide?.amolDone) others += 2;
 
-    // 5. Nafal Prayers (Total 5 pts)
-    if (dayData.extraPrayers?.tahajjud) earnedPoints += 2;
-    if (dayData.extraPrayers?.ishraq) earnedPoints += 1.5;
-    if (dayData.extraPrayers?.chasht) earnedPoints += 1.5;
+    // Nafal (5)
+    if (dayData.extraPrayers?.tahajjud) others += 2;
+    if (dayData.extraPrayers?.ishraq) others += 1.5;
+    if (dayData.extraPrayers?.chasht) others += 1.5;
 
-    // 6. Dhikr (Total 5 pts)
+    // Dhikr (5)
     const dhikrCount = (Number(dayData.dhikr?.subhanallah) || 0) +
         (Number(dayData.dhikr?.alhamdulillah) || 0) +
         (Number(dayData.dhikr?.allahuakbar) || 0) +
         (Number(dayData.dhikr?.custom?.count) || 0);
-    if (dhikrCount >= 100) earnedPoints += 5;
-    else if (dhikrCount >= 33) earnedPoints += 3;
-    else if (dhikrCount > 0) earnedPoints += 1.5;
+    if (dhikrCount >= 100) others += 5;
+    else if (dhikrCount >= 33) others += 3;
+    else if (dhikrCount > 0) others += 1.5;
 
-    // 7. Learning & Reflection (Total 5 pts)
+    // Learning (5)
     let learningItems = 0;
     const learningKeys = ['ayah', 'hadith', 'dua', 'sunnah', 'masala', 'iman'];
     learningKeys.forEach(k => { if (dayData.dailyLearning?.[k]) learningItems++; });
-    if (learningItems >= 3) earnedPoints += 2.5;
-    else if (learningItems > 0) earnedPoints += 1.5;
+    if (learningItems >= 3) others += 2.5;
+    else if (learningItems > 0) others += 1.5;
+    if (dayData.reflection?.note || dayData.reflection?.achievement) others += 2.5;
 
-    if (dayData.reflection?.note || dayData.reflection?.achievement) earnedPoints += 2.5;
-
-    // 8. Self Assessment / Character (Total 5 pts)
+    // SA (5)
     let behaviorCount = 0;
     const sa = dayData.selfAssessment || {};
     Object.values(sa).forEach(v => { if (v === true) behaviorCount++; });
-    if (behaviorCount >= 7) earnedPoints += 5;
-    else if (behaviorCount >= 3) earnedPoints += 2.5;
+    if (behaviorCount >= 7) others += 5;
+    else if (behaviorCount >= 3) others += 2.5;
 
-    return Math.min(100, Math.round(earnedPoints));
+    return {
+        salah: Math.round(salah),
+        roza: Math.round(roza),
+        quran: Math.round(quran),
+        others: Math.round(others),
+        total: Math.min(100, Math.round(salah + roza + quran + others))
+    };
 };
 
 // Get encouraging message based on progress

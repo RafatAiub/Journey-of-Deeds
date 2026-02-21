@@ -99,7 +99,7 @@ const SalahGrid = ({ salahData, extraPrayers, onUpdate, onExtraUpdate }) => {
                                     />
                                     <button
                                         onClick={() => handlePrayerToggle(prayer, 'sunnah')}
-                                        className={`px-3 sm:px-6 py-2 rounded-xl text-xs sm:text-sm font-black transition-all border-2 ${data.sunnah
+                                        className={`px-2 sm:px-6 py-2 rounded-xl text-[10px] sm:text-sm font-black transition-all border-2 ${data.sunnah
                                             ? 'bg-amber-500 border-amber-500 text-white shadow-lg shadow-amber-200 scale-105'
                                             : 'bg-white border-slate-100 text-slate-400 hover:border-amber-300 hover:text-amber-500'
                                             }`}

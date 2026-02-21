@@ -1,17 +1,19 @@
 import React, { useMemo } from 'react';
 import { useApp } from '../App';
 import { translations } from '../utils/language';
-import { getRamadanDayNumber, getDateKey, calculateDayProgress } from '../utils/quranCalculator';
+import { getRamadanDayNumber, getDateKey, calculateDayProgress, calculateDayProgressBreakdown } from '../utils/quranCalculator';
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
 import {
+    BarChart,
+    Bar,
     XAxis,
     YAxis,
     CartesianGrid,
     Tooltip,
     ResponsiveContainer,
-    AreaChart,
-    Area
+    ReferenceLine,
+    Cell
 } from 'recharts';
 import {
     Calendar as CalendarIcon,
@@ -21,7 +23,8 @@ import {
     BookOpen,
     ChevronRight,
     BarChart3,
-    Star
+    Star,
+    CheckCircle
 } from 'lucide-react';
 
 const CalendarView = () => {
@@ -40,24 +43,24 @@ const CalendarView = () => {
 
         const chartData = [];
         const categoryData = [
-            { name: t('salah'), value: 0, color: '#3b82f6', icon: TrendingUp },
-            { name: t('roza'), value: 0, color: '#10b981', icon: Moon },
-            { name: t('quranPlanner'), value: 0, color: '#f59e0b', icon: BookOpen },
-            { name: t('dailyLearning'), value: 0, color: '#8b5cf6', icon: BookOpen }
+            { name: t('salah'), value: 0, color: '#3b82f6', icon: TrendingUp, key: 'salah' },
+            { name: t('roza'), value: 0, color: '#10b981', icon: Moon, key: 'roza' },
+            { name: t('quranPlanner'), value: 0, color: '#f59e0b', icon: BookOpen, key: 'quran' },
+            { name: t('others'), value: 0, color: '#8b5cf6', icon: Star, key: 'others' }
         ];
 
         daysArray.forEach(dateKey => {
             const dayData = appData.days[dateKey];
             const ramadanDay = getRamadanDayNumber(appData.ramadanPlan.startDate, new Date(dateKey));
 
-            // 1. Calculate Daily Progress Score (Consolidated Utility)
-            const score = calculateDayProgress(dayData, appData, dateKey);
+            // Calculate Breakdown for Chart
+            const breakdown = calculateDayProgressBreakdown(dayData, appData, dateKey);
 
-            // Prayers count for stats (separate from score)
+            // Prayers count for stats
             const prayers = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'];
             prayers.forEach(p => {
                 const pData = dayData.salah?.[p];
-                if ((typeof pData === 'object' && pData.fard) || pData === true) {
+                if (pData?.fard || pData === true) {
                     categoryData[0].value++;
                     totalPrayers++;
                 }
@@ -74,15 +77,13 @@ const CalendarView = () => {
             }
 
             const learnings = ['ayah', 'hadith', 'dua', 'sunnah', 'iman'];
-            learnings.forEach(l => {
-                if (dayData.dailyLearning?.[l]) categoryData[3].value++;
-            });
+            learnings.forEach(l => { if (dayData.dailyLearning?.[l]) categoryData[3].value++; });
 
-            if (score === 100) perfectDays++;
+            if (breakdown.total === 100) perfectDays++;
 
             chartData.push({
                 day: ramadanDay,
-                score: score,
+                ...breakdown,
                 date: dateKey
             });
         });
@@ -137,53 +138,75 @@ const CalendarView = () => {
             </header>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6">
-                <div className="lg:col-span-8 card !p-5 sm:!p-8">
+                <div className="lg:col-span-8 card !p-5 sm:!p-8 min-w-0">
                     <div className="flex items-center justify-between mb-5 sm:mb-8">
                         <div>
                             <h3 className="text-lg sm:text-xl font-black text-slate-800 tracking-tight">
                                 {language === 'bn' ? 'অগ্রগতি ইতিহাস' : 'Progress History'}
                             </h3>
-                            <p className="text-slate-400 text-sm mt-1">{language === 'bn' ? 'বিগত ৩০ দিনের আমলের পরিবর্তন' : 'Daily progress visualizer'}</p>
+                            <p className="text-slate-400 text-sm mt-1">{language === 'bn' ? 'বিগত ৩০ দিনের আমলের পরিবর্তন' : 'Daily progress composition'}</p>
+                        </div>
+                        <div className="flex items-center gap-2 text-xs font-black text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-full border border-emerald-100">
+                            <CheckCircle size={14} />
+                            <span>{language === 'bn' ? '৭৫% লক্ষ্য' : '75% Goal'}</span>
                         </div>
                     </div>
 
-                    <div className="h-[200px] sm:h-[300px] w-full">
+                    <div className="h-[250px] sm:h-[350px] w-full relative">
                         <ResponsiveContainer width="100%" height="100%">
-                            <AreaChart data={stats?.chartData || []}>
-                                <defs>
-                                    <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="5%" stopColor="#10b981" stopOpacity={0.2} />
-                                        <stop offset="95%" stopColor="#10b981" stopOpacity={0} />
-                                    </linearGradient>
-                                </defs>
-                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f8fafc" />
+                            <BarChart data={stats?.chartData || []} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
                                 <XAxis
                                     dataKey="day"
                                     axisLine={false}
                                     tickLine={false}
-                                    tick={{ fontSize: 11, fill: '#64748b', fontWeight: 600 }}
-                                    dy={15}
+                                    tick={{ fontSize: 11, fill: '#94a3b8', fontWeight: 800 }}
+                                    dy={10}
                                 />
-                                <YAxis hide domain={[0, 100]} />
+                                <YAxis
+                                    domain={[0, 100]}
+                                    tick={{ fontSize: 10, fill: '#cbd5e1', fontWeight: 600 }}
+                                    axisLine={false}
+                                    tickLine={false}
+                                />
                                 <Tooltip
-                                    contentStyle={{ borderRadius: '1rem', border: 'none', boxShadow: '0 20px 50px rgba(0,0,0,0.1)', padding: '0.75rem' }}
-                                    cursor={{ stroke: '#10b981', strokeWidth: 2, strokeDasharray: '5 5' }}
+                                    cursor={{ fill: '#f8fafc' }}
+                                    content={({ active, payload, label }) => {
+                                        if (active && payload && payload.length) {
+                                            return (
+                                                <div className="bg-white/90 backdrop-blur-xl p-4 rounded-3xl shadow-2xl border border-slate-100 min-w-[160px] animate-in zoom-in-95">
+                                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 flex justify-between">
+                                                        <span>{t('day')} {label}</span>
+                                                        <span className="text-emerald-600 font-black">{payload[0].payload.total}%</span>
+                                                    </p>
+                                                    <div className="space-y-1.5">
+                                                        {payload.slice().reverse().map((entry, index) => (
+                                                            <div key={index} className="flex justify-between items-center text-xs font-bold">
+                                                                <div className="flex items-center gap-2">
+                                                                    <div className="w-2 h-2 rounded-full" style={{ backgroundColor: entry.color }} />
+                                                                    <span className="text-slate-600 capitalize">{entry.name}</span>
+                                                                </div>
+                                                                <span className="text-slate-900">{entry.value}%</span>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            );
+                                        }
+                                        return null;
+                                    }}
                                 />
-                                <Area
-                                    type="monotone"
-                                    dataKey="score"
-                                    stroke="#10b981"
-                                    strokeWidth={3}
-                                    fillOpacity={1}
-                                    fill="url(#chartGradient)"
-                                    animationDuration={2000}
-                                />
-                            </AreaChart>
+                                <ReferenceLine y={75} stroke="#34d399" strokeDasharray="5 5" strokeWidth={2} label={{ position: 'right', value: '', fill: '#10b981', fontSize: 10 }} />
+                                <Bar dataKey="salah" name={t('salah')} stackId="a" fill="#3b82f6" radius={[0, 0, 0, 0]} barSize={24} />
+                                <Bar dataKey="roza" name={t('roza')} stackId="a" fill="#10b981" radius={[0, 0, 0, 0]} />
+                                <Bar dataKey="quran" name={t('quran')} stackId="a" fill="#f59e0b" radius={[0, 0, 0, 0]} />
+                                <Bar dataKey="others" name={t('others')} stackId="a" fill="#a855f7" radius={[6, 6, 0, 0]} />
+                            </BarChart>
                         </ResponsiveContainer>
                     </div>
                 </div>
 
-                <div className="lg:col-span-4 grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-1 gap-3 sm:gap-4">
+                <div className="lg:col-span-4 grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-4">
                     <PremiumStat icon={Flame} value={stats?.currentStreak || 0} unit={language === 'bn' ? 'দিনের স্ট্রিক' : 'Day Streak'} color="orange" />
                     <PremiumStat icon={Star} value={stats?.perfectDays || 0} unit={language === 'bn' ? 'পূর্ণাঙ্গ দিন' : 'Perfect Days'} color="emerald" />
                     <PremiumStat icon={BookOpen} value={stats?.totalQuranPages || 0} unit={language === 'bn' ? 'পৃষ্ঠা খতম' : 'Quran Pages'} color="amber" />
@@ -198,14 +221,14 @@ const CalendarView = () => {
                     <div className="space-y-6">
                         {stats?.categoryData.map((item, idx) => (
                             <div key={idx} className="group">
-                                <div className="flex justify-between items-center mb-2 px-2">
-                                    <div className="flex items-center gap-3">
-                                        <div className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors" style={{ backgroundColor: `${item.color}15`, color: item.color }}>
-                                            <item.icon size={16} />
+                                <div className="flex justify-between items-center mb-2 px-1">
+                                    <div className="flex items-center gap-2 sm:gap-3">
+                                        <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center transition-colors" style={{ backgroundColor: `${item.color}15`, color: item.color }}>
+                                            <item.icon size={14} className="sm:size-16" />
                                         </div>
-                                        <span className="font-bold text-slate-700">{item.name}</span>
+                                        <span className="font-bold text-slate-700 text-sm sm:text-base">{item.name}</span>
                                     </div>
-                                    <span className="font-black text-slate-900">{item.value}</span>
+                                    <span className="font-black text-slate-900 text-sm sm:text-base">{item.value}</span>
                                 </div>
                                 <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
                                     <div
@@ -279,7 +302,7 @@ const PremiumStat = ({ icon: Icon, value, unit, color }) => {
     };
 
     return (
-        <div className="card group !p-6 flex flex-row items-center justify-between border-transparent">
+        <div className="card group !p-5 sm:!p-6 flex flex-row items-center justify-between border-transparent">
             <div>
                 <p className="text-slate-400 text-xs font-bold uppercase tracking-widest mb-1">{unit}</p>
                 <h4 className="text-4xl font-black text-slate-900 group-hover:scale-110 transition-transform origin-left">{value}</h4>
