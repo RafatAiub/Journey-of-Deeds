@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useApp } from '../App';
 import { translations } from '../utils/language';
-import { RotateCcw } from 'lucide-react';
+import { RotateCcw, Sparkles } from 'lucide-react';
 import ConfirmModal from './ConfirmModal';
 import SawabBadge from './SawabBadge';
 import { getSawab } from '../data/sawabData';
@@ -19,9 +19,9 @@ const DhikrCounters = ({ dhikrData, onUpdate }) => {
     const [showResetConfirm, setShowResetConfirm] = useState(false);
 
     const counters = [
-        { key: 'subhanallah', label: t('subhanallah'), color: 'emerald', icon: '✨' },
+        { key: 'subhanallah', label: t('subhanallah'), color: 'emerald', icon: '💎' },
         { key: 'alhamdulillah', label: t('alhamdulillah'), color: 'teal', icon: '🤲' },
-        { key: 'allahuakbar', label: t('allahuakbar'), color: 'blue', icon: '☝️' },
+        { key: 'allahuakbar', label: t('allahuakbar'), color: 'blue', icon: '🕋' },
     ];
 
     const handleUpdate = (key, delta) => {
@@ -131,12 +131,19 @@ const TasbihCard = ({ label, count, color, icon, onUpdate, onManual, language, s
                 <span className="text-xl sm:text-2xl drop-shadow-sm">{icon}</span>
                 <h4 className="text-xs sm:text-sm font-black text-slate-900 group-hover:text-emerald-600 transition-colors uppercase tracking-tight">{label}</h4>
             </div>
-            {/* Sawab info */}
-            {count > 0 && sawabKey && (() => {
+            {sawabKey && (() => {
                 const s = getSawab(sawabKey, language);
-                return s && (
-                    <div className="mb-3 px-1">
-                        <SawabBadge reward={s.reward} source={s.source} color={color} compact />
+                if (!s) return null;
+
+                return (
+                    <div className="mb-3 px-1 animate-fade-in">
+                        <SawabBadge
+                            reward={s.reward}
+                            source={s.source}
+                            detail={s.detail}
+                            color={color}
+                            compact={false}
+                        />
                     </div>
                 );
             })()}
@@ -175,7 +182,6 @@ const TasbihCard = ({ label, count, color, icon, onUpdate, onManual, language, s
                     <span className="text-xs font-black uppercase tracking-widest opacity-60 group-hover/btn:opacity-100 transition-opacity">
                         {language === 'bn' ? 'ট্যাপ করুন' : 'Tap to count'}
                     </span>
-                    <span className="text-2xl sm:text-3xl">🤲</span>
                 </button>
             </div>
         </div>
