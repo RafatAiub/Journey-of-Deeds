@@ -35,15 +35,15 @@
 /**
  * 30-Day Quran + Taraweeh Attraction System
  * * Plan: 
- * - Days 1-6: 1.5 juz/day (intensive) -> Ends at Juz 9
- * - Days 7-27: 1 juz/day (steady) -> Ends at Juz 30
- * - Days 28-30: buffer/revision/Eid prep
+ * - Days 0-5: 1.5 juz/day (intensive) -> Ends at Juz 9
+ * - Days 6-26: 1 juz/day (steady) -> Ends at Juz 30
+ * - Days 27-29: buffer/revision/Eid prep
  * * @type {TaraweehDay[]}
  */
 export const taraweehPlan = [
-    // ═══════════════ PHASE 1: INTENSIVE (Days 1-6, 1.5 juz/day) ═══════════════
+    // ═══════════════ PHASE 1: INTENSIVE (Days 0-5, 1.5 juz/day) ═══════════════
     {
-        day: 1, juz: 'Juz 1 to mid-Juz 2', hizbRange: '1-3', phase: 'intensive',
+        day: 0, juz: 'Juz 1 to mid-Juz 2', hizbRange: '1-3', phase: 'intensive',
         themes: {
             bn: ['হেদায়েতের সূচনা', 'তাকওয়ার আহ্বান', 'বনী ইসরাইলের শিক্ষা'],
             en: ['Beginning of Guidance', 'Call to Taqwa', 'Lessons from Bani Israel']
@@ -75,7 +75,7 @@ export const taraweehPlan = [
         uxTask: { bn: '৩টি থিম + ৩টি শব্দ জানুন; তারাবীহ শেষে ১টি প্রশ্নের উত্তর দিন', en: 'Learn 3 themes + 3 words; answer 1 question after Taraweeh' }
     },
     {
-        day: 2, juz: 'mid-Juz 2 to Juz 3', hizbRange: '4-6', phase: 'intensive',
+        day: 1, juz: 'mid-Juz 2 to Juz 3', hizbRange: '4-6', phase: 'intensive',
         themes: {
             bn: ['কিবলা পরিবর্তন', 'সবরের নির্দেশ', 'ব্যয়ের নীতি'],
             en: ['Change of Qiblah', 'Command of Patience', 'Principles of Spending']
@@ -107,7 +107,7 @@ export const taraweehPlan = [
         uxTask: { bn: 'আজ রাতের পড়ার ১টি আয়াতের বাংলা অর্থ পড়ুন', en: 'Read Bengali meaning of 1 ayah from tonight\'s juz' }
     },
     {
-        day: 3, juz: 'Juz 4 to mid-Juz 5', hizbRange: '7-9', phase: 'intensive',
+        day: 2, juz: 'Juz 4 to mid-Juz 5', hizbRange: '7-9', phase: 'intensive',
         themes: {
             bn: ['আলে ইমরানের পরিবার', 'উহুদের শিক্ষা', 'ঐক্যের আহ্বান'],
             en: ['Family of Imran', 'Lessons from Uhud', 'Call for Unity']
@@ -139,7 +139,7 @@ export const taraweehPlan = [
         uxTask: { bn: 'তারাবীহ শেষে ১ বাক্যে "আজ কী বুঝলাম" লিখুন', en: 'After Taraweeh, write "What I understood" in 1 sentence' }
     },
     {
-        day: 4, juz: 'mid-Juz 5 to Juz 6', hizbRange: '10-12', phase: 'intensive',
+        day: 3, juz: 'mid-Juz 5 to Juz 6', hizbRange: '10-12', phase: 'intensive',
         themes: {
             bn: ['নারীর অধিকার', 'এতিমের সম্পদ', 'ন্যায়বিচার'],
             en: ['Women\'s Rights', 'Orphans\' Wealth', 'Justice']
@@ -171,7 +171,7 @@ export const taraweehPlan = [
         uxTask: { bn: '৩টি শব্দের মধ্যে ১টি বেছে "আজ ব্যবহার করবো"', en: 'Choose 1 of 3 words & commit to using it today' }
     },
     {
-        day: 5, juz: 'Juz 7 to mid-Juz 8', hizbRange: '13-15', phase: 'intensive',
+        day: 4, juz: 'Juz 7 to mid-Juz 8', hizbRange: '13-15', phase: 'intensive',
         themes: {
             bn: ['মায়িদা—চুক্তির বিধান', 'হালাল-হারাম', 'ইবরাহিমের পরীক্ষা'],
             en: ['Maidah—Laws of Covenant', 'Halal & Haram', 'Trial of Ibrahim']
@@ -203,7 +203,7 @@ export const taraweehPlan = [
         uxTask: { bn: '১টি দোয়া কপি/সেভ করুন', en: 'Copy/save 1 dua' }
     },
     {
-        day: 6, juz: 'mid-Juz 8 to Juz 9', hizbRange: '16-18', phase: 'intensive',
+        day: 5, juz: 'mid-Juz 8 to Juz 9', hizbRange: '16-18', phase: 'intensive',
         themes: {
             bn: ['আনআম—তাওহিদের যুক্তি', 'আরাফ—আদম ও ইবলিস', 'পূর্ববর্তী উম্মতদের শিক্ষা'],
             en: ['An\'am—Arguments for Tawhid', 'A\'raf—Adam & Iblis', 'Lessons from Past Nations']
@@ -235,9 +235,9 @@ export const taraweehPlan = [
         uxTask: { bn: 'আজকের থিম → ১টি ছোট আমল', en: 'Today\'s theme → 1 small deed' }
     },
 
-    // ═══════════════ PHASE 2: STEADY (Days 7-27, 1 juz/day) ═══════════════
+    // ═══════════════ PHASE 2: STEADY (Days 6-26, 1 juz/day) ═══════════════
     {
-        day: 7, juz: '10', phase: 'steady',
+        day: 6, juz: '10', phase: 'steady',
         themes: {
             bn: ['আনফাল—বদরের যুদ্ধ', 'তাওবা—মুনাফিকদের চরিত্র', 'আল্লাহর সাহায্য'],
             en: ['Anfal—Battle of Badr', 'Tawbah—Traits of Hypocrites', 'Allah\'s Help']
@@ -266,7 +266,7 @@ export const taraweehPlan = [
         uxTask: { bn: '৫ মিনিটে ১ প্যারা সারাংশ + ১টি হাদিস', en: '5 min: 1 paragraph summary + 1 hadith' }
     },
     {
-        day: 8, juz: '11', phase: 'steady',
+        day: 7, juz: '11', phase: 'steady',
         themes: {
             bn: ['তাওবা—সদকার ফজিলত', 'ইউনুসের কাহিনী', 'ঈমানের পরীক্ষা'],
             en: ['Tawbah—Virtue of Charity', 'Story of Yunus', 'Tests of Faith']
@@ -295,7 +295,7 @@ export const taraweehPlan = [
         uxTask: { bn: '১টি আয়াত—বাংলা অর্থ + ১টি টেকঅ্যাওয়ে', en: '1 ayah meaning + 1 takeaway' }
     },
     {
-        day: 9, juz: '12', phase: 'steady',
+        day: 8, juz: '12', phase: 'steady',
         themes: {
             bn: ['হুদের কাহিনী', 'ইউসুফের কাহিনীর সূচনা', 'ইস্তেগফারের শক্তি'],
             en: ['Story of Hud', 'Beginning of Yusuf\'s Story', 'Power of Istighfar']
@@ -324,7 +324,7 @@ export const taraweehPlan = [
         uxTask: { bn: 'শুনে ট্যাপ: ৩টি থিমের কোনটা বেশি লাগলো?', en: 'Listen & tap: which of 3 themes resonated?' }
     },
     {
-        day: 10, juz: '13', phase: 'steady',
+        day: 9, juz: '13', phase: 'steady',
         themes: {
             bn: ['ইউসুফের কাহিনী—ক্ষমা', 'রাদ—আল্লাহর নিদর্শন', 'অন্তরের প্রশান্তি'],
             en: ['Yusuf—Forgiveness', 'Ra\'d—Signs of Allah', 'Tranquility of Heart']
@@ -353,7 +353,7 @@ export const taraweehPlan = [
         uxTask: { bn: 'তারাবীহ-পর ২ মিনিট রিফ্লেকশন', en: '2 min post-Taraweeh reflection' }
     },
     {
-        day: 11, juz: '14', phase: 'steady',
+        day: 10, juz: '14', phase: 'steady',
         themes: {
             bn: ['ইবরাহিমের দোয়া', 'হিজর—শয়তানের চক্রান্ত', 'নাহল—আল্লাহর নিয়ামত'],
             en: ['Ibrahim\'s Dua', 'Hijr—Satan\'s Plot', 'Nahl—Allah\'s Blessings']
@@ -382,7 +382,7 @@ export const taraweehPlan = [
         uxTask: { bn: 'আজকের ৩টি শব্দের ১টি নিয়ে দোয়া করুন', en: 'Make dua using 1 of 3 keywords' }
     },
     {
-        day: 12, juz: '15', phase: 'steady',
+        day: 11, juz: '15', phase: 'steady',
         themes: {
             bn: ['বনী ইসরাইল—ইসরা ও মিরাজ', 'কাহফ—৪টি মহান কাহিনী', 'দুনিয়ার পরীক্ষা'],
             en: ['Bani Israel—Isra & Miraj', 'Kahf—4 Great Stories', 'Tests of Dunya']
@@ -411,7 +411,7 @@ export const taraweehPlan = [
         uxTask: { bn: 'আজ কী কঠিন লাগলো—১ বাক্যে লিখুন', en: 'Write what felt difficult in 1 sentence' }
     },
     {
-        day: 13, juz: '16', phase: 'steady',
+        day: 12, juz: '16', phase: 'steady',
         themes: {
             bn: ['কাহফ—জুলকারনাইন', 'মারিয়ম—ঈসা ও ইবরাহিম', 'ত্বহা—মূসার কাহিনী'],
             en: ['Kahf—Dhul-Qarnayn', 'Maryam—Isa & Ibrahim', 'Taha—Story of Musa']
@@ -440,7 +440,7 @@ export const taraweehPlan = [
         uxTask: { bn: '১টি শব্দের অর্থ মনে করার চেষ্টা করুন', en: 'Try to remember meaning of 1 word' }
     },
     {
-        day: 14, juz: '17', phase: 'steady',
+        day: 13, juz: '17', phase: 'steady',
         themes: {
             bn: ['আম্বিয়া—নবীদের কাহিনী', 'হজ—ইবাদতের বিধান', 'কুরবানির দর্শন'],
             en: ['Anbiya—Stories of Prophets', 'Hajj—Worship Rulings', 'Philosophy of Sacrifice']
@@ -469,7 +469,7 @@ export const taraweehPlan = [
         uxTask: { bn: 'আজ রাতের পড়া—১টি থিম পরিবারকে বলুন', en: 'Share 1 theme with family' }
     },
     {
-        day: 15, juz: '18', phase: 'steady',
+        day: 14, juz: '18', phase: 'steady',
         themes: {
             bn: ['মুমিনুন—সফল মুমিনের গুণ', 'নূর—পর্দা ও শালীনতা', 'আল্লাহর নূর'],
             en: ['Mu\'minun—Traits of Successful Believers', 'Nur—Modesty & Hijab', 'Light of Allah']
@@ -498,7 +498,7 @@ export const taraweehPlan = [
         uxTask: { bn: 'প্রোগ্রেস চেক: ১৫ দিনে কত%?', en: 'Progress check: what % in 15 days?' }
     },
     {
-        day: 16, juz: '19', phase: 'steady',
+        day: 15, juz: '19', phase: 'steady',
         themes: {
             bn: ['ফুরকান—সত্য-মিথ্যার পার্থক্য', 'শুআরা—নবীদের সংগ্রাম', 'আল্লাহর বান্দাদের গুণ'],
             en: ['Furqan—Truth vs Falsehood', 'Shu\'ara—Prophets\' Struggle', 'Qualities of Allah\'s Servants']
@@ -527,7 +527,7 @@ export const taraweehPlan = [
         uxTask: { bn: 'আজকের পড়া—১টি আয়াত বুকমার্ক', en: 'Bookmark 1 ayah from today\'s juz' }
     },
     {
-        day: 17, juz: '20', phase: 'steady',
+        day: 16, juz: '20', phase: 'steady',
         themes: {
             bn: ['নামল—সুলাইমান ও পিঁপড়া', 'কাসাস—মূসার শৈশব', 'আল্লাহর কুদরত'],
             en: ['Naml—Sulaiman & Ant', 'Qasas—Musa\'s Childhood', 'Allah\'s Power']
@@ -556,7 +556,7 @@ export const taraweehPlan = [
         uxTask: { bn: 'মাইক্রো-তাফসির (২–৩ লাইন) পড়ুন', en: 'Read a 2-3 line micro-tafsir' }
     },
     {
-        day: 18, juz: '21', phase: 'steady',
+        day: 17, juz: '21', phase: 'steady',
         themes: {
             bn: ['আনকাবুত—পরীক্ষার দর্শন', 'রুম—সভ্যতার উত্থান-পতন', 'লুকমানের উপদেশ'],
             en: ['Ankabut—Philosophy of Tests', 'Rum—Rise & Fall of Civilizations', 'Luqman\'s Advice']
@@ -585,7 +585,7 @@ export const taraweehPlan = [
         uxTask: { bn: 'আজকের শব্দ: ১টি শব্দ-কার্ড', en: 'Today\'s word: 1 word-card' }
     },
     {
-        day: 19, juz: '22', phase: 'steady',
+        day: 18, juz: '22', phase: 'steady',
         themes: {
             bn: ['সাজদা—সৃষ্টির পর্যায়', 'আহযাব—নবীর পরিবার', 'আমানত ও দায়িত্ব'],
             en: ['Sajdah—Stages of Creation', 'Ahzab—Prophet\'s Household', 'Trust & Responsibility']
@@ -614,7 +614,7 @@ export const taraweehPlan = [
         uxTask: { bn: 'শুনে ট্যাপ: রহমত/সবর/তাওবা থিম', en: 'Listen & tap: mercy/patience/repentance theme' }
     },
     {
-        day: 20, juz: '23', phase: 'steady',
+        day: 19, juz: '23', phase: 'steady',
         themes: {
             bn: ['সাবা—কৃতজ্ঞতা ও অকৃতজ্ঞতা', 'ফাতির—সৃষ্টির রহস্য', 'ইয়াসিন—হৃদয়ের সূরা'],
             en: ['Saba—Gratitude & Ingratitude', 'Fatir—Mysteries of Creation', 'Yasin—Heart of Quran']
@@ -643,7 +643,7 @@ export const taraweehPlan = [
         uxTask: { bn: 'তারাবীহ শেষে: ১ জনের জন্য দোয়া লিখুন', en: 'After Taraweeh: write dua for 1 person' }
     },
     {
-        day: 21, juz: '24', phase: 'steady',
+        day: 20, juz: '24', phase: 'steady',
         themes: {
             bn: ['সাফফাত—ফেরেশতাদের ইবাদত', 'সাদ—দাউদের তাওবা', 'জুমার—তাওহিদের সারাংশ'],
             en: ['Saffat—Angels\' Worship', 'Sad—Dawud\'s Repentance', 'Zumar—Essence of Tawhid']
@@ -672,7 +672,7 @@ export const taraweehPlan = [
         uxTask: { bn: 'আজকে ১টি সদকা ট্র্যাক', en: 'Track 1 act of sadaqah today' }
     },
     {
-        day: 22, juz: '25', phase: 'steady',
+        day: 21, juz: '25', phase: 'steady',
         themes: {
             bn: ['গাফির—ফেরাউনের মুমিন', 'ফুসসিলাত—কুরআনের অলৌকিকতা', 'শূরা—পরামর্শের গুরুত্ব'],
             en: ['Ghafir—Pharaoh\'s Believer', 'Fussilat—Miracle of Quran', 'Shura—Importance of Consultation']
@@ -701,7 +701,7 @@ export const taraweehPlan = [
         uxTask: { bn: '"লাস্ট ১০ নাইটস মোড অন" (ফোকাস টগল)', en: '"Last 10 Nights Mode ON" (focus toggle)' }
     },
     {
-        day: 23, juz: '26', phase: 'steady',
+        day: 22, juz: '26', phase: 'steady',
         themes: {
             bn: ['আহকাফ—পিতামাতার হক', 'মুহাম্মদ—জিহাদের বিধান', 'ফাতহ—বিজয়ের প্রতিশ্রুতি'],
             en: ['Ahqaf—Rights of Parents', 'Muhammad—Rules of Jihad', 'Fath—Promise of Victory']
@@ -730,7 +730,7 @@ export const taraweehPlan = [
         uxTask: { bn: 'আজকের পড়া—১টি আয়াত দোয়া হিসেবে পড়ুন', en: 'Read 1 ayah as a dua' }
     },
     {
-        day: 24, juz: '27', phase: 'steady',
+        day: 23, juz: '27', phase: 'steady',
         themes: {
             bn: ['যারিয়াত—আল্লাহর রিজক', 'তুর—নবীর সান্ত্বনা', 'নাজম ও কামার—কিয়ামতের ভয়াবহতা'],
             en: ['Dhariyat—Allah\'s Provision', 'Tur—Consoling the Prophet', 'Najm & Qamar—Day of Judgment']
@@ -759,7 +759,7 @@ export const taraweehPlan = [
         uxTask: { bn: '২ মিনিট: "আমি কিসে বদলাচ্ছি?"', en: '2 min: "How am I changing?"' }
     },
     {
-        day: 25, juz: '28', phase: 'steady',
+        day: 24, juz: '28', phase: 'steady',
         themes: {
             bn: ['রাহমান—আল্লাহর নিয়ামতের বর্ণনা', 'ওয়াকিয়া—তিন শ্রেণী', 'হাদিদ—দুনিয়ার প্রকৃতি'],
             en: ['Rahman—Blessings of Allah', 'Waqi\'ah—Three Groups', 'Hadid—Nature of Dunya']
@@ -788,7 +788,7 @@ export const taraweehPlan = [
         uxTask: { bn: 'ডিসট্র্যাকশন চেক: আজ কী কমালাম?', en: 'Distraction check: what did I reduce today?' }
     },
     {
-        day: 26, juz: '29', phase: 'steady',
+        day: 25, juz: '29', phase: 'steady',
         themes: {
             bn: ['হাশর—আল্লাহর নামসমূহ', 'মুমতাহিনা—বন্ধুত্বের সীমানা', 'তালাক ও তাহরিম—পারিবারিক বিধান'],
             en: ['Hashr—Names of Allah', 'Mumtahina—Boundaries of Friendship', 'Family Laws']
@@ -817,7 +817,7 @@ export const taraweehPlan = [
         uxTask: { bn: 'আজ রাতের থিম: ক্ষমা/মমতা/বিচার', en: 'Tonight\'s theme: forgiveness/mercy/judgment' }
     },
     {
-        day: 27, juz: '30', phase: 'steady',
+        day: 26, juz: '30', phase: 'steady',
         themes: {
             bn: ['মুলক—আল্লাহর রাজত্ব', 'জিন থেকে নাস পর্যন্ত—ছোট সূরাগুলোর শিক্ষা', 'কুরআন খতম!'],
             en: ['Mulk—Allah\'s Sovereignty', 'Jinn to Nas—Lessons of Short Surahs', 'Quran Khatm!']
@@ -846,9 +846,9 @@ export const taraweehPlan = [
         uxTask: { bn: 'খতম টাচপয়েন্ট + শোকর রিফ্লেকশন', en: 'Khatm touchpoint + gratitude reflection' }
     },
 
-    // ═══════════════ PHASE 3: BUFFER (Days 28-30, revision/catch-up) ═══════════════
+    // ═══════════════ PHASE 3: BUFFER (Days 27-29, revision/catch-up) ═══════════════
     {
-        day: 28, juz: 'buffer', phase: 'buffer',
+        day: 27, juz: 'buffer', phase: 'buffer',
         themes: {
             bn: ['রিভিশন/ক্যাচ-আপ', 'লাইলাতুল কদর অনুসন্ধান', 'দোয়া ও কিয়ামের রাত'],
             en: ['Revision/Catch-up', 'Seeking Laylatul Qadr', 'Night of Dua & Qiyam']
@@ -877,7 +877,7 @@ export const taraweehPlan = [
         uxTask: { bn: 'লাস্ট ৩ নাইটস—দোয়া/কিয়াম অগ্রাধিকার', en: 'Last 3 nights—dua/qiyam priority' }
     },
     {
-        day: 29, juz: 'review', phase: 'buffer',
+        day: 28, juz: 'review', phase: 'buffer',
         themes: {
             bn: ['প্রিয় আয়াত রিভিউ', 'রমজানের শিক্ষা সংকলন', 'হৃদয়ে গেঁথে যাওয়া আয়াত'],
             en: ['Review Favorite Ayahs', 'Compile Ramadan Lessons', 'Ayahs Etched in Heart']
@@ -906,7 +906,7 @@ export const taraweehPlan = [
         uxTask: { bn: '"আমি যে আয়াতগুলো রাখবো" তালিকা', en: '"Ayahs I\'ll keep" list' }
     },
     {
-        day: 30, juz: 'eid-prep', phase: 'buffer',
+        day: 29, juz: 'eid-prep', phase: 'buffer',
         themes: {
             bn: ['ঈদের প্রস্তুতি', 'রমজান-পরবর্তী পরিকল্পনা', 'ধারাবাহিকতার সংকল্প'],
             en: ['Eid Preparation', 'Post-Ramadan Plan', 'Commitment to Continuity']
@@ -945,7 +945,7 @@ export const taraweehPlan = [
  */
 export const getTaraweehDay = (dayNumber) => {
     if (dayNumber < 1 || dayNumber > 30) return null;
-    return taraweehPlan.find(d => d.day === dayNumber) || null;
+    return taraweehPlan.find(d => d.day === (dayNumber - 1)) || null;
 };
 
 /**
@@ -957,16 +957,16 @@ export const getTaraweehDay = (dayNumber) => {
 export const getPhaseInfo = (phase, language = 'bn') => {
     const phases = {
         intensive: {
-            bn: { label: 'মনোযোগ সপ্তাহ', desc: 'দিন ১–৬ • ১.৫ পারা/দিন', emoji: '🔥', color: 'orange' },
-            en: { label: 'Intensive Week', desc: 'Day 1–6 • 1.5 juz/day', emoji: '🔥', color: 'orange' }
+            bn: { label: 'মনোযোগ সপ্তাহ', desc: 'দিন ০–৫ • ১.৫ পারা/দিন', emoji: '🔥', color: 'orange' },
+            en: { label: 'Intensive Week', desc: 'Day 0–5 • 1.5 juz/day', emoji: '🔥', color: 'orange' }
         },
         steady: {
-            bn: { label: 'স্থিতিশীল', desc: 'দিন ৭–২৭ • ১ পারা/দিন', emoji: '🌊', color: 'blue' },
-            en: { label: 'Steady Pace', desc: 'Day 7–27 • 1 juz/day', emoji: '🌊', color: 'blue' }
+            bn: { label: 'স্থিতিশীল', desc: 'দিন ৬–২৬ • ১ পারা/দিন', emoji: '🌊', color: 'blue' },
+            en: { label: 'Steady Pace', desc: 'Day 6–26 • 1 juz/day', emoji: '🌊', color: 'blue' }
         },
         buffer: {
-            bn: { label: 'বাফার/রিভিশন', desc: 'দিন ২৮–৩০ • রিভিউ ও ঈদ প্রস্তুতি', emoji: '✨', color: 'purple' },
-            en: { label: 'Buffer/Revision', desc: 'Day 28–30 • Review & Eid prep', emoji: '✨', color: 'purple' }
+            bn: { label: 'বাফার/রিভিশন', desc: 'দিন ২৭–২৯ • রিভিউ ও ঈদ প্রস্তুতি', emoji: '✨', color: 'purple' },
+            en: { label: 'Buffer/Revision', desc: 'Day 27–29 • Review & Eid prep', emoji: '✨', color: 'purple' }
         }
     };
     return phases[phase]?.[language] || phases.steady[language];
@@ -981,10 +981,11 @@ export const getJuzProgress = (dayNumber) => {
     if (dayNumber <= 0) return { completed: 0, total: 30, percent: 0 };
 
     let completed;
-    if (dayNumber <= 6) {
-        completed = Math.min(dayNumber * 1.5, 9);
-    } else if (dayNumber <= 27) {
-        completed = 9 + (dayNumber - 6);
+    const idx = dayNumber - 1;
+    if (idx <= 5) {
+        completed = Math.min((idx + 1) * 1.5, 9);
+    } else if (idx <= 26) {
+        completed = 9 + (idx - 5);
     } else {
         completed = 30;
     }
