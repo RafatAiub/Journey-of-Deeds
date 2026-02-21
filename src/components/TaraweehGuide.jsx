@@ -7,7 +7,7 @@ import { getSawab } from '../data/sawabData';
 import { useToast } from './Toast';
 import {
     Moon, BookOpen, Sparkles, CheckCircle, ChevronDown, ChevronUp,
-    Target, MessageCircle, Pen, Star, Flame, Heart
+    Target, MessageCircle, Pen, Star, Flame, Heart, Calendar as CalendarIcon
 } from 'lucide-react';
 
 /**
@@ -68,63 +68,103 @@ const TaraweehGuide = ({ ramadanDay, taraweehData, tarawihRakats, onUpdate, onTa
     const juzSummary = dayPlan.juzSummary ? (dayPlan.juzSummary[lang] || dayPlan.juzSummary.en) : null;
     const extraAyats = dayPlan.extraAyats || [];
 
-    const phaseColors = {
-        intensive: { bg: 'from-orange-500 to-amber-600', badge: 'bg-orange-100 text-orange-700', border: 'border-orange-200' },
-        steady: { bg: 'from-indigo-500 to-blue-600', badge: 'bg-blue-100 text-blue-700', border: 'border-blue-200' },
-        buffer: { bg: 'from-purple-500 to-violet-600', badge: 'bg-purple-100 text-purple-700', border: 'border-purple-200' }
+    const phaseStyles = {
+        intensive: {
+            header: 'from-amber-900 via-orange-900 to-stone-900',
+            accent: 'text-amber-400',
+            badge: 'bg-amber-400/10 text-amber-300 border-amber-400/20',
+            glow: 'shadow-amber-500/20',
+            iconBg: 'bg-amber-500',
+            button: 'border-amber-100 bg-amber-50/50 hover:bg-amber-50',
+            pills: {
+                current: 'bg-amber-500 shadow-amber-200 ring-amber-300',
+                past: 'bg-amber-100 text-amber-700',
+                future: 'bg-stone-50 text-stone-300 border-stone-100'
+            }
+        },
+        steady: {
+            header: 'from-teal-950 via-emerald-900 to-slate-900',
+            accent: 'text-emerald-400',
+            badge: 'bg-emerald-400/10 text-emerald-300 border-emerald-400/20',
+            glow: 'shadow-emerald-500/20',
+            iconBg: 'bg-emerald-600',
+            button: 'border-emerald-100 bg-emerald-50/30 hover:bg-emerald-50',
+            pills: {
+                current: 'bg-emerald-500 shadow-emerald-200 ring-emerald-300',
+                past: 'bg-teal-100 text-teal-700',
+                future: 'bg-slate-50 text-slate-300 border-slate-100'
+            }
+        },
+        buffer: {
+            header: 'from-indigo-950 via-purple-900 to-slate-950',
+            accent: 'text-purple-300',
+            badge: 'bg-purple-400/10 text-purple-200 border-purple-400/20',
+            glow: 'shadow-purple-500/20',
+            iconBg: 'bg-purple-600',
+            button: 'border-purple-100 bg-purple-50/50 hover:bg-purple-50',
+            pills: {
+                current: 'bg-purple-600 shadow-purple-200 ring-purple-300',
+                past: 'bg-indigo-100 text-indigo-700',
+                future: 'bg-slate-50 text-slate-300 border-slate-100'
+            }
+        }
     };
-    const pc = phaseColors[dayPlan.phase] || phaseColors.steady;
+    const ps = phaseStyles[dayPlan.phase] || phaseStyles.steady;
 
     const tarawihSawab = getSawab('tarawih', language);
 
     return (
-        <section className="card !p-0 overflow-hidden border-transparent bg-white shadow-xl shadow-indigo-100/50">
+        <section className={`card !p-0 overflow-hidden border-transparent bg-white shadow-2xl ${ps.glow} transition-all duration-700`}>
 
-            {/* ── HEADER ── */}
-            <div className={`bg-gradient-to-r ${pc.bg} p-6 sm:p-8 text-white relative overflow-hidden`}>
-                <div className="absolute top-0 right-0 w-40 h-40 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2" />
-                <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2" />
+            {/* ── SACRED HEADER ── */}
+            <div className={`bg-gradient-to-br ${ps.header} p-7 sm:p-10 text-white relative overflow-hidden group`}>
+                {/* Decorative Holy Patterns */}
+                <div className="absolute inset-0 opacity-10 pointer-events-none">
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-white rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2" />
+                    <div className="absolute bottom-0 left-0 w-48 h-48 bg-white rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2" />
+                    <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100">
+                        <pattern id="holy-grid" x="0" y="0" width="10" height="10" patternUnits="userSpaceOnUse">
+                            <circle cx="1" cy="1" r="0.5" fill="white" fillOpacity="0.2" />
+                        </pattern>
+                        <rect x="0" y="0" width="100" height="100" fill="url(#holy-grid)" />
+                    </svg>
+                </div>
 
-                <div className="relative z-10 flex items-start justify-between gap-4">
-                    <div>
-                        <div className="flex items-center gap-2 mb-2">
-                            <Moon className="w-5 h-5" />
-                            <h2 className="text-xl sm:text-2xl font-black tracking-tight">{t('taraweehGuide')}</h2>
+                <div className="relative z-10 flex flex-col sm:flex-row items-center sm:items-start justify-between gap-6">
+                    <div className="text-center sm:text-left">
+                        <div className="flex items-center justify-center sm:justify-start gap-3 mb-3">
+                            <div className="w-10 h-10 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 shadow-inner group-hover:scale-110 transition-transform duration-500">
+                                <Moon className="w-5 h-5 text-amber-300 drop-shadow-[0_0_8px_rgba(252,211,77,0.5)]" />
+                            </div>
+                            <h2 className="text-2xl sm:text-3xl font-black tracking-tight drop-shadow-md">{t('taraweehGuide')}</h2>
                         </div>
-                        <div className="flex items-center gap-2 flex-wrap">
-                            <span className="px-3 py-1 rounded-full bg-white/20 text-xs font-bold backdrop-blur-sm">
+
+                        <div className="flex flex-col sm:flex-row items-center gap-3">
+                            <span className={`px-4 py-1.5 rounded-full backdrop-blur-xl border font-bold text-xs uppercase tracking-widest ${ps.badge} animate-pulse`}>
                                 {phaseInfo?.emoji} {phaseInfo?.label}
                             </span>
-                            <span className="text-white/70 text-xs font-medium">{phaseInfo?.desc}</span>
+                            <span className="text-white/60 text-[10px] sm:text-xs font-bold bg-black/20 px-3 py-1 rounded-lg backdrop-blur-sm">
+                                {phaseInfo?.desc}
+                            </span>
                         </div>
                     </div>
 
-                    {/* Juz Badge */}
-                    <div className="flex flex-col items-end gap-1 flex-shrink-0">
-                        <div className="min-h-[4.5rem] min-w-[5rem] px-5 py-3 rounded-3xl bg-white/20 backdrop-blur-md flex flex-col items-center justify-center shadow-xl border border-white/10 text-center">
-                            <span className="text-[10px] font-black text-white/70 uppercase tracking-widest mb-1.5 leading-none">
+                    {/* Juz Medallion */}
+                    <div className="relative group/juz">
+                        <div className="absolute inset-0 bg-white/20 rounded-[2.5rem] blur-xl group-hover/juz:bg-white/30 transition-all duration-500" />
+                        <div className="relative min-h-[5.5rem] min-w-[7rem] px-6 py-4 rounded-[2.5rem] bg-stone-900/40 backdrop-blur-2xl flex flex-col items-center justify-center shadow-2xl border-2 border-white/20 text-center ring-4 ring-white/5 mx-auto">
+                            <span className={`text-[10px] font-black uppercase tracking-[0.2em] mb-2 leading-none drop-shadow-sm ${ps.accent}`}>
                                 {t('tonightsJuz')}
                             </span>
                             <span className={`
-                                ${dayPlan.juz.length > 12 ? 'text-xs' : dayPlan.juz.length > 6 ? 'text-sm' : 'text-3xl'} 
-                                font-black leading-tight tracking-tight
+                                ${dayPlan.juz.length > 12 ? 'text-xs' : dayPlan.juz.length > 6 ? 'text-sm' : 'text-4xl'} 
+                                font-black leading-tight tracking-tighter text-white drop-shadow-lg
                             `}>
                                 {(() => {
                                     if (lang !== 'bn') return dayPlan.juz.replace(' to ', '–');
-
-                                    // Translate to Pure Bangla
                                     const bnNums = { '0': '০', '1': '১', '2': '২', '3': '৩', '4': '৪', '5': '৫', '6': '৬', '7': '৭', '8': '৮', '9': '৯' };
-                                    let juzBn = dayPlan.juz
-                                        .replace(/Juz/g, 'পারা')
-                                        .replace(/to/g, 'থেকে')
-                                        .replace(/mid-/g, 'অর্ধেক-')
-                                        .replace(/\d/g, m => bnNums[m]);
-
-                                    // Clean up common patterns for better readability in Bengali
-                                    if (juzBn.includes('অর্ধেক-পারা')) {
-                                        juzBn = juzBn.replace(/অর্ধেক-পারা (\S+)/g, 'পারা $1 (অর্ধেক)');
-                                    }
-
+                                    let juzBn = dayPlan.juz.replace(/Juz/g, 'পারা').replace(/to/g, 'থেকে').replace(/mid-/g, 'অর্ধেক-').replace(/\d/g, m => bnNums[m]);
+                                    if (juzBn.includes('অর্ধেক-পারা')) juzBn = juzBn.replace(/অর্ধেক-পারা (\S+)/g, 'পারা $1 (অর্ধেক)');
                                     return juzBn.replace(' থেকে ', '–');
                                 })()}
                             </span>
@@ -132,40 +172,45 @@ const TaraweehGuide = ({ ramadanDay, taraweehData, tarawihRakats, onUpdate, onTa
                     </div>
                 </div>
 
-                {/* Mini Progress Tracker */}
-                <div className="mt-8 relative z-10">
-                    <div className="flex items-center justify-between text-xs mb-1.5">
-                        <span className="font-bold text-white/80">{t('juzProgress')}</span>
-                        <span className="font-black">{juzProgress.completed}/{juzProgress.total}</span>
+                {/* Progress Bar with Glow */}
+                <div className="mt-10 relative z-10 px-2">
+                    <div className="flex items-center justify-between text-[10px] font-black uppercase tracking-widest mb-2 px-1">
+                        <span className="text-white/70">{t('juzProgress')}</span>
+                        <div className="flex items-center gap-2">
+                            <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
+                            <span className="text-emerald-300">{juzProgress.completed}/{juzProgress.total}</span>
+                        </div>
                     </div>
-                    <div className="h-2 bg-white/20 rounded-full overflow-hidden">
+                    <div className="h-2.5 bg-black/30 rounded-full p-0.5 overflow-hidden backdrop-blur-sm border border-white/5">
                         <div
-                            className="h-full bg-white/80 rounded-full transition-all duration-700"
+                            className="h-full bg-gradient-to-r from-emerald-400 to-teal-300 rounded-full transition-all duration-1000 shadow-[0_0_12px_rgba(52,211,153,0.5)]"
                             style={{ width: `${juzProgress.percent}%` }}
                         />
                     </div>
                 </div>
             </div>
 
-            <div className="p-5 sm:p-8 space-y-5">
+            <div className="p-6 sm:p-10 space-y-8 bg-gradient-to-b from-white to-slate-50/50">
 
-                {/* ── TARAWIH RAKAT SLIDER ── */}
-                <div className={`p-5 sm:p-6 rounded-2xl transition-all border-2 ${tarawihRakats > 0
-                    ? 'bg-indigo-50 border-indigo-100 shadow-inner'
-                    : 'bg-slate-50 border-slate-50'}`}>
-                    <div className="flex items-center justify-between mb-3">
-                        <div className="flex items-center gap-3">
-                            <span className="text-2xl">🕌</span>
+                {/* ── TARAWIH RAKAT CONTROLLER ── */}
+                <div className={`p-6 sm:p-8 rounded-[2.5rem] transition-all duration-500 border-2 ${tarawihRakats > 0
+                    ? 'bg-gradient-to-br from-indigo-50/50 to-white border-indigo-100 shadow-xl shadow-indigo-100/20'
+                    : 'bg-slate-50/40 border-slate-100/50'}`}>
+                    <div className="flex items-center justify-between mb-5">
+                        <div className="flex items-center gap-4">
+                            <div className={`w-14 h-14 rounded-2xl flex items-center justify-center text-3xl shadow-inner transition-all transform hover:rotate-12 ${tarawihRakats > 0 ? 'bg-indigo-100' : 'bg-slate-100'}`}>
+                                🕌
+                            </div>
                             <div>
-                                <h3 className="font-black text-slate-800 text-sm sm:text-base">{t('tarawih')}</h3>
-                                <p className="text-xs text-slate-400 font-medium">
+                                <h3 className="font-black text-slate-800 text-base sm:text-lg tracking-tight">{t('tarawih')}</h3>
+                                <p className="text-xs text-slate-400 font-bold uppercase tracking-wider mt-0.5">
                                     {tarawihRakats > 0
                                         ? `${tarawihRakats} ${t('rakats')}`
-                                        : (lang === 'bn' ? 'আজ রাতে তারাবীহ পড়েছেন?' : 'Did you pray Taraweeh tonight?')}
+                                        : (lang === 'bn' ? 'আজ রাতের ইবাদত' : 'Tonight\'s Worship')}
                                 </p>
                             </div>
                         </div>
-                        <div className={`w-14 h-14 rounded-2xl flex items-center justify-center font-black text-2xl ${tarawihRakats > 0 ? 'bg-indigo-500 text-white shadow-lg shadow-indigo-200' : 'bg-white text-slate-300 border-2 border-slate-100'}`}>
+                        <div className={`w-16 h-16 rounded-[2rem] flex items-center justify-center font-black text-4xl transition-all duration-500 ${tarawihRakats > 0 ? 'bg-indigo-600 text-white shadow-2xl shadow-indigo-200' : 'bg-white text-slate-300 border-2 border-slate-100'}`}>
                             {tarawihRakats}
                         </div>
                     </div>
@@ -176,96 +221,103 @@ const TaraweehGuide = ({ ramadanDay, taraweehData, tarawihRakats, onUpdate, onTa
                         onChange={(e) => {
                             const val = Number(e.target.value);
                             onTarawihUpdate(val);
-                            if (val > 0) showToast(language === 'bn' ? `${val} রাকাত তারাবীহ সেট করা হয়েছে! +১০ পয়েন্ট` : `Set ${val} Rakats! +10 progress pts`, 'success');
+                            if (val > 0) showToast(language === 'bn' ? `${val} রাকাত তারাবীহ সেট করা হয়েছে! মাশাআল্লাহ` : `Set ${val} Rakats! MashaAllah`, 'success');
                         }}
-                        className="w-full h-2 bg-indigo-200 rounded-lg appearance-none cursor-pointer accent-indigo-600 mb-2"
+                        className="w-full h-2.5 bg-indigo-100 rounded-lg appearance-none cursor-pointer accent-indigo-600 mb-2 shadow-inner"
                     />
-                    <div className="flex justify-between text-[10px] font-bold text-slate-300 mt-1 px-0.5">
+                    <div className="flex justify-between text-[11px] font-black text-slate-300 mt-2 px-1 tracking-widest">
                         <span>0</span><span>8</span><span>12</span><span>20</span>
                     </div>
 
                     {tarawihRakats > 0 && tarawihSawab && (
-                        <SawabBadge reward={tarawihSawab.reward} source={tarawihSawab.source} detail={tarawihSawab.detail} color="indigo" />
+                        <div className="mt-5 transform hover:scale-[1.02] transition-transform">
+                            <SawabBadge reward={tarawihSawab.reward} source={tarawihSawab.source} detail={tarawihSawab.detail} color="indigo" />
+                        </div>
                     )}
                 </div>
 
-                {/* ── UX TASK ── */}
-                <div className={`p-4 rounded-xl ${pc.badge} flex items-start gap-3`}>
-                    <Target className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                {/* ── DAILY MISSION ── */}
+                <div className={`p-5 rounded-3xl ${ps.badge} border flex items-center gap-4 hover:scale-[1.01] transition-all cursor-default`}>
+                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${ps.iconBg} text-white shadow-lg`}>
+                        <Target className="w-5 h-5" />
+                    </div>
                     <div>
-                        <p className="text-[10px] font-black uppercase tracking-widest mb-0.5 opacity-60">
-                            {lang === 'bn' ? 'আজকের টাস্ক' : 'Today\'s Task'}
+                        <p className="text-[10px] font-black uppercase tracking-[0.2em] mb-0.5 opacity-60">
+                            {lang === 'bn' ? 'আজকের লক্ষ্য' : 'Today\'s Mission'}
                         </p>
-                        <p className="text-xs sm:text-sm font-bold">{uxTask}</p>
+                        <p className="text-sm sm:text-base font-black text-slate-800 tracking-tight">{uxTask}</p>
                     </div>
                 </div>
 
-                {/* ── PREVIEW CARD ── */}
-                <div className="rounded-2xl border-2 border-indigo-100 overflow-hidden">
+                {/* ── PREVIEW INTERACTIVE ── */}
+                <div className="rounded-[2.5rem] border-2 border-slate-100 overflow-hidden bg-white hover:border-indigo-100 transition-all shadow-sm">
                     <button
                         onClick={() => {
                             setPreviewOpen(!previewOpen);
                             if (!data.previewSeen) handleUpdate('previewSeen', true);
                         }}
-                        className="w-full flex items-center justify-between p-4 sm:p-5 bg-indigo-50/50 hover:bg-indigo-50 transition-colors"
+                        className={`w-full flex items-center justify-between p-6 sm:p-7 transition-all ${previewOpen ? 'bg-indigo-50/30' : 'bg-white'}`}
                     >
-                        <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-xl bg-indigo-500 text-white flex items-center justify-center shadow-md shadow-indigo-200">
-                                <BookOpen className="w-5 h-5" />
+                        <div className="flex items-center gap-4">
+                            <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-lg transition-transform ${previewOpen ? 'bg-indigo-600 text-white rotate-6' : 'bg-indigo-100 text-indigo-600'}`}>
+                                <BookOpen className="w-6 h-6" />
                             </div>
                             <div className="text-left">
-                                <h3 className="font-black text-slate-800 text-sm">{t('tonightsPreview')}</h3>
-                                <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">
-                                    {lang === 'bn' ? '৫ মিনিটে জানুন' : '5 min overview'}
+                                <h3 className="font-black text-slate-800 text-base">{t('tonightsPreview')}</h3>
+                                <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.1em]">
+                                    {lang === 'bn' ? 'কুরআনের মূল থিম ও সারাংশ' : 'Quranic Themes & Summary'}
                                 </p>
                             </div>
                         </div>
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-3">
                             {data.previewSeen && (
-                                <CheckCircle className="w-4 h-4 text-emerald-500" />
+                                <div className="bg-emerald-100 p-1.5 rounded-full animate-fade-in">
+                                    <CheckCircle className="w-4 h-4 text-emerald-600" />
+                                </div>
                             )}
-                            {previewOpen ? <ChevronUp className="w-5 h-5 text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-400" />}
+                            {previewOpen ? <ChevronUp className="w-6 h-6 text-slate-300" /> : <ChevronDown className="w-6 h-6 text-slate-300" />}
                         </div>
                     </button>
 
                     {previewOpen && (
-                        <div className="p-4 sm:p-5 space-y-6 bg-white border-t border-indigo-50">
+                        <div className="p-6 sm:p-8 space-y-8 bg-white border-t border-slate-50 animate-fade-in">
 
-                            {/* Juz Summary */}
+                            {/* Juz Summary Medallion */}
                             {juzSummary && (
-                                <div className="p-4 rounded-2xl bg-indigo-50/50 border border-indigo-100/50">
-                                    <h4 className="text-[10px] font-black uppercase tracking-widest text-indigo-500 mb-2 flex items-center gap-1.5">
-                                        <Sparkles className="w-3.5 h-3.5" /> {t('juzSummaryLabel')}
+                                <div className="p-6 rounded-[2rem] bg-indigo-50/40 border-2 border-indigo-100/50 relative overflow-hidden">
+                                    <Sparkles className="absolute top-4 right-4 w-6 h-6 text-indigo-200 opacity-50" />
+                                    <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-500 mb-3 flex items-center gap-2">
+                                        <MessageCircle className="w-4 h-4" /> {t('juzSummaryLabel')}
                                     </h4>
-                                    <p className="text-xs sm:text-sm font-medium text-slate-700 leading-relaxed italic">
+                                    <p className="text-sm sm:text-base font-bold text-slate-700 leading-relaxed italic border-l-4 border-indigo-400 pl-4">
                                         "{juzSummary}"
                                     </p>
                                 </div>
                             )}
 
-                            {/* Themes */}
+                            {/* Interactive Themes Selection */}
                             <div>
-                                <div className="flex items-center justify-between mb-3">
-                                    <h4 className="text-[10px] font-black uppercase tracking-widest text-indigo-400 flex items-center gap-1.5">
-                                        <Flame className="w-3.5 h-3.5" /> {t('themes')}
+                                <div className="flex items-center justify-between mb-4">
+                                    <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-rose-500 flex items-center gap-2">
+                                        <Flame className="w-4 h-4" /> {t('themes')}
                                     </h4>
-                                    <span className="text-[10px] font-bold text-slate-400 bg-slate-50 px-2 py-0.5 rounded-full">
+                                    <div className="px-3 py-1 bg-rose-50 text-[10px] font-black text-rose-600 rounded-full border border-rose-100 uppercase tracking-widest">
                                         {t('themeFocusLabel')}
-                                    </span>
+                                    </div>
                                 </div>
-                                <div className="flex flex-wrap gap-2.5">
+                                <div className="flex flex-wrap gap-3">
                                     {themes.map((theme, i) => {
                                         const isSelected = data.selectedTheme === theme;
                                         return (
                                             <button
                                                 key={i}
                                                 onClick={() => handleUpdate('selectedTheme', isSelected ? '' : theme)}
-                                                className={`group flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs font-black transition-all duration-300 border-2 ${isSelected
-                                                    ? 'bg-indigo-500 text-white border-indigo-400 shadow-lg shadow-indigo-200 scale-105 active:scale-95'
-                                                    : 'bg-white text-slate-600 border-slate-100 hover:border-indigo-200 hover:bg-indigo-50/30 active:scale-95'
+                                                className={`group flex items-center gap-2 px-5 py-3 rounded-2xl text-xs font-black transition-all duration-300 border-2 ${isSelected
+                                                    ? 'bg-rose-500 text-white border-rose-400 shadow-xl shadow-rose-200 scale-105 active:scale-95'
+                                                    : 'bg-white text-slate-600 border-slate-100 hover:border-rose-200 hover:bg-rose-50/30 active:scale-95'
                                                     }`}
                                             >
-                                                {isSelected && <CheckCircle className="w-4 h-4 text-white" />}
+                                                {isSelected ? <CheckCircle className="w-4 h-4 text-white" /> : <div className="w-2 h-2 rounded-full bg-slate-200 group-hover:bg-rose-300" />}
                                                 <span>{theme}</span>
                                             </button>
                                         );
@@ -273,53 +325,65 @@ const TaraweehGuide = ({ ramadanDay, taraweehData, tarawihRakats, onUpdate, onTa
                                 </div>
                             </div>
 
-                            {/* Key Words */}
+                            {/* Keywords Grid */}
                             <div>
-                                <h4 className="text-[10px] font-black uppercase tracking-widest text-amber-500 mb-2 flex items-center gap-1.5">
-                                    <Star className="w-3.5 h-3.5" /> {t('keyWordsLabel')}
+                                <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-amber-600 mb-3 flex items-center gap-2">
+                                    <Star className="w-4 h-4" /> {t('keyWordsLabel')}
                                 </h4>
-                                <div className="flex gap-2">
+                                <div className="flex flex-wrap gap-2">
                                     {keyWords.map((word, i) => (
-                                        <span key={i} className="px-3 py-1.5 rounded-full bg-amber-50 text-amber-700 text-xs font-bold border border-amber-100">
+                                        <span key={i} className="px-4 py-2 rounded-xl bg-amber-50/50 text-amber-700 text-xs font-black border border-amber-100/50 shadow-sm">
                                             {word}
                                         </span>
                                     ))}
                                 </div>
                             </div>
 
-                            {/* Featured Ayah */}
-                            <div className="bg-gradient-to-br from-emerald-50/50 to-teal-50/50 rounded-2xl p-5 border border-emerald-100 relative overflow-hidden">
-                                <div className="absolute top-0 right-0 p-2 opacity-10">
-                                    <BookOpen className="w-12 h-12" />
+                            {/* Featured Ayah - High Design */}
+                            <div className="bg-stone-50 rounded-[2rem] p-7 border-2 border-stone-100 relative group/ayah">
+                                <div className="absolute top-0 right-0 p-5 opacity-[0.03] group-hover/ayah:scale-110 transition-transform">
+                                    <Moon className="w-24 h-24" />
                                 </div>
-                                <h4 className="text-[10px] font-black uppercase tracking-widest text-emerald-500 mb-3 flex items-center gap-1.5">
-                                    <BookOpen className="w-3.5 h-3.5" /> {t('featuredAyah')}
+                                <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-stone-400 mb-5 flex items-center gap-2">
+                                    {t('featuredAyah')}
                                 </h4>
-                                <p className="text-sm sm:text-base font-bold text-slate-800 leading-relaxed mb-3 relative z-10">
-                                    ❝ {ayah.text} ❞
-                                </p>
-                                <p className="text-[11px] font-black text-emerald-600">
-                                    — {ayah.surah} ({ayah.ayahNum})
-                                </p>
+                                <div className="relative z-10">
+                                    <p className="text-lg sm:text-xl font-serif font-bold text-stone-800 leading-snug mb-5 tracking-tight">
+                                        “{ayah.text}”
+                                    </p>
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-8 h-8 rounded-lg bg-stone-800 text-white flex items-center justify-center font-black text-[10px]">
+                                            📖
+                                        </div>
+                                        <p className="text-xs font-black text-stone-500 uppercase tracking-widest">
+                                            {ayah.surah} • {ayah.ayahNum}
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
 
-                            {/* Extra Ayats */}
+                            {/* Extra Ayats Accordion-style */}
                             {extraAyats.length > 0 && (
-                                <div>
-                                    <h4 className="text-[10px] font-black uppercase tracking-widest text-indigo-400 mb-3 flex items-center gap-1.5">
-                                        <Target className="w-3.5 h-3.5" /> {t('extraAyatsLabel')}
+                                <div className="pt-4">
+                                    <h4 className="text-[10px] font-black uppercase tracking-[0.1em] text-slate-400 mb-4 flex items-center gap-2 bg-slate-50 px-3 py-1.5 rounded-lg w-fit">
+                                        {t('extraAyatsLabel')}
                                     </h4>
-                                    <div className="space-y-3">
+                                    <div className="grid grid-cols-1 gap-4">
                                         {extraAyats.map((ex, i) => {
                                             const exAyah = ex[lang] || ex.en;
                                             return (
-                                                <div key={i} className="p-4 rounded-xl border border-slate-100 bg-slate-50/30 hover:bg-white transition-colors">
-                                                    <p className="text-xs sm:text-sm font-bold text-slate-700 mb-1.5">
-                                                        {exAyah.text}
-                                                    </p>
-                                                    <p className="text-[10px] font-bold text-slate-400">
-                                                        {exAyah.surah} ({exAyah.ayahNum})
-                                                    </p>
+                                                <div key={i} className="p-5 rounded-2xl border border-slate-100 bg-white hover:shadow-lg hover:shadow-indigo-50 transition-all group">
+                                                    <div className="flex items-start gap-3">
+                                                        <div className="w-2 h-2 rounded-full bg-indigo-200 mt-2 group-hover:bg-indigo-500 transition-colors" />
+                                                        <div>
+                                                            <p className="text-xs sm:text-sm font-bold text-slate-700 mb-2 leading-relaxed">
+                                                                {exAyah.text}
+                                                            </p>
+                                                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                                                                {exAyah.surah} • {exAyah.ayahNum}
+                                                            </p>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             );
                                         })}
@@ -327,68 +391,70 @@ const TaraweehGuide = ({ ramadanDay, taraweehData, tarawihRakats, onUpdate, onTa
                                 </div>
                             )}
 
-                            {/* Small Amol */}
-                            <div className="flex items-start gap-3 p-4 rounded-xl bg-rose-50 border border-rose-100">
-                                <Heart className="w-4 h-4 text-rose-500 flex-shrink-0 mt-0.5" />
-                                <div className="flex-1">
-                                    <h4 className="text-[10px] font-black uppercase tracking-widest text-rose-400 mb-1">{t('smallAmol')}</h4>
-                                    <p className="text-xs font-bold text-rose-700">{amol}</p>
+                            {/* Actionable Deed Section */}
+                            <div className="flex flex-col sm:flex-row items-center gap-4 p-6 rounded-[2rem] bg-rose-50 border-2 border-rose-100 shadow-xl shadow-rose-100/20">
+                                <div className="w-16 h-16 rounded-[1.5rem] bg-white flex items-center justify-center text-4xl shadow-inner flex-shrink-0 border border-rose-100">
+                                    ❤️
+                                </div>
+                                <div className="flex-1 text-center sm:text-left">
+                                    <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-rose-400 mb-1">{t('smallAmol')}</h4>
+                                    <p className="text-sm sm:text-base font-black text-rose-900 tracking-tight">{amol}</p>
                                 </div>
                                 <button
                                     onClick={(e) => { e.stopPropagation(); handleUpdate('amolDone', !data.amolDone); }}
-                                    className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${data.amolDone
-                                        ? 'bg-rose-500 text-white shadow-md shadow-rose-200'
+                                    className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all shadow-xl active:scale-95 ${data.amolDone
+                                        ? 'bg-rose-500 text-white shadow-rose-200'
                                         : 'bg-white border-2 border-rose-200 text-rose-300'}`}
                                 >
-                                    <CheckCircle className="w-5 h-5" />
+                                    <CheckCircle className="w-7 h-7" />
                                 </button>
                             </div>
                         </div>
                     )}
                 </div>
 
-                {/* ── REFLECT CARD ── (shows when tarawih > 0) */}
+                {/* ── REFLECTION HIGHLIGHT ── */}
                 {tarawihRakats > 0 && (
-                    <div className="rounded-2xl border-2 border-purple-100 overflow-hidden">
+                    <div className="rounded-[2.5rem] border-2 border-slate-100 overflow-hidden bg-white hover:border-purple-200 transition-all shadow-sm">
                         <button
                             onClick={() => setReflectOpen(!reflectOpen)}
-                            className="w-full flex items-center justify-between p-4 sm:p-5 bg-purple-50/50 hover:bg-purple-50 transition-colors"
+                            className={`w-full flex items-center justify-between p-6 sm:p-7 transition-all ${reflectOpen ? 'bg-purple-50/30' : 'bg-white'}`}
                         >
-                            <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 rounded-xl bg-purple-500 text-white flex items-center justify-center shadow-md shadow-purple-200">
-                                    <MessageCircle className="w-5 h-5" />
+                            <div className="flex items-center gap-4">
+                                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-lg transition-transform ${reflectOpen ? 'bg-purple-600 text-white -rotate-6' : 'bg-purple-100 text-purple-600'}`}>
+                                    <MessageCircle className="w-6 h-6" />
                                 </div>
                                 <div className="text-left">
-                                    <h3 className="font-black text-slate-800 text-sm">{t('reflectTitle')}</h3>
-                                    <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">
-                                        {lang === 'bn' ? 'তারাবীহের পর ২ মিনিট' : '2 min after Taraweeh'}
+                                    <h3 className="font-black text-slate-800 text-base">{t('reflectTitle')}</h3>
+                                    <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.1em]">
+                                        {lang === 'bn' ? 'তারাবীহের পর ২ মিনিট আক্ষেপ' : '2 min post-prayer reflection'}
                                     </p>
                                 </div>
                             </div>
-                            <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-3">
                                 {data.reflectionDone && <CheckCircle className="w-4 h-4 text-emerald-500" />}
-                                {reflectOpen ? <ChevronUp className="w-5 h-5 text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-400" />}
+                                {reflectOpen ? <ChevronUp className="w-6 h-6 text-slate-300" /> : <ChevronDown className="w-6 h-6 text-slate-300" />}
                             </div>
                         </button>
 
                         {reflectOpen && (
-                            <div className="p-4 sm:p-5 space-y-4 bg-white border-t border-purple-50">
+                            <div className="p-6 sm:p-8 space-y-6 bg-white border-t border-purple-50 animate-fade-in">
 
-                                {/* Reflection Question */}
+                                {/* Sacred Question */}
                                 <div>
-                                    <h4 className="text-[10px] font-black uppercase tracking-widest text-purple-400 mb-2 flex items-center gap-1.5">
-                                        <Sparkles className="w-3.5 h-3.5" /> {t('reflectionQuestion')}
+                                    <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-purple-400 mb-3 flex items-center gap-2">
+                                        <Pen className="w-4 h-4" /> {t('reflectionQuestion')}
                                     </h4>
-                                    <p className="text-sm font-bold text-purple-700 bg-purple-50 p-3 rounded-xl border border-purple-100 mb-3">
+                                    <p className="text-base font-black text-purple-950 bg-purple-50 p-5 rounded-[1.5rem] border border-purple-100 mb-5 relative group/q">
+                                        <Sparkles className="absolute -top-2 -right-2 w-6 h-6 text-purple-300 animate-pulse" />
                                         {reflQ}
                                     </p>
 
-                                    {/* Show Selected Theme as reminder */}
+                                    {/* Focus Reminder */}
                                     {data.selectedTheme && (
-                                        <div className="flex items-center gap-2 mb-4 p-3 bg-indigo-50/50 border border-indigo-100 rounded-xl">
-                                            <Flame className="w-4 h-4 text-indigo-500" />
-                                            <span className="text-xs font-black text-indigo-700 uppercase tracking-wide">{t('themeSelectionReflection')}</span>
-                                            <span className="px-2 py-0.5 bg-indigo-500 text-white text-[10px] font-black rounded-lg shadow-sm">{data.selectedTheme}</span>
+                                        <div className="flex items-center gap-3 mb-5 p-4 bg-slate-50 border-2 border-slate-100 rounded-2xl border-dotted font-bold text-xs text-slate-600">
+                                            <div className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse" />
+                                            {t('themeSelectionReflection')}: <span className="bg-indigo-600 text-white px-2 py-0.5 rounded-lg text-[10px] font-black">{data.selectedTheme}</span>
                                         </div>
                                     )}
 
@@ -397,21 +463,21 @@ const TaraweehGuide = ({ ramadanDay, taraweehData, tarawihRakats, onUpdate, onTa
                                         onChange={(e) => handleTextChange('reflectionNote', e.target.value)}
                                         onBlur={() => { if (data.reflectionNote.trim()) handleUpdate('reflectionDone', true); }}
                                         placeholder={t('reflectionNotePlaceholder')}
-                                        className="w-full p-3 rounded-xl border-2 border-purple-100 text-sm font-medium text-slate-700 placeholder:text-slate-300 focus:border-purple-300 focus:ring-2 focus:ring-purple-100 transition-all resize-none"
-                                        rows={2}
+                                        className="w-full p-4 rounded-2xl border-2 border-purple-100 text-sm font-bold text-slate-700 placeholder:text-slate-300 focus:border-purple-300 focus:ring-4 focus:ring-purple-100 transition-all resize-none shadow-inner"
+                                        rows={3}
                                     />
                                 </div>
 
-                                {/* Tomorrow's Niyyah */}
+                                {/* Next Day Intent */}
                                 <div>
-                                    <h4 className="text-[10px] font-black uppercase tracking-widest text-amber-500 mb-2 flex items-center gap-1.5">
-                                        <Pen className="w-3.5 h-3.5" /> {t('tomorrowNiyyah')}
+                                    <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-amber-500 mb-3 flex items-center gap-2">
+                                        <Flame className="w-4 h-4" /> {t('tomorrowNiyyah')}
                                     </h4>
                                     <textarea
                                         value={data.tomorrowNiyyah}
                                         onChange={(e) => handleTextChange('tomorrowNiyyah', e.target.value)}
                                         placeholder={t('niyyahPlaceholder')}
-                                        className="w-full p-3 rounded-xl border-2 border-amber-100 text-sm font-medium text-slate-700 placeholder:text-slate-300 focus:border-amber-300 focus:ring-2 focus:ring-amber-100 transition-all resize-none"
+                                        className="w-full p-4 rounded-2xl border-2 border-amber-100 text-sm font-bold text-slate-700 placeholder:text-slate-300 focus:border-amber-300 focus:ring-4 focus:ring-amber-100 transition-all resize-none shadow-inner"
                                         rows={2}
                                     />
                                 </div>
@@ -420,13 +486,15 @@ const TaraweehGuide = ({ ramadanDay, taraweehData, tarawihRakats, onUpdate, onTa
                     </div>
                 )}
 
-                {/* ── 30-DAY JUZ PILLS ── */}
-                <div>
-                    <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-3 flex items-center gap-1.5">
-                        <Target className="w-3.5 h-3.5" />
-                        {lang === 'bn' ? '৩০ দিনের জুজ ট্র্যাকার' : '30-Day Juz Tracker'}
-                    </h4>
-                    <div className="flex flex-wrap gap-1.5">
+                {/* ── SACRED 30-DAY JOURNEY MAP ── */}
+                <div className="pt-4 px-2">
+                    <div className="flex items-center justify-between mb-5">
+                        <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 flex items-center gap-2">
+                            <CalendarIcon className="w-4 h-4" /> {lang === 'bn' ? '৩০ দিনের পবিত্র সফর' : 'The 30-Day Journey'}
+                        </h4>
+                        <div className="h-0.5 flex-1 mx-4 bg-slate-100 rounded-full" />
+                    </div>
+                    <div className="grid grid-cols-6 sm:grid-cols-10 gap-2 sm:gap-3">
                         {Array.from({ length: 30 }, (_, i) => i + 1).map(d => {
                             const isToday = d === ramadanDay;
                             const isPast = d < ramadanDay;
@@ -434,17 +502,22 @@ const TaraweehGuide = ({ ramadanDay, taraweehData, tarawihRakats, onUpdate, onTa
                             return (
                                 <div
                                     key={d}
-                                    className={`w-8 h-8 rounded-lg flex items-center justify-center text-[10px] font-black transition-all ${isToday
-                                        ? 'bg-indigo-500 text-white shadow-md shadow-indigo-200 scale-110 ring-2 ring-indigo-300'
+                                    className={`relative aspect-square rounded-xl sm:rounded-2xl flex flex-col items-center justify-center text-[11px] font-black transition-all group overflow-hidden border-2 cursor-default ${isToday
+                                        ? `bg-gradient-to-br ${ps.header} text-white border-transparent shadow-xl scale-110 ring-4 ring-white ring-inset`
                                         : isPast
-                                            ? 'bg-emerald-100 text-emerald-700'
+                                            ? 'bg-white text-emerald-600 border-emerald-100 shadow-sm'
                                             : isBuffer
-                                                ? 'bg-purple-50 text-purple-400 border border-purple-100'
-                                                : 'bg-slate-50 text-slate-300 border border-slate-100'
+                                                ? 'bg-white text-slate-300 border-purple-50 border-dotted'
+                                                : 'bg-white text-slate-200 border-slate-50'
                                         }`}
-                                    title={`Day ${d}`}
                                 >
-                                    {d}
+                                    {isPast && (
+                                        <div className="absolute top-0 right-0 p-0.5">
+                                            <div className="w-2 h-2 rounded-full bg-emerald-400" />
+                                        </div>
+                                    )}
+                                    <span className="relative z-10">{d}</span>
+                                    {isToday && <Sparkles className="absolute bottom-1 w-3 h-3 text-amber-300 animate-pulse" />}
                                 </div>
                             );
                         })}

@@ -158,7 +158,7 @@ export const taraweehPlan = [
                 en: { text: 'For men is a share of what the parents and close relatives leave... and for women.', surah: 'An-Nisa', ayahNum: '4:7' }
             },
             {
-                bn: { text: 'যারা ঈমান এনেছে and নেক কাজ করেছে, তাদের আমি প্রবেশ করাব জান্নাতে।', surah: 'সূরা নিসা', ayahNum: '৪:৫৭' },
+                bn: { text: 'যারা ঈমান এনেছে ও নেক কাজ করেছে, তাদের আমি প্রবেশ করাব জান্নাতে।', surah: 'সূরা নিসা', ayahNum: '৪:৫৭' },
                 en: { text: 'But those who believe and do righteous deeds - We will admit them to gardens.', surah: 'An-Nisa', ayahNum: '4:57' }
             }
         ],
