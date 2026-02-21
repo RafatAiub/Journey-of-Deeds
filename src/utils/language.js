@@ -103,6 +103,8 @@ export const translations = {
         // Extra Prayers Detail
         rakats: 'রাকাত',
         tahajjudMotivation: 'যে ব্যক্তি ঈমান ও সওয়াবের আশায় রমজানের রাতে কিয়াম (তারাবিহ/তাহাজ্জুদ) করে, তার পূর্ববর্তী সব গুনাহ মাফ করে দেওয়া হয়। (বুখারী ও মুসলিম)',
+        ishraqMotivation: 'ফজর পড়ে সূর্য ওঠা পর্যন্ত যিকির করে ২ রাকাত ইশরাক পড়লে পূর্ণ একটি হজ ও উমরার সওয়াব পাওয়া যায়। (তিরমিযী)',
+        chashtMotivation: 'চাশতের দুই রাকাত নামাজ শরীরের ৩৬০টি জোড়ার সদকা হিসেবে যথেষ্ট। (মুসলিম)',
 
         quranTracker: 'কুরআন ট্র্যাকার',
         para: 'পারা',
@@ -328,6 +330,8 @@ export const translations = {
         // Extra Prayers Detail
         rakats: 'Rakats',
         tahajjudMotivation: 'Whoever stands (in prayer) during Ramadan out of faith and expectation of reward, his previous sins will be forgiven. (Bukhari & Muslim)',
+        ishraqMotivation: 'Whoever prays Fajr, remembers Allah until sunrise, then prays 2 rakahs of Ishraq, gets the reward of a complete Hajj and Umrah. (Tirmidhi)',
+        chashtMotivation: 'Two rakahs of Duha (Chasht) prayer suffice as charity for all 360 joints of the body. (Muslim)',
 
         quranTracker: 'Quran Tracker',
         para: 'Juz (Para)',

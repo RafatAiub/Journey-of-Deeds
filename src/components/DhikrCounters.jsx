@@ -77,15 +77,15 @@ const DhikrCounters = ({ dhikrData, onUpdate }) => {
             </header>
 
             <div className="grid grid-cols-2 gap-3 sm:gap-6">
-                {counters.map((c) => (
+                {counters.map(({ key, ...c }) => (
                     <TasbihCard
-                        key={c.key}
+                        key={key}
                         {...c}
-                        count={dhikrData[c.key] || 0}
-                        onUpdate={(d) => handleUpdate(c.key, d)}
-                        onManual={(v) => handleManual(c.key, v)}
+                        count={dhikrData[key] || 0}
+                        onUpdate={(d) => handleUpdate(key, d)}
+                        onManual={(v) => handleManual(key, v)}
                         language={language}
-                        sawabKey={c.key}
+                        sawabKey={key}
                     />
                 ))}
 

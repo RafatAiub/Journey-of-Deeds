@@ -1,7 +1,7 @@
 import React from 'react';
 import { useApp } from '../App';
 import { translations } from '../utils/language';
-import { Check, Users, Moon, Star, Sun } from 'lucide-react';
+import { Check, Users, Moon, Star, Sun, Sparkles } from 'lucide-react';
 import SawabBadge from './SawabBadge';
 import { getSawab } from '../data/sawabData';
 
@@ -151,22 +151,36 @@ const SalahGrid = ({ salahData, extraPrayers, onUpdate, onExtraUpdate }) => {
                     })()}
                 </div>
 
-                {/* Ishraq — was in data model but had no UI */}
+                {/* Ishraq */}
                 <div
                     onClick={() => onExtraUpdate({ ...extraPrayers, ishraq: !extraPrayers.ishraq })}
-                    className={`p-6 rounded-[2rem] cursor-pointer transition-all border-2 group ${extraPrayers.ishraq ? 'bg-orange-50 border-orange-100 shadow-inner' : 'bg-slate-50 border-slate-50 hover:border-orange-100'}`}
+                    className={`p-5 sm:p-8 rounded-2xl sm:rounded-[2rem] cursor-pointer transition-all border-2 group ${extraPrayers.ishraq ? 'bg-orange-50 border-orange-100 shadow-inner' : 'bg-slate-50 border-slate-50 hover:border-orange-100'}`}
                 >
-                    <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                            <Sun className={`w-6 h-6 ${extraPrayers.ishraq ? 'text-orange-500' : 'text-slate-400'}`} />
+                    <div className="flex items-center justify-between mb-3 sm:mb-4">
+                        <div className="flex items-center gap-2 sm:gap-3">
+                            <Sun className={`w-5 h-5 sm:w-6 sm:h-6 ${extraPrayers.ishraq ? 'text-orange-500' : 'text-slate-400'}`} />
                             <div>
-                                <h4 className="text-lg font-black text-slate-800">{t('ishraq')}</h4>
-                                <p className={`text-xs font-bold ${extraPrayers.ishraq ? 'text-orange-600' : 'text-slate-400'}`}>
+                                <h4 className="text-base sm:text-xl font-black text-slate-800">{t('ishraq')}</h4>
+                                <p className={`text-[10px] sm:text-xs font-bold uppercase tracking-wider ${extraPrayers.ishraq ? 'text-orange-600' : 'text-slate-400'}`}>
                                     {language === 'bn' ? 'সূর্যোদয়ের পর' : 'After sunrise'}
                                 </p>
                             </div>
                         </div>
                         <div className={`w-8 h-8 rounded-full border-4 transition-all ${extraPrayers.ishraq ? 'bg-orange-500 border-orange-200 scale-110 shadow-lg shadow-orange-200' : 'border-slate-200'}`}></div>
+                    </div>
+                    <div className="mt-4 flex flex-col gap-3">
+                        <p className={`text-sm italic font-medium leading-relaxed ${extraPrayers.ishraq ? 'text-orange-800' : 'text-slate-400'}`}>
+                            "{t('ishraqMotivation')}"
+                        </p>
+
+                        {!extraPrayers.ishraq && (
+                            <div className="flex items-center gap-2 bg-orange-100/50 border border-orange-100 px-3 py-1.5 rounded-xl w-fit">
+                                <Sparkles className="w-3.5 h-3.5 text-orange-500" />
+                                <span className="text-[10px] sm:text-xs font-black text-orange-700">
+                                    {language === 'bn' ? 'পুরস্কার: পূর্ণ হজ্ব ও উমরার সওয়াব' : 'Reward: Full Hajj & Umrah'}
+                                </span>
+                            </div>
+                        )}
                     </div>
                     {extraPrayers.ishraq && (() => {
                         const s = getSawab('ishraq', language);
@@ -174,22 +188,36 @@ const SalahGrid = ({ salahData, extraPrayers, onUpdate, onExtraUpdate }) => {
                     })()}
                 </div>
 
-                {/* Chasht — was in data model but had no UI */}
+                {/* Chasht */}
                 <div
                     onClick={() => onExtraUpdate({ ...extraPrayers, chasht: !extraPrayers.chasht })}
-                    className={`p-6 rounded-[2rem] cursor-pointer transition-all border-2 group ${extraPrayers.chasht ? 'bg-yellow-50 border-yellow-100 shadow-inner' : 'bg-slate-50 border-slate-50 hover:border-yellow-100'}`}
+                    className={`p-5 sm:p-8 rounded-2xl sm:rounded-[2rem] cursor-pointer transition-all border-2 group ${extraPrayers.chasht ? 'bg-yellow-50 border-yellow-100 shadow-inner' : 'bg-slate-50 border-slate-50 hover:border-yellow-100'}`}
                 >
-                    <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                            <Sun className={`w-6 h-6 ${extraPrayers.chasht ? 'text-yellow-500' : 'text-slate-400'}`} />
+                    <div className="flex items-center justify-between mb-3 sm:mb-4">
+                        <div className="flex items-center gap-2 sm:gap-3">
+                            <Sun className={`w-5 h-5 sm:w-6 sm:h-6 ${extraPrayers.chasht ? 'text-yellow-500' : 'text-slate-400'}`} />
                             <div>
-                                <h4 className="text-lg font-black text-slate-800">{t('chasht')}</h4>
-                                <p className={`text-xs font-bold ${extraPrayers.chasht ? 'text-yellow-600' : 'text-slate-400'}`}>
+                                <h4 className="text-base sm:text-xl font-black text-slate-800">{t('chasht')}</h4>
+                                <p className={`text-[10px] sm:text-xs font-bold uppercase tracking-wider ${extraPrayers.chasht ? 'text-yellow-600' : 'text-slate-400'}`}>
                                     {language === 'bn' ? 'চাশতের সময়' : 'Forenoon prayer'}
                                 </p>
                             </div>
                         </div>
                         <div className={`w-8 h-8 rounded-full border-4 transition-all ${extraPrayers.chasht ? 'bg-yellow-500 border-yellow-200 scale-110 shadow-lg shadow-yellow-200' : 'border-slate-200'}`}></div>
+                    </div>
+                    <div className="mt-4 flex flex-col gap-3">
+                        <p className={`text-sm italic font-medium leading-relaxed ${extraPrayers.chasht ? 'text-yellow-800' : 'text-slate-400'}`}>
+                            "{t('chashtMotivation')}"
+                        </p>
+
+                        {!extraPrayers.chasht && (
+                            <div className="flex items-center gap-2 bg-yellow-100/50 border border-yellow-100 px-3 py-1.5 rounded-xl w-fit">
+                                <Sparkles className="w-3.5 h-3.5 text-yellow-500" />
+                                <span className="text-[10px] sm:text-xs font-black text-yellow-700">
+                                    {language === 'bn' ? 'পুরস্কার: ৩৬০টি সদকার সওয়াব' : 'Reward: 360 acts of charity'}
+                                </span>
+                            </div>
+                        )}
                     </div>
                     {extraPrayers.chasht && (() => {
                         const s = getSawab('chasht', language);
