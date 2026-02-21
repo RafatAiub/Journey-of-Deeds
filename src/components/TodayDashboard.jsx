@@ -5,7 +5,7 @@ import { format } from 'date-fns';
 import { bn } from 'date-fns/locale';
 import { useParams, Link } from 'react-router-dom';
 import { getDayData } from '../utils/storage';
-import { getRamadanDayNumber, getDateKey } from '../utils/quranCalculator';
+import { getRamadanDayNumber, getDateKey, computeQuranTodayTarget, calculateTotalPagesRead, calculateDayProgress } from '../utils/quranCalculator';
 import { ArrowLeft, Calendar as CalendarIcon, Trophy, Moon, CheckCircle, AlertCircle, Sparkles } from 'lucide-react';
 import SawabBadge from './SawabBadge';
 import { getSawab } from '../data/sawabData';
@@ -73,47 +73,7 @@ const TodayDashboard = () => {
         flashSaved();
     }, [dayData, appData, activeDateKey, updateData, flashSaved]);
 
-    // Calculate Progress (0-100)
-    const calculateProgress = () => {
-        let earnedPoints = 0;
-
-        // 1. Salah Fard: 5 prayers × 10 = 50 pts
-        const prayers = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'];
-        prayers.forEach(p => {
-            const pData = dayData.salah[p];
-            if ((typeof pData === 'object' && pData.fard) || pData === true) {
-                earnedPoints += 10;
-            }
-        });
-
-        // 2. Fasting: 20 pts
-        if (dayData.roza) earnedPoints += 20;
-
-        // 3. Quran: 10 pts
-        if ((Number(dayData.quran?.pagesRead) || 0) > 0) earnedPoints += 10;
-
-        // 4. Tarawih: 10 pts
-        if ((dayData.extraPrayers?.tarawih || 0) > 0) earnedPoints += 10;
-
-        // 5. Learning, Dhikr & Focus: up to 10 pts
-        let bonus = 0;
-        ['ayah', 'hadith', 'dua', 'sunnah', 'iman'].forEach(l => {
-            if (dayData.dailyLearning?.[l]) bonus += 1;
-        });
-        const dhikrCount = (dayData.dhikr?.subhanallah || 0) + (dayData.dhikr?.alhamdulillah || 0) + (dayData.dhikr?.allahuakbar || 0);
-        if (dhikrCount > 100) bonus += 5;
-        else if (dhikrCount > 0) bonus += 2;
-
-        // New: Taraweeh Focus & Preview
-        if (dayData.taraweehGuide?.selectedTheme) bonus += 2;
-        if (dayData.taraweehGuide?.previewSeen) bonus += 1;
-
-        earnedPoints += Math.min(10, bonus);
-
-        return Math.min(100, earnedPoints);
-    };
-
-    const progress = calculateProgress();
+    const progress = calculateDayProgress(dayData, appData, activeDateKey);
 
     // Gamification: Mark day as complete
     const handleCompleteDay = () => {

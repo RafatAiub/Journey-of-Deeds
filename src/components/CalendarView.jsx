@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { useApp } from '../App';
 import { translations } from '../utils/language';
-import { getRamadanDayNumber, getDateKey } from '../utils/quranCalculator';
+import { getRamadanDayNumber, getDateKey, calculateDayProgress } from '../utils/quranCalculator';
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
 import {
@@ -50,51 +50,34 @@ const CalendarView = () => {
             const dayData = appData.days[dateKey];
             const ramadanDay = getRamadanDayNumber(appData.ramadanPlan.startDate, new Date(dateKey));
 
-            // 1. Calculate Daily Progress Score (same logic as TodayDashboard)
-            let earnedPoints = 0;
+            // 1. Calculate Daily Progress Score (Consolidated Utility)
+            const score = calculateDayProgress(dayData, appData, dateKey);
 
-            // Prayers
+            // Prayers count for stats (separate from score)
             const prayers = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'];
-            let dayPrayers = 0;
             prayers.forEach(p => {
                 const pData = dayData.salah?.[p];
                 if ((typeof pData === 'object' && pData.fard) || pData === true) {
-                    earnedPoints += 10;
-                    dayPrayers++;
                     categoryData[0].value++;
+                    totalPrayers++;
                 }
             });
-            totalPrayers += dayPrayers;
 
-            // Fasting
             if (dayData.roza) {
-                earnedPoints += 20;
                 totalFasts++;
                 categoryData[1].value++;
             }
 
-            // Quran
             if ((Number(dayData.quran?.pagesRead) || 0) > 0) {
-                earnedPoints += 10;
                 totalQuranPages += Number(dayData.quran.pagesRead);
                 categoryData[2].value++;
             }
 
-            // Tarawih
-            if ((dayData.extraPrayers?.tarawih || 0) > 0 || dayData.tarawih) earnedPoints += 10;
-
-            // Learning & Dhikr (Max 10)
-            let learningItems = 0;
             const learnings = ['ayah', 'hadith', 'dua', 'sunnah', 'iman'];
             learnings.forEach(l => {
-                if (dayData.dailyLearning?.[l]) {
-                    learningItems++;
-                    categoryData[3].value++;
-                }
+                if (dayData.dailyLearning?.[l]) categoryData[3].value++;
             });
-            earnedPoints += Math.min(10, learningItems);
 
-            const score = Math.min(100, earnedPoints);
             if (score === 100) perfectDays++;
 
             chartData.push({
@@ -111,11 +94,8 @@ const CalendarView = () => {
         for (const key of sortedDays) {
             if (key > todayKey) continue;
             const d = appData.days[key];
-            let pts = 0;
-            const pr = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'];
-            pr.forEach(p => { if ((typeof d.salah?.[p] === 'object' && d.salah?.[p].fard) || d.salah?.[p] === true) pts += 10; });
-            if (d.roza) pts += 20;
-            if (Math.min(100, pts) >= 50) currentStreak++;
+            const pts = calculateDayProgress(d, appData, key);
+            if (pts >= 40) currentStreak++; // Streak continues if progress >= 40%
             else break;
         }
 
@@ -250,12 +230,7 @@ const CalendarView = () => {
                             const dayData = appData.days[dateKey];
                             const ramadanDay = getRamadanDayNumber(appData.ramadanPlan.startDate, new Date(dateKey));
 
-                            let ePoints = 0;
-                            const prayers = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'];
-                            prayers.forEach(p => { if ((typeof dayData.salah?.[p] === 'object' && dayData.salah?.[p].fard) || dayData.salah?.[p] === true) ePoints += 10; });
-                            if (dayData.roza) ePoints += 20;
-                            if ((Number(dayData.quran?.pagesRead) || 0) > 0) ePoints += 10;
-                            const dayProgress = Math.min(100, ePoints);
+                            const dayProgress = calculateDayProgress(dayData, appData, dateKey);
 
                             return (
                                 <Link

@@ -296,14 +296,18 @@ const TaraweehGuide = ({ ramadanDay, taraweehData, tarawihRakats, onUpdate, onTa
                             )}
 
                             {/* Interactive Themes Selection */}
-                            <div>
-                                <div className="flex items-center justify-between mb-4">
-                                    <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-rose-500 flex items-center gap-2">
-                                        <Flame className="w-4 h-4" /> {t('themes')}
-                                    </h4>
-                                    <div className="px-3 py-1 bg-rose-50 text-[10px] font-black text-rose-600 rounded-full border border-rose-100 uppercase tracking-widest">
-                                        {t('themeFocusLabel')}
+                            <div className="space-y-4">
+                                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                                    <div className="flex items-center gap-2">
+                                        <div className={`w-1.5 h-6 rounded-full ${ps.iconBg}`} />
+                                        <h4 className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-800">
+                                            {t('themes')}
+                                        </h4>
                                     </div>
+                                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+                                        <Sparkles className="w-3 h-3 text-amber-400" />
+                                        {t('themeFocusLabel')}
+                                    </p>
                                 </div>
                                 <div className="flex flex-wrap gap-3">
                                     {themes.map((theme, i) => {
@@ -312,13 +316,25 @@ const TaraweehGuide = ({ ramadanDay, taraweehData, tarawihRakats, onUpdate, onTa
                                             <button
                                                 key={i}
                                                 onClick={() => handleUpdate('selectedTheme', isSelected ? '' : theme)}
-                                                className={`group flex items-center gap-2 px-5 py-3 rounded-2xl text-xs font-black transition-all duration-300 border-2 ${isSelected
-                                                    ? 'bg-rose-500 text-white border-rose-400 shadow-xl shadow-rose-200 scale-105 active:scale-95'
-                                                    : 'bg-white text-slate-600 border-slate-100 hover:border-rose-200 hover:bg-rose-50/30 active:scale-95'
+                                                className={`group relative flex items-center gap-3 px-6 py-4 rounded-[1.5rem] text-sm font-black transition-all duration-500 border-2 ${isSelected
+                                                    ? `${ps.iconBg} text-white border-transparent shadow-2xl scale-105 z-10`
+                                                    : 'bg-white text-slate-500 border-slate-100 hover:border-slate-300 hover:text-slate-800'
                                                     }`}
                                             >
-                                                {isSelected ? <CheckCircle className="w-4 h-4 text-white" /> : <div className="w-2 h-2 rounded-full bg-slate-200 group-hover:bg-rose-300" />}
-                                                <span>{theme}</span>
+                                                {isSelected ? (
+                                                    <div className="bg-white/20 p-1 rounded-lg">
+                                                        <CheckCircle className="w-4 h-4 text-white" />
+                                                    </div>
+                                                ) : (
+                                                    <div className={`w-2.5 h-2.5 rounded-full bg-slate-200 group-hover:scale-125 transition-transform`} />
+                                                )}
+                                                <span className="tracking-tight">{theme}</span>
+                                                {isSelected && (
+                                                    <span className="absolute -top-2 -right-2 flex h-4 w-4">
+                                                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+                                                        <span className="relative inline-flex rounded-full h-4 w-4 bg-white/30"></span>
+                                                    </span>
+                                                )}
                                             </button>
                                         );
                                     })}
