@@ -69,17 +69,24 @@ const SalahGrid = ({ salahData, extraPrayers, onUpdate, onExtraUpdate }) => {
             <div className="space-y-3">
                 {prayers.map((prayer) => {
                     const data = getPrayerData(prayer);
-                    // Show prayer-specific sawab for fajr & isha
+                    // Show prayer-specific sawab for fajr & isha (Special row-level rewards)
                     const prayerSawab = (prayer === 'fajr' || prayer === 'isha') ? getSawab(prayer, language) : null;
-                    const jamaatSawab = data.jamaat ? getSawab('salahJamaat', language) : null;
-                    const sunnahSawab = data.sunnah ? getSawab('salahSunnah', language) : null;
 
                     return (
                         <div key={prayer}>
                             <div className="group flex items-center justify-between p-4 sm:p-5 rounded-2xl sm:rounded-[2rem] bg-slate-50 border border-slate-100/50 hover:bg-white hover:shadow-xl hover:shadow-slate-200/50 transition-all duration-300">
                                 <div className="flex items-center gap-3">
                                     <div className={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${data.fard ? 'bg-emerald-500 animate-pulse' : 'bg-slate-200'}`}></div>
-                                    <h4 className="text-base sm:text-xl font-black text-slate-800 capitalize leading-none">{t(prayer)}</h4>
+                                    <div className="flex flex-col">
+                                        <h4 className="text-base sm:text-xl font-black text-slate-800 capitalize leading-none flex items-center gap-2">
+                                            {t(prayer)}
+                                            {data.fard && <Sparkles className="w-3.5 h-3.5 text-amber-500 animate-bounce" />}
+                                        </h4>
+                                        <div className="flex items-center gap-1.5 mt-1.5">
+                                            {data.jamaat && <span className="text-[9px] font-black bg-blue-100 text-blue-600 px-1.5 py-0.5 rounded-md uppercase tracking-tighter shadow-sm animate-fade-in">+27x</span>}
+                                            {data.sunnah && <span className="text-[9px] font-black bg-amber-100 text-amber-600 px-1.5 py-0.5 rounded-md uppercase tracking-tighter shadow-sm animate-fade-in">+Sunnah</span>}
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div className="flex items-center gap-2 sm:gap-3">
@@ -108,24 +115,42 @@ const SalahGrid = ({ salahData, extraPrayers, onUpdate, onExtraUpdate }) => {
                                     </button>
                                 </div>
                             </div>
-                            {/* Show sawab when prayer is done */}
+
+                            {/* Row-Specific Special Rewards (Fajr/Isha only) */}
                             {data.fard && prayerSawab && (
-                                <SawabBadge reward={prayerSawab.reward} source={prayerSawab.source} color={prayer === 'fajr' ? 'amber' : 'indigo'} compact />
-                            )}
-                            {jamaatSawab && (
-                                <div className="mt-1">
-                                    <SawabBadge reward={jamaatSawab.reward} source={jamaatSawab.source} color="blue" compact />
-                                </div>
-                            )}
-                            {sunnahSawab && (
-                                <div className="mt-1">
-                                    <SawabBadge reward={sunnahSawab.reward} source={sunnahSawab.source} color="amber" compact />
+                                <div className="mt-1.5 px-2 animate-fade-in">
+                                    <SawabBadge reward={prayerSawab.reward} source={prayerSawab.source} color={prayer === 'fajr' ? 'amber' : 'indigo'} compact />
                                 </div>
                             )}
                         </div>
                     );
                 })}
             </div>
+
+            {/* Consolidated Motivation Area (Active Blessings) */}
+            {(() => {
+                const hasAnyJamaat = prayers.some(p => getPrayerData(p).jamaat);
+                const hasAnySunnah = prayers.some(p => getPrayerData(p).sunnah);
+
+                if (!hasAnyJamaat && !hasAnySunnah) return null;
+
+                const jamaatSawab = getSawab('salahJamaat', language);
+                const sunnahSawab = getSawab('salahSunnah', language);
+
+                return (
+                    <div className="mt-8 space-y-3 bg-slate-50/50 p-4 sm:p-6 rounded-[2rem] border border-slate-100 animate-fade-in">
+                        <h5 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4 text-center">
+                            {language === 'bn' ? 'অর্জিত বারাকাহ ও পুরস্কার' : 'Active Blessings & Rewards'}
+                        </h5>
+                        {hasAnyJamaat && jamaatSawab && (
+                            <SawabBadge reward={jamaatSawab.reward} source={jamaatSawab.source} color="blue" />
+                        )}
+                        {hasAnySunnah && sunnahSawab && (
+                            <SawabBadge reward={sunnahSawab.reward} source={sunnahSawab.source} color="amber" />
+                        )}
+                    </div>
+                );
+            })()}
 
             {/* Extra Prayers: Tarawih, Tahajjud, Ishraq, Chasht */}
             <div className="mt-6 sm:mt-12 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 pt-6 sm:pt-10 border-t border-slate-100">
