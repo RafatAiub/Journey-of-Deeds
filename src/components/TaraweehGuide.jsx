@@ -3,6 +3,7 @@ import { useApp } from '../App';
 import { translations } from '../utils/language';
 import { getTaraweehDay, getPhaseInfo, getJuzProgress } from '../data/taraweehPlanData';
 import SawabBadge from './SawabBadge';
+import PdfViewer from './PdfViewer';
 import { getSawab } from '../data/sawabData';
 import { useToast } from './Toast';
 import {
@@ -22,6 +23,7 @@ const TaraweehGuide = ({ ramadanDay, taraweehData, tarawihRakats, onUpdate, onTa
 
     const [previewOpen, setPreviewOpen] = useState(true);
     const [reflectOpen, setReflectOpen] = useState(true);
+    const [showPdf, setShowPdf] = useState(false);
 
     const dayPlan = getTaraweehDay(ramadanDay);
     const phaseInfo = dayPlan ? getPhaseInfo(dayPlan.phase, language) : null;
@@ -341,13 +343,11 @@ const TaraweehGuide = ({ ramadanDay, taraweehData, tarawihRakats, onUpdate, onTa
                                 </div>
                             </div>
 
-                            {/* PDF Summary Feature - SMART LINK */}
+                            {/* PDF Summary Feature - SMART VIEWER */}
                             <div className="space-y-3">
-                                <a
-                                    href={`${import.meta.env.BASE_URL}taraweeh_master.pdf#page=${7 + (ramadanDay - 1) * 5}`}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="group relative p-6 rounded-[2rem] bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white overflow-hidden shadow-2xl hover:scale-[1.02] transition-all cursor-pointer block no-underline border border-white/5"
+                                <button
+                                    onClick={() => setShowPdf(true)}
+                                    className="w-full group relative p-6 rounded-[2rem] bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white overflow-hidden shadow-2xl hover:scale-[1.02] transition-all cursor-pointer block text-left border border-white/5"
                                 >
                                     <div className="absolute top-0 right-0 p-8 opacity-10 rotate-12 group-hover:rotate-45 transition-transform">
                                         <FileText className="w-24 h-24" />
@@ -378,16 +378,25 @@ const TaraweehGuide = ({ ramadanDay, taraweehData, tarawihRakats, onUpdate, onTa
                                             {t('viewChapterPdf')}
                                         </h3>
 
-                                        <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-white bg-indigo-600 hover:bg-indigo-500 w-fit px-5 py-2.5 rounded-full shadow-lg shadow-indigo-900/50 transition-all">
+                                        <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-white bg-indigo-600 group-hover:bg-indigo-500 w-fit px-5 py-2.5 rounded-full shadow-lg shadow-indigo-900/50 transition-all">
                                             {t('openPdfSummary')} <ExternalLink className="w-3.5 h-3.5 ml-1" />
                                         </div>
                                     </div>
-                                </a>
+                                </button>
                                 <p className="text-[10px] sm:text-xs text-slate-400 font-bold text-center px-4 leading-relaxed">
                                     <Info className="w-3 h-3 inline mr-1 mb-0.5" />
                                     {t('pdfInstruction')}
                                 </p>
                             </div>
+
+                            {showPdf && (
+                                <PdfViewer
+                                    file={`${import.meta.env.BASE_URL}taraweeh_master.pdf`}
+                                    initialPage={7 + (ramadanDay - 1) * 5}
+                                    title={t('viewChapterPdf')}
+                                    onClose={() => setShowPdf(false)}
+                                />
+                            )}
 
                             {/* Keywords Grid */}
                             <div>
