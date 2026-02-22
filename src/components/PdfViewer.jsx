@@ -35,17 +35,28 @@ const PdfViewer = ({ file, initialPage, onClose, title }) => {
 
                     <div className="flex items-center gap-2">
                         <button
-                            onClick={() => setScale(s => Math.min(s + 0.2, 2.0))}
+                            onClick={() => setScale(s => Math.min(s + 0.2, 4.0))}
                             className="p-2 rounded-xl border border-slate-100 hover:bg-slate-50 text-slate-600 transition-colors"
+                            title="Zoom In"
                         >
                             <ZoomIn className="w-5 h-5" />
                         </button>
                         <button
                             onClick={() => setScale(s => Math.max(s - 0.2, 0.5))}
                             className="p-2 rounded-xl border border-slate-100 hover:bg-slate-50 text-slate-600 transition-colors"
+                            title="Zoom Out"
                         >
                             <ZoomOut className="w-5 h-5" />
                         </button>
+                        <a
+                            href={file}
+                            target="_blank"
+                            download="Quran_Message_Shaykh_Ahmadullah.pdf"
+                            className="p-2 rounded-xl border border-slate-100 hover:bg-slate-50 text-slate-600 transition-colors"
+                            title="Download PDF"
+                        >
+                            <Download className="w-5 h-5" />
+                        </a>
                         <div className="w-px h-6 bg-slate-100 mx-1" />
                         <button
                             onClick={onClose}
@@ -57,26 +68,29 @@ const PdfViewer = ({ file, initialPage, onClose, title }) => {
                 </div>
 
                 {/* PDF Content */}
-                <div className="flex-1 overflow-auto bg-slate-50/50 flex flex-col items-center p-4 sm:p-8 scrollbar-hide select-none transition-all">
+                <div className="flex-1 overflow-auto bg-slate-50/50 flex flex-col items-center p-4 sm:p-8 scrollbar-hide select-none">
                     {isLoading && (
-                        <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/50 z-10">
+                        <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/50 z-10 transition-opacity">
                             <Loader2 className="w-10 h-10 text-indigo-600 animate-spin mb-4" />
-                            <p className="text-sm font-black text-slate-400 uppercase tracking-widest">Loading Quranic Message...</p>
+                            <p className="text-sm font-black text-slate-400 uppercase tracking-widest">Rendering Quranic Message...</p>
                         </div>
                     )}
 
-                    <div className="shadow-2xl rounded-lg overflow-hidden border border-slate-200 transition-transform duration-300" style={{ transform: `scale(${scale})`, transformOrigin: 'top center' }}>
+                    <div className="shadow-[0_20px_50px_rgba(0,0,0,0.1)] rounded-sm overflow-hidden border border-slate-200 bg-white">
                         <Document
                             file={file}
                             onLoadSuccess={onDocumentLoadSuccess}
+                            onLoadError={(err) => console.error('PDF Load Error:', err)}
                             loading={null}
                         >
                             <Page
                                 pageNumber={pageNumber}
                                 renderTextLayer={false}
                                 renderAnnotationLayer={false}
-                                width={Math.min(window.innerWidth - 80, 800)}
-                                className="transition-opacity duration-500"
+                                scale={scale}
+                                width={Math.min(window.innerWidth - 32, 850)}
+                                devicePixelRatio={Math.min(2, window.devicePixelRatio || 1)}
+                                className="transition-all duration-300"
                             />
                         </Document>
                     </div>
@@ -105,6 +119,16 @@ const PdfViewer = ({ file, initialPage, onClose, title }) => {
                     </button>
                 </div>
             </div>
+
+            <style dangerouslySetInnerHTML={{
+                __html: `
+                .react-pdf__Page__canvas {
+                    margin: 0 auto !important;
+                    box-shadow: 0 4px 24px rgba(0,0,0,0.1);
+                    image-rendering: -webkit-optimize-contrast;
+                    image-rendering: crisp-edges;
+                }
+            `}} />
         </div>
     );
 };
