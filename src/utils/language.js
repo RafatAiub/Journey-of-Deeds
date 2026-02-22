@@ -134,6 +134,9 @@ export const translations = {
         extraAyatsLabel: 'গভীরভাবে জানুন',
         themeFocusLabel: 'আজকের ইবাদতের ফোকাস বেছে নিন',
         themeSelectionReflection: 'আপনার আজকের ফোকাস:',
+        pdfSummaryLabel: 'শায়খ আহমাদুল্লাহর সারসংক্ষেপ',
+        openPdfSummary: 'পিডিএফ সারসংক্ষেপ পড়ুন',
+        viewChapterPdf: 'আজকের বার্তার বিস্তারিত',
 
         // Daily Self-Assessment
         dailySelfAssessment: 'দৈনিক আত্ম-মূল্যায়ন',
@@ -362,6 +365,9 @@ export const translations = {
         extraAyatsLabel: 'Deep Dive Wisdom',
         themeFocusLabel: 'Pick your focus for tonight',
         themeSelectionReflection: 'Your focus today:',
+        pdfSummaryLabel: 'Shaykh Ahmadullah\'s Summary',
+        openPdfSummary: 'Read PDF Summary',
+        viewChapterPdf: 'Chapter Details',
 
         // Daily Self-Assessment
         dailySelfAssessment: 'Daily Self-Assessment',

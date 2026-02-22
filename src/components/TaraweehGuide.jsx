@@ -7,7 +7,7 @@ import { getSawab } from '../data/sawabData';
 import { useToast } from './Toast';
 import {
     Moon, BookOpen, Sparkles, CheckCircle, ChevronDown, ChevronUp,
-    Target, MessageCircle, Pen, Star, Flame, Heart, Calendar as CalendarIcon
+    Target, MessageCircle, Pen, Star, Flame, Heart, FileText, ExternalLink, Calendar as CalendarIcon
 } from 'lucide-react';
 
 /**
@@ -340,6 +340,39 @@ const TaraweehGuide = ({ ramadanDay, taraweehData, tarawihRakats, onUpdate, onTa
                                     })}
                                 </div>
                             </div>
+
+                            {/* PDF Summary Feature - SMART LINK */}
+                            <a
+                                href={`/taraweeh_master.pdf#page=${7 + (ramadanDay - 1) * 5}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="group relative p-6 rounded-[2rem] bg-gradient-to-br from-slate-900 to-slate-800 text-white overflow-hidden shadow-2xl hover:scale-[1.02] transition-all cursor-pointer block no-underline"
+                            >
+                                <div className="absolute top-0 right-0 p-8 opacity-10 rotate-12 group-hover:rotate-45 transition-transform">
+                                    <FileText className="w-24 h-24" />
+                                </div>
+                                <div className="relative z-10">
+                                    <div className="flex items-center gap-3 mb-4">
+                                        <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center border border-white/20">
+                                            <FileText className="w-5 h-5 text-amber-400" />
+                                        </div>
+                                        <div>
+                                            <h4 className="text-xs font-black uppercase tracking-[0.2em] text-amber-400">
+                                                {t('pdfSummaryLabel')}
+                                            </h4>
+                                            <p className="text-[10px] text-white/50 font-bold uppercase tracking-widest mt-0.5">
+                                                {lang === 'bn' ? 'শায়খ আহমাদুল্লাহ' : 'by Shaykh Ahmadullah'}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <h3 className="text-base sm:text-xl font-black mb-4 pr-12 leading-tight">
+                                        {t('viewChapterPdf')}
+                                    </h3>
+                                    <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-white/60 bg-white/5 w-fit px-4 py-2 rounded-full border border-white/10 hover:bg-white/10 transition-colors">
+                                        {t('openPdfSummary')} <ExternalLink className="w-3 h-3 ml-1" />
+                                    </div>
+                                </div>
+                            </a>
 
                             {/* Keywords Grid */}
                             <div>
