@@ -78,17 +78,17 @@ const QuranPlannerCard = ({
     };
 
     return (
-        <section className="card !p-4 sm:!p-8 bg-gradient-to-br from-white to-sky-50/30 border-sky-100">
+        <section className="card !p-4 sm:!p-8 bg-gradient-to-br from-white to-sky-50/30 dark:from-slate-900 dark:to-sky-950/20 border-sky-100 dark:border-sky-900/50">
             <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 sm:gap-6 mb-6 sm:mb-10">
                 <div className="flex items-center gap-3 sm:gap-4">
-                    <div className="w-11 h-11 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-sky-500 to-blue-600 flex items-center justify-center shadow-lg shadow-sky-200">
+                    <div className="w-11 h-11 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-sky-500 to-blue-600 flex items-center justify-center shadow-lg shadow-sky-200 dark:shadow-sky-900/20">
                         <BookOpen className="text-white w-5 h-5 sm:w-7 sm:h-7" />
                     </div>
                     <div>
-                        <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">{t('quranTracker')}</h2>
+                        <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">{t('quranTracker')}</h2>
                         <div className="flex items-center gap-2 mt-1">
                             <div className="w-2 h-2 rounded-full bg-sky-500"></div>
-                            <p className="text-xs font-bold text-sky-600 uppercase tracking-widest leading-none">
+                            <p className="text-xs font-bold text-sky-600 dark:text-sky-400 uppercase tracking-widest leading-none">
                                 {t('quranGoal')}: {totalGoal} {t('pages')}
                             </p>
                         </div>
@@ -113,27 +113,27 @@ const QuranPlannerCard = ({
             })()}
 
             {/* Overall Progress Bar */}
-            <div className="mb-8 bg-sky-50 rounded-2xl p-5 border border-sky-100">
+            <div className="mb-8 bg-sky-50 dark:bg-sky-950/30 rounded-2xl p-5 border border-sky-100 dark:border-sky-800/50">
                 <div className="flex justify-between items-center mb-2">
-                    <span className="text-xs font-black text-sky-600 uppercase tracking-widest">
+                    <span className="text-xs font-black text-sky-600 dark:text-sky-400 uppercase tracking-widest">
                         {language === 'bn' ? 'মোট অগ্রগতি' : 'Overall Progress'}
                     </span>
-                    <span className="text-sm font-black text-sky-700">{totalPagesRead} / {totalGoal} {t('pages')}</span>
+                    <span className="text-sm font-black text-sky-700 dark:text-sky-300">{totalPagesRead} / {totalGoal} {t('pages')}</span>
                 </div>
-                <div className="h-3 bg-sky-100 rounded-full overflow-hidden">
+                <div className="h-3 bg-sky-100 dark:bg-sky-800 rounded-full overflow-hidden">
                     <div
                         className="h-full bg-gradient-to-r from-sky-500 to-blue-600 rounded-full transition-all duration-700"
                         style={{ width: `${overallPercent}%` }}
                     />
                 </div>
-                <p className="text-xs text-sky-500 font-bold mt-2">{overallPercent}% {language === 'bn' ? 'সম্পন্ন' : 'complete'}</p>
+                <p className="text-xs text-sky-500 dark:text-sky-400 font-bold mt-2">{overallPercent}% {language === 'bn' ? 'সম্পন্ন' : 'complete'}</p>
             </div>
 
             {/* Today's Target */}
             {todayTargetPages > 0 && (
-                <div className="mb-6 flex items-center gap-3 px-5 py-4 bg-amber-50 border border-amber-100 rounded-2xl">
-                    <Target className="w-5 h-5 text-amber-500 flex-shrink-0" />
-                    <p className="text-sm font-bold text-amber-800">
+                <div className="mb-6 flex items-center gap-3 px-5 py-4 bg-amber-50 dark:bg-amber-950/20 border border-amber-100 dark:border-amber-900/30 rounded-2xl">
+                    <Target className="w-5 h-5 text-amber-500 dark:text-amber-400 flex-shrink-0" />
+                    <p className="text-sm font-bold text-amber-800 dark:text-amber-200">
                         {language === 'bn'
                             ? `আজকের লক্ষ্য: ${todayTargetPages} পৃষ্ঠা পড়ুন`
                             : `Today's target: Read ${todayTargetPages} pages`}
@@ -143,7 +143,7 @@ const QuranPlannerCard = ({
 
             {/* Error message */}
             {error && (
-                <div className="mb-4 flex items-center gap-2 px-4 py-3 bg-red-50 border border-red-100 rounded-2xl text-red-600 text-sm font-bold">
+                <div className="mb-4 flex items-center gap-2 px-4 py-3 bg-red-50 dark:bg-red-950/20 border border-red-100 dark:border-red-900/30 rounded-2xl text-red-600 dark:text-red-400 text-sm font-bold">
                     <AlertCircle className="w-4 h-4 flex-shrink-0" />
                     {error}
                 </div>
@@ -174,11 +174,11 @@ const QuranPlannerCard = ({
                     min="0"
                 />
                 <div className="group">
-                    <label className="text-xs font-black text-slate-400 uppercase tracking-widest mb-2 block px-1">
+                    <label className="text-xs font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 block px-1">
                         {t('pages')} (+{data.pagesRead} {language === 'bn' ? 'পড়া হয়েছে' : 'read'})
                     </label>
                     <div className="relative">
-                        <BookOpen className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-300 group-focus-within:text-sky-500 transition-colors" />
+                        <BookOpen className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-300 dark:text-slate-600 group-focus-within:text-sky-500 transition-colors" />
                         <input
                             type="number"
                             min="0"
@@ -190,7 +190,7 @@ const QuranPlannerCard = ({
                                 if (v === '' || parseInt(v) >= 0) setInputPages(v);
                             }}
                             placeholder={language === 'bn' ? '+ পৃষ্ঠা' : '+ pages'}
-                            className="input-field !pl-12 !border-sky-100 !bg-white"
+                            className="input-field !pl-12 !border-sky-100 dark:!border-slate-700 !bg-white dark:!bg-slate-950"
                         />
                     </div>
                 </div>
@@ -200,8 +200,8 @@ const QuranPlannerCard = ({
                 onClick={handleSave}
                 disabled={justSaved}
                 className={`w-full btn-gradient !py-5 flex justify-center items-center gap-3 transition-all hover:scale-[1.01] disabled:opacity-70 disabled:cursor-not-allowed disabled:scale-100 ${justSaved
-                    ? 'bg-gradient-to-r from-emerald-500 to-teal-600 shadow-emerald-200/50'
-                    : 'bg-gradient-to-r from-sky-600 to-blue-700 shadow-sky-200/50'
+                    ? 'bg-gradient-to-r from-emerald-500 to-teal-600 shadow-emerald-200/50 dark:shadow-emerald-950/20'
+                    : 'bg-gradient-to-r from-sky-600 to-blue-700 shadow-sky-200/50 dark:shadow-sky-950/20'
                     }`}
             >
                 {justSaved ? (
@@ -224,11 +224,11 @@ const QuranPlannerCard = ({
 
 const InputField = ({ label, icon: Icon, value, onChange, placeholder, type = 'number', min, max }) => (
     <div className="group">
-        <label className="text-xs font-black text-slate-400 uppercase tracking-widest mb-2 block px-1">
+        <label className="text-xs font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 block px-1">
             {label}
         </label>
         <div className="relative">
-            <Icon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-300 group-focus-within:text-sky-500 transition-colors" />
+            <Icon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-300 dark:text-slate-600 group-focus-within:text-sky-500 transition-colors" />
             <input
                 type={type}
                 min={min}
@@ -236,7 +236,7 @@ const InputField = ({ label, icon: Icon, value, onChange, placeholder, type = 'n
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
                 placeholder={placeholder}
-                className="input-field !pl-12 !bg-white"
+                className="input-field !pl-12 !bg-white dark:!bg-slate-950 dark:!border-slate-700"
             />
         </div>
     </div>
@@ -245,16 +245,16 @@ const InputField = ({ label, icon: Icon, value, onChange, placeholder, type = 'n
 // Static color map — avoids Tailwind JIT dynamic class issues
 const summaryColorMap = {
     sky: {
-        bg: 'bg-sky-50',
-        border: 'border-sky-100',
-        labelText: 'text-sky-400',
-        valueText: 'text-sky-700',
+        bg: 'bg-sky-50 dark:bg-sky-950/30',
+        border: 'border-sky-100 dark:border-sky-900/50',
+        labelText: 'text-sky-400 dark:text-sky-500',
+        valueText: 'text-sky-700 dark:text-sky-300',
     },
     blue: {
-        bg: 'bg-blue-50',
-        border: 'border-blue-100',
-        labelText: 'text-blue-400',
-        valueText: 'text-blue-700',
+        bg: 'bg-blue-50 dark:bg-blue-950/30',
+        border: 'border-blue-100 dark:border-blue-900/50',
+        labelText: 'text-blue-400 dark:text-blue-500',
+        valueText: 'text-blue-700 dark:text-blue-300',
     },
 };
 

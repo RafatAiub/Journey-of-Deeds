@@ -2,9 +2,10 @@ import React, { useRef, useState } from 'react';
 import { useApp } from '../App';
 import { translations } from '../utils/language';
 import { exportData, importData, resetData } from '../utils/storage';
-import { Settings as SettingsIcon, Download, Upload, Trash2, Globe, Info, CheckCircle, AlertCircle } from 'lucide-react';
+import { Settings as SettingsIcon, Download, Upload, Trash2, Globe, Info, Palette } from 'lucide-react';
 import ConfirmModal from './ConfirmModal';
 import { useToast } from './Toast';
+import ThemeToggle from './ThemeToggle';
 
 /**
  * Settings — app settings page.
@@ -13,7 +14,7 @@ import { useToast } from './Toast';
  *  - Added inline status messages for export/import feedback
  */
 const Settings = () => {
-    const { appData, setAppData, language, changeLanguage } = useApp();
+    const { appData, setAppData, language, changeLanguage, isDarkMode } = useApp();
     const { showToast } = useToast();
     const t = (key) => translations[language][key] || key;
     const fileInputRef = useRef(null);
@@ -80,9 +81,28 @@ const Settings = () => {
 
             {/* Header */}
 
+            {/* Theme */}
+            <div className="card">
+                <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-4 flex items-center gap-2">
+                    <Palette className="w-5 h-5 text-emerald-600" />
+                    {language === 'bn' ? 'থিম পরিবর্তন' : 'Theme Settings'}
+                </h2>
+                <div className="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-100 dark:border-slate-700">
+                    <span className="font-medium text-gray-700 dark:text-slate-200">
+                        {language === 'bn' ? (isDarkMode ? 'ডার্ক মোড' : 'লাইট মোড') : (isDarkMode ? 'Dark Mode' : 'Light Mode')}
+                    </span>
+                    <ThemeToggle />
+                </div>
+                <p className="text-sm text-gray-600 dark:text-slate-400 mt-3">
+                    {language === 'bn'
+                        ? 'আপনার পছন্দমতো লাইট বা ডার্ক থিম বেছে নিন।'
+                        : 'Choose between light or dark theme based on your preference.'}
+                </p>
+            </div>
+
             {/* Language */}
             <div className="card">
-                <h2 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-4 flex items-center gap-2">
                     <Globe className="w-5 h-5 text-emerald-600" />
                     {t('changeLanguage')}
                 </h2>
@@ -94,7 +114,7 @@ const Settings = () => {
                         {language === 'bn' ? 'Switch to English' : 'বাংলায় পরিবর্তন করুন'}
                     </button>
                 </div>
-                <p className="text-sm text-gray-600 mt-3">
+                <p className="text-sm text-gray-600 dark:text-slate-400 mt-3">
                     {language === 'bn'
                         ? 'বর্তমান ভাষা: বাংলা'
                         : 'Current language: English'}
@@ -103,15 +123,15 @@ const Settings = () => {
 
             {/* Data Management */}
             <div className="card">
-                <h2 className="text-xl font-bold text-gray-800 mb-4">
+                <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-6">
                     {language === 'bn' ? 'ডেটা ম্যানেজমেন্ট' : 'Data Management'}
                 </h2>
 
-                <div className="space-y-3">
+                <div className="space-y-4">
                     {/* Export */}
                     <button
                         onClick={handleExport}
-                        className="w-full btn-secondary flex items-center justify-center gap-2"
+                        className="w-full btn-secondary flex items-center justify-center gap-2 py-4"
                     >
                         <Download className="w-5 h-5" />
                         {t('exportData')}
@@ -128,24 +148,26 @@ const Settings = () => {
                         />
                         <button
                             onClick={() => fileInputRef.current?.click()}
-                            className="w-full btn-secondary flex items-center justify-center gap-2"
+                            className="w-full btn-secondary flex items-center justify-center gap-2 py-4"
                         >
                             <Upload className="w-5 h-5" />
                             {t('importData')}
                         </button>
                     </div>
 
-                    {/* Reset — now uses ConfirmModal instead of native confirm() */}
-                    <button
-                        onClick={() => setShowResetConfirm(true)}
-                        className="w-full rounded-xl px-6 py-3 font-medium bg-red-50 text-red-600 ring-2 ring-red-200 hover:bg-red-100 active:scale-95 transition-all duration-200 flex items-center justify-center gap-2"
-                    >
-                        <Trash2 className="w-5 h-5" />
-                        {t('resetData')}
-                    </button>
+                    <div className="pt-2">
+                        {/* Reset — now uses ConfirmModal instead of native confirm() */}
+                        <button
+                            onClick={() => setShowResetConfirm(true)}
+                            className="w-full rounded-2xl px-6 py-4 font-bold bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-400 border border-red-100 dark:border-red-900/30 hover:bg-red-100 dark:hover:bg-red-500/20 active:scale-95 transition-all duration-200 flex items-center justify-center gap-2"
+                        >
+                            <Trash2 className="w-5 h-5" />
+                            {t('resetData')}
+                        </button>
+                    </div>
                 </div>
 
-                <div className="mt-4 p-4 bg-emerald-50 rounded-xl text-sm text-gray-700">
+                <div className="mt-6 p-4 bg-emerald-50 dark:bg-emerald-900/10 rounded-2xl text-sm text-gray-700 dark:text-slate-300 border border-emerald-100 dark:border-emerald-800/30">
                     {language === 'bn'
                         ? '💡 টিপস: নিয়মিত আপনার ডেটা এক্সপোর্ট করে ব্যাকআপ রাখুন।'
                         : '💡 Tip: Regularly export your data to keep a backup.'}
@@ -153,13 +175,13 @@ const Settings = () => {
             </div>
 
             {/* About */}
-            <div className="card bg-gradient-to-br from-emerald-50 to-teal-50">
-                <h2 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+            <div className="card bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-slate-800 dark:to-slate-900">
+                <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-4 flex items-center gap-2">
                     <Info className="w-5 h-5 text-emerald-600" />
                     {t('about')}
                 </h2>
 
-                <div className="space-y-3 text-gray-700">
+                <div className="space-y-3 text-gray-700 dark:text-slate-300">
                     <p className="leading-relaxed">
                         {language === 'bn'
                             ? 'রমজান প্ল্যানার একটি প্রাইভেসি-ফার্স্ট ওয়েব অ্যাপ্লিকেশন যা আপনার রমজানের আমল ট্র্যাক করতে সাহায্য করে।'
@@ -170,7 +192,7 @@ const Settings = () => {
                             ? '🔒 আপনার সব ডেটা শুধুমাত্র আপনার ব্রাউজারে সংরক্ষিত থাকে। কোনো সার্ভারে পাঠানো হয় না।'
                             : '🔒 All your data is stored only in your browser. Nothing is sent to any server.'}
                     </p>
-                    <p className="text-sm text-emerald-700 font-medium">
+                    <p className="text-sm text-emerald-700 dark:text-emerald-400 font-bold">
                         {language === 'bn'
                             ? 'আল্লাহ আপনার সব আমল কবুল করুন। আমীন।'
                             : 'May Allah accept all your deeds. Ameen.'}

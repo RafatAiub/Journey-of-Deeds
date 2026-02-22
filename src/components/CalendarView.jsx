@@ -28,7 +28,7 @@ import {
 } from 'lucide-react';
 
 const CalendarView = () => {
-    const { appData, language } = useApp();
+    const { appData, language, isDarkMode } = useApp();
     const t = (key) => translations[language][key] || key;
 
     // Process data for analytics
@@ -106,9 +106,9 @@ const CalendarView = () => {
     const days = Object.keys(appData.days).sort().reverse();
 
     const getProgressColorClass = (progress) => {
-        if (progress >= 80) return 'text-emerald-600 bg-emerald-50';
-        if (progress >= 50) return 'text-amber-600 bg-amber-50';
-        return 'text-slate-400 bg-slate-50';
+        if (progress >= 80) return 'text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20';
+        if (progress >= 50) return 'text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/10';
+        return 'text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-800/50';
     };
 
     return (
@@ -116,21 +116,21 @@ const CalendarView = () => {
 
             <header className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 sm:gap-6">
                 <div>
-                    <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 tracking-tight flex items-center gap-3 sm:gap-4">
-                        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-lg shadow-emerald-200">
+                    <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight flex items-center gap-3 sm:gap-4">
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-lg shadow-emerald-200 dark:shadow-emerald-900/20">
                             <BarChart3 className="text-white w-5 h-5 sm:w-7 sm:h-7" />
                         </div>
                         {language === 'bn' ? 'আমার ড্যাশবোর্ড' : 'Insights'}
                     </h1>
-                    <p className="text-slate-500 mt-2 sm:mt-3 text-base sm:text-lg font-medium">
+                    <p className="text-slate-500 dark:text-slate-400 mt-2 sm:mt-3 text-base sm:text-lg font-medium">
                         {language === 'bn' ? 'আপনার রমজানের অগ্রগতির সূক্ষ্ম বিশ্লেষণ' : 'Reflecting on your spiritual journey'}
                     </p>
                 </div>
 
                 {stats && (
-                    <div className="flex items-center gap-3 px-4 sm:px-6 py-3 bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 self-start sm:self-auto">
+                    <div className="flex items-center gap-3 px-4 sm:px-6 py-3 bg-white dark:bg-slate-900 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-slate-950/20 border border-slate-100 dark:border-slate-800 self-start sm:self-auto">
                         <CalendarIcon size={18} className="text-emerald-500" />
-                        <span className="text-slate-600 font-bold text-sm sm:text-base">
+                        <span className="text-slate-600 dark:text-slate-300 font-bold text-sm sm:text-base">
                             {stats.chartData.length} {language === 'bn' ? 'দিন সম্পন্ন' : 'Days Recorded'}
                         </span>
                     </div>
@@ -141,12 +141,12 @@ const CalendarView = () => {
                 <div className="lg:col-span-8 card !p-5 sm:!p-8 min-w-0">
                     <div className="flex items-center justify-between mb-5 sm:mb-8">
                         <div>
-                            <h3 className="text-lg sm:text-xl font-black text-slate-800 tracking-tight">
+                            <h3 className="text-lg sm:text-xl font-black text-slate-800 dark:text-white tracking-tight">
                                 {language === 'bn' ? 'অগ্রগতি ইতিহাস' : 'Progress History'}
                             </h3>
-                            <p className="text-slate-400 text-sm mt-1">{language === 'bn' ? 'বিগত ৩০ দিনের আমলের পরিবর্তন' : 'Daily progress composition'}</p>
+                            <p className="text-slate-400 dark:text-slate-500 text-sm mt-1">{language === 'bn' ? 'বিগত ৩০ দিনের আমলের পরিবর্তন' : 'Daily progress composition'}</p>
                         </div>
-                        <div className="flex items-center gap-2 text-xs font-black text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-full border border-emerald-100">
+                        <div className="flex items-center gap-2 text-xs font-black text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20 px-3 py-1.5 rounded-full border border-emerald-100 dark:border-emerald-800/30">
                             <CheckCircle size={14} />
                             <span>{language === 'bn' ? '৭৫% লক্ষ্য' : '75% Goal'}</span>
                         </div>
@@ -155,38 +155,38 @@ const CalendarView = () => {
                     <div className="h-[250px] sm:h-[350px] w-full relative">
                         <ResponsiveContainer width="100%" height="100%">
                             <BarChart data={stats?.chartData || []} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={isDarkMode ? '#1e293b' : '#f1f5f9'} />
                                 <XAxis
                                     dataKey="day"
                                     axisLine={false}
                                     tickLine={false}
-                                    tick={{ fontSize: 11, fill: '#94a3b8', fontWeight: 800 }}
+                                    tick={{ fontSize: 11, fill: isDarkMode ? '#475569' : '#94a3b8', fontWeight: 800 }}
                                     dy={10}
                                 />
                                 <YAxis
                                     domain={[0, 100]}
-                                    tick={{ fontSize: 10, fill: '#cbd5e1', fontWeight: 600 }}
+                                    tick={{ fontSize: 10, fill: isDarkMode ? '#334155' : '#cbd5e1', fontWeight: 600 }}
                                     axisLine={false}
                                     tickLine={false}
                                 />
                                 <Tooltip
-                                    cursor={{ fill: '#f8fafc' }}
+                                    cursor={{ fill: isDarkMode ? '#1e293b' : '#f8fafc' }}
                                     content={({ active, payload, label }) => {
                                         if (active && payload && payload.length) {
                                             return (
-                                                <div className="bg-white/90 backdrop-blur-xl p-4 rounded-3xl shadow-2xl border border-slate-100 min-w-[160px] animate-in zoom-in-95">
-                                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 flex justify-between">
+                                                <div className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl p-4 rounded-3xl shadow-2xl border border-slate-100 dark:border-slate-800 min-w-[160px] animate-in zoom-in-95">
+                                                    <p className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 flex justify-between">
                                                         <span>{t('day')} {label}</span>
-                                                        <span className="text-emerald-600 font-black">{payload[0].payload.total}%</span>
+                                                        <span className="text-emerald-600 dark:text-emerald-400 font-black">{payload[0].payload.total}%</span>
                                                     </p>
                                                     <div className="space-y-1.5">
                                                         {payload.slice().reverse().map((entry, index) => (
                                                             <div key={index} className="flex justify-between items-center text-xs font-bold">
                                                                 <div className="flex items-center gap-2">
                                                                     <div className="w-2 h-2 rounded-full" style={{ backgroundColor: entry.color }} />
-                                                                    <span className="text-slate-600 capitalize">{entry.name}</span>
+                                                                    <span className="text-slate-600 dark:text-slate-400 capitalize">{entry.name}</span>
                                                                 </div>
-                                                                <span className="text-slate-900">{entry.value}%</span>
+                                                                <span className="text-slate-900 dark:text-white">{entry.value}%</span>
                                                             </div>
                                                         ))}
                                                     </div>
@@ -215,7 +215,7 @@ const CalendarView = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
                 <section className="lg:col-span-1 glass-card overflow-hidden">
-                    <h3 className="text-lg sm:text-xl font-black text-slate-800 mb-6 sm:mb-8 px-2">
+                    <h3 className="text-lg sm:text-xl font-black text-slate-800 dark:text-white mb-6 sm:mb-8 px-2">
                         {language === 'bn' ? 'আমল বিশ্লেষণ' : 'Activity Focus'}
                     </h3>
                     <div className="space-y-6">
@@ -223,14 +223,14 @@ const CalendarView = () => {
                             <div key={idx} className="group">
                                 <div className="flex justify-between items-center mb-2 px-1">
                                     <div className="flex items-center gap-2 sm:gap-3">
-                                        <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center transition-colors" style={{ backgroundColor: `${item.color}15`, color: item.color }}>
+                                        <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center transition-colors" style={{ backgroundColor: isDarkMode ? `${item.color}30` : `${item.color}15`, color: item.color }}>
                                             <item.icon size={14} className="sm:size-16" />
                                         </div>
-                                        <span className="font-bold text-slate-700 text-sm sm:text-base">{item.name}</span>
+                                        <span className="font-bold text-slate-700 dark:text-slate-300 text-sm sm:text-base">{item.name}</span>
                                     </div>
-                                    <span className="font-black text-slate-900 text-sm sm:text-base">{item.value}</span>
+                                    <span className="font-black text-slate-900 dark:text-white text-sm sm:text-base">{item.value}</span>
                                 </div>
-                                <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
+                                <div className="h-2 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
                                     <div
                                         className="h-full rounded-full transition-all duration-1000 ease-out"
                                         style={{ backgroundColor: item.color, width: `${Math.min(100, (item.value / ((stats.chartData.length || 1) * 5)) * 100)}%` }}
@@ -243,7 +243,7 @@ const CalendarView = () => {
 
                 <section className="lg:col-span-2">
                     <div className="flex items-center justify-between mb-8 px-2">
-                        <h3 className="text-xl font-black text-slate-800">
+                        <h3 className="text-xl font-black text-slate-800 dark:text-white">
                             {language === 'bn' ? 'দিনলিপি ইতিহাস' : 'Daily Journal'}
                         </h3>
                     </div>
@@ -259,21 +259,21 @@ const CalendarView = () => {
                                 <Link
                                     to={`/day/${dateKey}`}
                                     key={dateKey}
-                                    className="group card !p-5 flex items-center gap-5 hover:scale-[1.02] active:scale-95 border-none shadow-[0_4px_20px_rgba(0,0,0,0.03)]"
+                                    className="group card !p-5 flex items-center gap-5 hover:scale-[1.02] active:scale-95 border-none shadow-[0_4px_20px_rgba(0,0,0,0.03)] dark:shadow-slate-950/20"
                                 >
-                                    <div className={`w-16 h-16 rounded-2xl flex flex-col items-center justify-center text-white shadow-xl rotate-3 group-hover:rotate-0 transition-transform ${dayProgress >= 80 ? 'bg-gradient-to-br from-emerald-400 to-teal-600' : 'bg-gradient-to-br from-slate-400 to-slate-600'}`}>
+                                    <div className={`w-16 h-16 rounded-2xl flex flex-col items-center justify-center text-white shadow-xl rotate-3 group-hover:rotate-0 transition-transform ${dayProgress >= 80 ? 'bg-gradient-to-br from-emerald-400 to-teal-600' : 'bg-gradient-to-br from-slate-400 to-slate-600 dark:from-slate-700 dark:to-slate-800'}`}>
                                         <span className="text-[10px] font-black uppercase opacity-60 leading-none mb-1">{t('day')}</span>
                                         <span className="text-2xl font-black leading-none">{ramadanDay}</span>
                                     </div>
 
                                     <div className="flex-1">
-                                        <h4 className="font-black text-slate-800">
+                                        <h4 className="font-black text-slate-800 dark:text-white">
                                             {format(new Date(dateKey), 'dd MMMM')}
                                         </h4>
                                         <div className="flex items-center gap-2 mt-2">
                                             <div className="flex -space-x-1">
-                                                {dayData.roza && <div className="w-5 h-5 rounded-full bg-emerald-100 flex items-center justify-center ring-2 ring-white text-[10px]">🌙</div>}
-                                                {dayData.quran?.pagesRead > 0 && <div className="w-5 h-5 rounded-full bg-amber-100 flex items-center justify-center ring-2 ring-white text-[10px]">📖</div>}
+                                                {dayData.roza && <div className="w-5 h-5 rounded-full bg-emerald-100 dark:bg-emerald-900/40 flex items-center justify-center ring-2 ring-white dark:ring-slate-900 text-[10px]">🌙</div>}
+                                                {dayData.quran?.pagesRead > 0 && <div className="w-5 h-5 rounded-full bg-amber-100 dark:bg-amber-900/40 flex items-center justify-center ring-2 ring-white dark:ring-slate-900 text-[10px]">📖</div>}
                                             </div>
                                             <span className={`text-[11px] font-bold px-2 py-0.5 rounded-full ${getProgressColorClass(dayProgress)}`}>
                                                 {dayProgress}%
@@ -281,7 +281,7 @@ const CalendarView = () => {
                                         </div>
                                     </div>
 
-                                    <div className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center group-hover:bg-emerald-500 group-hover:text-white transition-all">
+                                    <div className="w-10 h-10 rounded-full bg-slate-50 dark:bg-slate-800 flex items-center justify-center group-hover:bg-emerald-500 group-hover:text-white transition-all text-slate-400 dark:text-slate-500">
                                         <ChevronRight size={20} />
                                     </div>
                                 </Link>
@@ -304,8 +304,8 @@ const PremiumStat = ({ icon: Icon, value, unit, color }) => {
     return (
         <div className="card group !p-5 sm:!p-6 flex flex-row items-center justify-between border-transparent">
             <div>
-                <p className="text-slate-400 text-xs font-bold uppercase tracking-widest mb-1">{unit}</p>
-                <h4 className="text-4xl font-black text-slate-900 group-hover:scale-110 transition-transform origin-left">{value}</h4>
+                <p className="text-slate-400 dark:text-slate-500 text-xs font-bold uppercase tracking-widest mb-1">{unit}</p>
+                <h4 className="text-4xl font-black text-slate-900 dark:text-white group-hover:scale-110 transition-transform origin-left">{value}</h4>
             </div>
             <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${colorMap[color]} flex items-center justify-center shadow-xl rotate-6 group-hover:rotate-0 transition-all duration-500`}>
                 <Icon className="text-white w-7 h-7" />

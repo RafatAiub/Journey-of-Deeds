@@ -134,54 +134,54 @@ const GamificationModal = ({ isOpen, onClose, day, newBadgeIds = [] }) => {
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
-            <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 relative animate-scale-in text-center overflow-hidden max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 dark:bg-black/70 backdrop-blur-sm animate-fade-in">
+            <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl max-w-md w-full p-6 relative animate-scale-in text-center overflow-hidden max-h-[90vh] overflow-y-auto border border-slate-100 dark:border-slate-800">
 
                 {/* Background Decorative Glow */}
-                <div className="absolute -top-20 -left-20 w-40 h-40 bg-emerald-300 rounded-full blur-3xl opacity-30"></div>
-                <div className="absolute -bottom-20 -right-20 w-40 h-40 bg-amber-300 rounded-full blur-3xl opacity-30"></div>
+                <div className="absolute -top-20 -left-20 w-40 h-40 bg-emerald-300 dark:bg-emerald-600 rounded-full blur-3xl opacity-30 dark:opacity-10"></div>
+                <div className="absolute -bottom-20 -right-20 w-40 h-40 bg-amber-300 dark:bg-amber-600 rounded-full blur-3xl opacity-30 dark:opacity-10"></div>
 
                 <button
                     onClick={onClose}
-                    className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
+                    className="absolute top-4 right-4 text-gray-400 dark:text-slate-500 hover:text-gray-600 dark:hover:text-slate-300 transition-colors"
                 >
                     <X className="w-6 h-6" />
                 </button>
 
                 <div className="flex justify-center mb-6">
-                    <div className="w-24 h-24 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-full flex items-center justify-center shadow-lg border-4 border-white">
+                    <div className="w-24 h-24 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-full flex items-center justify-center shadow-lg border-4 border-white dark:border-slate-800">
                         <Trophy className="w-12 h-12 text-white" />
                     </div>
                 </div>
 
-                <h2 className="text-3xl font-bold text-gray-800 mb-2">
+                <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-2">
                     {t('levelUp')}
                 </h2>
 
-                <p className="text-gray-600 mb-4">
+                <p className="text-gray-600 dark:text-slate-400 mb-4">
                     {language === 'bn'
                         ? `মাশাআল্লাহ! আপনি রমজানের ${day} তম দিনটি সফলভাবে সম্পন্ন করেছেন।`
                         : `MashaAllah! You have successfully completed Day ${day} of Ramadan.`}
                 </p>
 
                 {/* Level & XP */}
-                <div className="bg-slate-50 rounded-2xl p-4 mb-4 border border-slate-100">
+                <div className="bg-slate-50 dark:bg-slate-800/50 rounded-2xl p-4 mb-4 border border-slate-100 dark:border-slate-800">
                     <div className="flex items-center justify-between mb-2">
-                        <div className="flex items-center gap-2 text-slate-700 font-bold">
+                        <div className="flex items-center gap-2 text-slate-700 dark:text-slate-200 font-bold">
                             <Zap className="w-4 h-4 text-amber-500" />
                             {language === 'bn' ? `লেভেল ${level}` : `Level ${level}`}
                         </div>
-                        <span className="text-xs font-bold text-slate-400">
+                        <span className="text-xs font-bold text-slate-400 dark:text-slate-500">
                             {language === 'bn' ? `পরবর্তী লেভেলে ${xpToNextLevel} পয়েন্ট বাকি` : `${xpToNextLevel} pts to next level`}
                         </span>
                     </div>
-                    <div className="h-2 bg-slate-200 rounded-full overflow-hidden">
+                    <div className="h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
                         <div
                             className="h-full bg-gradient-to-r from-amber-400 to-orange-500 rounded-full transition-all duration-1000"
                             style={{ width: `${((totalXp % 100) / 100) * 100}%` }}
                         />
                     </div>
-                    <p className="text-xs text-slate-400 mt-1 font-bold">
+                    <p className="text-xs text-slate-400 dark:text-slate-500 mt-1 font-bold">
                         {language === 'bn' ? `মোট: ${totalXp} ইস্তিকামাত পয়েন্ট` : `Total: ${totalXp} Consistency Points`}
                     </p>
                 </div>
@@ -194,11 +194,11 @@ const GamificationModal = ({ isOpen, onClose, day, newBadgeIds = [] }) => {
                         </p>
                         <div className="space-y-2">
                             {newBadges.map(badge => (
-                                <div key={badge.id} className="flex items-center gap-3 bg-amber-50 rounded-2xl p-3 border border-amber-100">
+                                <div key={badge.id} className="flex items-center gap-3 bg-amber-50 dark:bg-amber-900/10 rounded-2xl p-3 border border-amber-100 dark:border-amber-800/50">
                                     <span className="text-2xl">{badge.icon}</span>
                                     <div className="text-left">
-                                        <p className="font-black text-slate-800 text-sm">{language === 'bn' ? badge.bn : badge.en}</p>
-                                        <p className="text-xs text-slate-400">{language === 'bn' ? badge.descBn : badge.descEn}</p>
+                                        <p className="font-black text-slate-800 dark:text-slate-200 text-sm">{language === 'bn' ? badge.bn : badge.en}</p>
+                                        <p className="text-xs text-slate-400 dark:text-slate-500">{language === 'bn' ? badge.descBn : badge.descEn}</p>
                                     </div>
                                     <Star className="w-4 h-4 text-amber-500 fill-amber-500 ml-auto flex-shrink-0" />
                                 </div>
@@ -209,12 +209,12 @@ const GamificationModal = ({ isOpen, onClose, day, newBadgeIds = [] }) => {
 
                 {/* Default badge if no new ones */}
                 {newBadges.length === 0 && (
-                    <div className="bg-amber-50 rounded-xl p-4 mb-6 border border-amber-100">
-                        <div className="flex items-center justify-center gap-2 text-amber-600 font-bold mb-1">
+                    <div className="bg-amber-50 dark:bg-amber-900/10 rounded-xl p-4 mb-6 border border-amber-100 dark:border-amber-800/50">
+                        <div className="flex items-center justify-center gap-2 text-amber-600 dark:text-amber-400 font-bold mb-1">
                             <Star className="w-5 h-5 fill-current" />
                             {language === 'bn' ? 'ইস্তিকামাতের মুকুট' : 'Crown of Consistency'}
                         </div>
-                        <p className="text-xs text-amber-700">
+                        <p className="text-xs text-amber-700 dark:text-amber-500">
                             {language === 'bn' ? 'প্রতিদিনের ধারাবাহিকতাই সবচেয়ে বড় পুরস্কার।' : 'Daily consistency is the greatest reward.'}
                         </p>
                     </div>
@@ -222,7 +222,7 @@ const GamificationModal = ({ isOpen, onClose, day, newBadgeIds = [] }) => {
 
                 <button
                     onClick={onClose}
-                    className="w-full btn-primary bg-emerald-600 hover:bg-emerald-700 py-3 text-lg shadow-lg shadow-emerald-200"
+                    className="w-full btn-primary bg-emerald-600 dark:bg-emerald-600 hover:bg-emerald-700 dark:hover:bg-emerald-500 py-3 text-lg shadow-lg shadow-emerald-200 dark:shadow-emerald-950/40"
                 >
                     {language === 'bn' ? 'আলহামদুলিল্লাহ' : 'Alhamdulillah'}
                 </button>

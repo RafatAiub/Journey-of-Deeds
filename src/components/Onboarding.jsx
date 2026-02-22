@@ -35,7 +35,7 @@ const Onboarding = () => {
     ];
 
     return (
-        <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-b from-emerald-50/50 to-white">
+        <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-b from-emerald-50/50 to-white dark:from-slate-900 dark:to-slate-950">
             <div className="max-w-2xl w-full">
                 {/* Welcome Step */}
                 {step === 1 && (
@@ -47,21 +47,21 @@ const Onboarding = () => {
                             <h1 className="text-4xl font-bold text-gradient mb-4">
                                 {t('welcome')}
                             </h1>
-                            <p className="text-xl text-gray-700 mb-2">
+                            <p className="text-xl text-gray-700 dark:text-slate-200 mb-2">
                                 {t('appTitle')}
                             </p>
                         </div>
 
-                        <div className="bg-emerald-50 rounded-xl p-6 mb-6">
-                            <p className="text-gray-700 mb-3 leading-relaxed">
+                        <div className="bg-emerald-50 dark:bg-emerald-900/10 rounded-xl p-6 mb-6">
+                            <p className="text-gray-700 dark:text-slate-300 mb-3 leading-relaxed">
                                 {t('welcomeMessage')}
                             </p>
-                            <p className="text-gray-600 text-sm leading-relaxed">
+                            <p className="text-gray-600 dark:text-slate-400 text-sm leading-relaxed">
                                 {t('privacyMessage')}
                             </p>
                         </div>
 
-                        <p className="text-lg text-emerald-700 font-medium mb-8">
+                        <p className="text-lg text-emerald-700 dark:text-emerald-400 font-medium mb-8">
                             {t('startMessage')}
                         </p>
 
@@ -84,20 +84,20 @@ const Onboarding = () => {
                         <div className="space-y-8">
                             {/* Start Date — Pre-filled */}
                             <div>
-                                <label className="flex items-center gap-2 text-gray-700 font-bold mb-3">
-                                    <Calendar className="w-5 h-5 text-emerald-600" />
+                                <label className="flex items-center gap-2 text-gray-700 dark:text-slate-200 font-bold mb-3">
+                                    <Calendar className="w-5 h-5 text-emerald-600 dark:text-emerald-500" />
                                     {t('ramadanStartDate')}
                                 </label>
 
-                                <div className="flex items-center gap-3 p-4 bg-emerald-50 rounded-2xl border-2 border-emerald-200">
-                                    <div className="w-12 h-12 rounded-xl bg-emerald-100 flex items-center justify-center text-2xl flex-shrink-0">
+                                <div className="flex items-center gap-3 p-4 bg-emerald-50 dark:bg-emerald-900/10 rounded-2xl border-2 border-emerald-200 dark:border-emerald-800/50">
+                                    <div className="w-12 h-12 rounded-xl bg-emerald-100 dark:bg-emerald-900/40 flex items-center justify-center text-2xl flex-shrink-0">
                                         🌙
                                     </div>
                                     <div className="flex-1">
-                                        <p className="font-black text-emerald-800 text-lg">
+                                        <p className="font-black text-emerald-800 dark:text-emerald-300 text-lg">
                                             {language === 'bn' ? '১৯ ফেব্রুয়ারি, ২০২৬' : 'February 19, 2026'}
                                         </p>
-                                        <p className="text-emerald-600 text-sm font-medium">
+                                        <p className="text-emerald-600 dark:text-emerald-400 text-sm font-medium">
                                             {language === 'bn'
                                                 ? '১ রমজান ১৪৪৭ হিজরি (বাংলাদেশ)'
                                                 : '1st Ramadan 1447 AH (Bangladesh)'}
@@ -108,7 +108,7 @@ const Onboarding = () => {
                                     </div>
                                 </div>
 
-                                <p className="text-xs text-gray-400 mt-2 ml-1">
+                                <p className="text-xs text-gray-400 dark:text-slate-500 mt-2 ml-1">
                                     {language === 'bn'
                                         ? 'ভিন্ন তারিখ হলে নিচে পরিবর্তন করুন:'
                                         : 'Different date? Change below:'}
@@ -123,8 +123,8 @@ const Onboarding = () => {
 
                             {/* Quran Goal — with proper inline styling */}
                             <div>
-                                <label className="flex items-center gap-2 text-gray-700 font-bold mb-3">
-                                    <BookOpen className="w-5 h-5 text-emerald-600" />
+                                <label className="flex items-center gap-2 text-gray-700 dark:text-slate-200 font-bold mb-3">
+                                    <BookOpen className="w-5 h-5 text-emerald-600 dark:text-emerald-500" />
                                     {t('quranGoal')}
                                 </label>
                                 <div className="grid grid-cols-3 gap-3">
@@ -136,20 +136,20 @@ const Onboarding = () => {
                                                 rounded-2xl py-4 px-3 font-bold text-center border-2 
                                                 transition-all duration-300 cursor-pointer
                                                 ${targetDays === option.days
-                                                    ? 'bg-emerald-50 border-emerald-500 text-emerald-700 ring-4 ring-emerald-500/10 scale-105'
-                                                    : 'bg-slate-50 border-slate-200 text-slate-500 hover:border-emerald-300 hover:text-emerald-600 hover:bg-emerald-50/50'
+                                                    ? 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-500 text-emerald-700 dark:text-emerald-400 ring-4 ring-emerald-500/10 scale-105'
+                                                    : 'bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-500 hover:border-emerald-300 dark:hover:border-emerald-700 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-emerald-50/50 dark:hover:bg-emerald-900/10'
                                                 }
                                             `}
                                             style={targetDays === option.days ? { boxShadow: '0 4px 14px rgba(16, 185, 129, 0.25)' } : {}}
                                         >
                                             <span className="block text-lg">{option.label}</span>
-                                            <span className={`block text-xs mt-1 ${targetDays === option.days ? 'text-emerald-500' : 'text-slate-400'}`}>
+                                            <span className={`block text-xs mt-1 ${targetDays === option.days ? 'text-emerald-500 dark:text-emerald-400' : 'text-slate-400 dark:text-slate-600'}`}>
                                                 {option.desc}
                                             </span>
                                         </button>
                                     ))}
                                 </div>
-                                <p className="text-sm text-gray-500 mt-3 font-medium text-center">
+                                <p className="text-sm text-gray-500 dark:text-slate-500 mt-3 font-medium text-center">
                                     {language === 'bn'
                                         ? `📖 ${targetDays} দিনে কুরআন খতমের পরিকল্পনা`
                                         : `📖 Plan to complete Quran in ${targetDays} days`}
@@ -160,7 +160,7 @@ const Onboarding = () => {
                             <div className="flex gap-4 pt-2">
                                 <button
                                     onClick={() => setStep(1)}
-                                    className="flex-1 rounded-2xl px-6 py-4 font-bold bg-slate-50 text-slate-700 border-2 border-slate-200 hover:bg-slate-100 active:scale-95 transition-all duration-200"
+                                    className="flex-1 rounded-2xl px-6 py-4 font-bold bg-slate-50 dark:bg-slate-800/50 text-slate-700 dark:text-slate-200 border-2 border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 active:scale-95 transition-all duration-200"
                                 >
                                     {t('cancel')}
                                 </button>

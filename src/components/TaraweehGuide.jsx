@@ -130,7 +130,7 @@ const TaraweehGuide = ({ ramadanDay, taraweehData, tarawihRakats, onUpdate, onTa
     const tarawihSawab = getSawab('tarawih', language);
 
     return (
-        <section className={`card !p-0 overflow-hidden border-transparent bg-white shadow-2xl ${ps.glow} transition-all duration-700`}>
+        <section className={`card !p-0 overflow-hidden border-transparent bg-white dark:bg-slate-900 shadow-2xl ${ps.glow} transition-all duration-700`}>
 
             {/* ── SACRED HEADER ── */}
             <div className={`bg-gradient-to-br ${ps.header} p-7 sm:p-10 text-white relative overflow-hidden group`}>
@@ -206,27 +206,27 @@ const TaraweehGuide = ({ ramadanDay, taraweehData, tarawihRakats, onUpdate, onTa
                 </div>
             </div>
 
-            <div className="p-6 sm:p-10 space-y-8 bg-gradient-to-b from-white to-slate-50/50">
+            <div className="p-6 sm:p-10 space-y-8 bg-gradient-to-b from-white to-slate-50/50 dark:from-slate-900 dark:to-slate-950/50">
 
                 {/* ── TARAWIH RAKAT CONTROLLER ── */}
                 <div className={`p-6 sm:p-8 rounded-[2.5rem] transition-all duration-500 border-2 ${tarawihRakats > 0
-                    ? 'bg-gradient-to-br from-indigo-50/50 to-white border-indigo-100 shadow-xl shadow-indigo-100/20'
-                    : 'bg-slate-50/40 border-slate-100/50'}`}>
+                    ? 'bg-gradient-to-br from-indigo-50/50 to-white dark:from-indigo-900/20 dark:to-slate-900 border-indigo-100 dark:border-indigo-800/50 shadow-xl shadow-indigo-100/20 dark:shadow-indigo-950/20'
+                    : 'bg-slate-50/40 dark:bg-slate-800/20 border-slate-100/50 dark:border-slate-800/50'}`}>
                     <div className="flex items-center justify-between mb-5">
                         <div className="flex items-center gap-4">
-                            <div className={`w-14 h-14 rounded-2xl flex items-center justify-center text-3xl shadow-inner transition-all transform hover:rotate-12 ${tarawihRakats > 0 ? 'bg-indigo-100' : 'bg-slate-100'}`}>
+                            <div className={`w-14 h-14 rounded-2xl flex items-center justify-center text-3xl shadow-inner transition-all transform hover:rotate-12 ${tarawihRakats > 0 ? 'bg-indigo-100 dark:bg-indigo-900/40' : 'bg-slate-100 dark:bg-slate-800'}`}>
                                 🕌
                             </div>
                             <div>
-                                <h3 className="font-black text-slate-800 text-base sm:text-lg tracking-tight">{t('tarawih')}</h3>
-                                <p className="text-xs text-slate-400 font-bold uppercase tracking-wider mt-0.5">
+                                <h3 className="font-black text-slate-800 dark:text-white text-base sm:text-lg tracking-tight">{t('tarawih')}</h3>
+                                <p className="text-xs text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider mt-0.5">
                                     {tarawihRakats > 0
                                         ? `${tarawihRakats} ${t('rakats')}`
                                         : (lang === 'bn' ? 'আজ রাতের ইবাদত' : 'Tonight\'s Worship')}
                                 </p>
                             </div>
                         </div>
-                        <div className={`w-16 h-16 rounded-[2rem] flex items-center justify-center font-black text-4xl transition-all duration-500 ${tarawihRakats > 0 ? 'bg-indigo-600 text-white shadow-2xl shadow-indigo-200' : 'bg-white text-slate-300 border-2 border-slate-100'}`}>
+                        <div className={`w-16 h-16 rounded-[2rem] flex items-center justify-center font-black text-4xl transition-all duration-500 ${tarawihRakats > 0 ? 'bg-indigo-600 text-white shadow-2xl shadow-indigo-200 dark:shadow-indigo-950/40' : 'bg-white dark:bg-slate-900 text-slate-300 dark:text-slate-700 border-2 border-slate-100 dark:border-slate-800'}`}>
                             {tarawihRakats}
                         </div>
                     </div>
@@ -239,9 +239,9 @@ const TaraweehGuide = ({ ramadanDay, taraweehData, tarawihRakats, onUpdate, onTa
                             onTarawihUpdate(val);
                             if (val > 0) showToast(language === 'bn' ? `${val} রাকাত তারাবীহ সেট করা হয়েছে! মাশাআল্লাহ` : `Set ${val} Rakats! MashaAllah`, 'success');
                         }}
-                        className="w-full h-2.5 bg-indigo-100 rounded-lg appearance-none cursor-pointer accent-indigo-600 mb-2 shadow-inner"
+                        className="w-full h-2.5 bg-indigo-100 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-indigo-600 mb-2 shadow-inner"
                     />
-                    <div className="flex justify-between text-[11px] font-black text-slate-300 mt-2 px-1 tracking-widest">
+                    <div className="flex justify-between text-[11px] font-black text-slate-300 dark:text-slate-700 mt-2 px-1 tracking-widest">
                         <span>0</span><span>8</span><span>12</span><span>20</span>
                     </div>
 
@@ -261,51 +261,51 @@ const TaraweehGuide = ({ ramadanDay, taraweehData, tarawihRakats, onUpdate, onTa
                         <p className="text-[10px] font-black uppercase tracking-[0.2em] mb-0.5 opacity-60">
                             {lang === 'bn' ? 'আজকের লক্ষ্য' : 'Today\'s Mission'}
                         </p>
-                        <p className="text-sm sm:text-base font-black text-slate-800 tracking-tight">{uxTask}</p>
+                        <p className="text-sm sm:text-base font-black text-slate-800 dark:text-slate-100 tracking-tight">{uxTask}</p>
                     </div>
                 </div>
 
                 {/* ── PREVIEW INTERACTIVE ── */}
-                <div className="rounded-[2.5rem] border-2 border-slate-100 overflow-hidden bg-white hover:border-indigo-100 transition-all shadow-sm">
+                <div className="rounded-[2.5rem] border-2 border-slate-100 dark:border-slate-800 overflow-hidden bg-white dark:bg-slate-900 hover:border-indigo-100 dark:hover:border-indigo-900/50 transition-all shadow-sm">
                     <button
                         onClick={() => {
                             setPreviewOpen(!previewOpen);
                             if (!data.previewSeen) handleUpdate('previewSeen', true);
                         }}
-                        className={`w-full flex items-center justify-between p-6 sm:p-7 transition-all ${previewOpen ? 'bg-indigo-50/30' : 'bg-white'}`}
+                        className={`w-full flex items-center justify-between p-6 sm:p-7 transition-all ${previewOpen ? 'bg-indigo-50/30 dark:bg-indigo-900/10' : 'bg-white dark:bg-slate-900'}`}
                     >
                         <div className="flex items-center gap-4">
-                            <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-lg transition-transform ${previewOpen ? 'bg-indigo-600 text-white rotate-6' : 'bg-indigo-100 text-indigo-600'}`}>
+                            <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-lg transition-transform ${previewOpen ? 'bg-indigo-600 text-white rotate-6' : 'bg-indigo-100 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400'}`}>
                                 <BookOpen className="w-6 h-6" />
                             </div>
                             <div className="text-left">
-                                <h3 className="font-black text-slate-800 text-base">{t('tonightsPreview')}</h3>
-                                <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.1em]">
+                                <h3 className="font-black text-slate-800 dark:text-white text-base">{t('tonightsPreview')}</h3>
+                                <p className="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase tracking-[0.1em]">
                                     {lang === 'bn' ? 'কুরআনের মূল থিম ও সারাংশ' : 'Quranic Themes & Summary'}
                                 </p>
                             </div>
                         </div>
                         <div className="flex items-center gap-3">
                             {data.previewSeen && (
-                                <div className="bg-emerald-100 p-1.5 rounded-full animate-fade-in">
-                                    <CheckCircle className="w-4 h-4 text-emerald-600" />
+                                <div className="bg-emerald-100 dark:bg-emerald-900/40 p-1.5 rounded-full animate-fade-in">
+                                    <CheckCircle className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                                 </div>
                             )}
-                            {previewOpen ? <ChevronUp className="w-6 h-6 text-slate-300" /> : <ChevronDown className="w-6 h-6 text-slate-300" />}
+                            {previewOpen ? <ChevronUp className="w-6 h-6 text-slate-300 dark:text-slate-700" /> : <ChevronDown className="w-6 h-6 text-slate-300 dark:text-slate-700" />}
                         </div>
                     </button>
 
                     {previewOpen && (
-                        <div className="p-6 sm:p-8 space-y-8 bg-white border-t border-slate-50 animate-fade-in">
+                        <div className="p-6 sm:p-8 space-y-8 bg-white dark:bg-slate-900 border-t border-slate-50 dark:border-slate-800 animate-fade-in">
 
                             {/* Juz Summary Medallion */}
                             {juzSummary && (
-                                <div className="p-6 rounded-[2rem] bg-indigo-50/40 border-2 border-indigo-100/50 relative overflow-hidden">
-                                    <Sparkles className="absolute top-4 right-4 w-6 h-6 text-indigo-200 opacity-50" />
-                                    <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-500 mb-3 flex items-center gap-2">
+                                <div className="p-6 rounded-[2rem] bg-indigo-50/40 dark:bg-indigo-950/20 border-2 border-indigo-100/50 dark:border-indigo-800/40 relative overflow-hidden">
+                                    <Sparkles className="absolute top-4 right-4 w-6 h-6 text-indigo-200 dark:text-indigo-800 opacity-50" />
+                                    <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-500 dark:text-indigo-400 mb-3 flex items-center gap-2">
                                         <MessageCircle className="w-4 h-4" /> {t('juzSummaryLabel')}
                                     </h4>
-                                    <p className="text-sm sm:text-base font-bold text-slate-700 leading-relaxed italic border-l-4 border-indigo-400 pl-4">
+                                    <p className="text-sm sm:text-base font-bold text-slate-700 dark:text-slate-200 leading-relaxed italic border-l-4 border-indigo-400 dark:border-indigo-600 pl-4">
                                         "{juzSummary}"
                                     </p>
                                 </div>
@@ -316,12 +316,12 @@ const TaraweehGuide = ({ ramadanDay, taraweehData, tarawihRakats, onUpdate, onTa
                                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                                     <div className="flex items-center gap-2">
                                         <div className={`w-1.5 h-6 rounded-full ${ps.iconBg}`} />
-                                        <h4 className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-800">
+                                        <h4 className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-800 dark:text-slate-100">
                                             {t('themes')}
                                         </h4>
                                     </div>
-                                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
-                                        <Sparkles className="w-3 h-3 text-amber-400" />
+                                    <p className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
+                                        <Sparkles className="w-3 h-3 text-amber-400 dark:text-amber-500" />
                                         {t('themeFocusLabel')}
                                     </p>
                                 </div>
@@ -334,7 +334,7 @@ const TaraweehGuide = ({ ramadanDay, taraweehData, tarawihRakats, onUpdate, onTa
                                                 onClick={() => handleUpdate('selectedTheme', isSelected ? '' : theme)}
                                                 className={`group relative flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-3 sm:py-4 rounded-[1.2rem] sm:rounded-[1.5rem] text-xs sm:text-sm font-black transition-all duration-500 border-2 ${isSelected
                                                     ? `${ps.iconBg} text-white border-transparent shadow-2xl scale-105 z-10`
-                                                    : 'bg-white text-slate-500 border-slate-100 hover:border-slate-300 hover:text-slate-800'
+                                                    : 'bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-500 border-slate-100 dark:border-slate-800'
                                                     }`}
                                             >
                                                 {isSelected ? (
@@ -342,7 +342,7 @@ const TaraweehGuide = ({ ramadanDay, taraweehData, tarawihRakats, onUpdate, onTa
                                                         <CheckCircle className="w-4 h-4 text-white" />
                                                     </div>
                                                 ) : (
-                                                    <div className={`w-2.5 h-2.5 rounded-full bg-slate-200 group-hover:scale-125 transition-transform`} />
+                                                    <div className={`w-2.5 h-2.5 rounded-full bg-slate-200 dark:bg-slate-700 group-hover:scale-125 transition-transform`} />
                                                 )}
                                                 <span className="tracking-tight">{theme}</span>
                                                 {isSelected && (
@@ -363,7 +363,7 @@ const TaraweehGuide = ({ ramadanDay, taraweehData, tarawihRakats, onUpdate, onTa
                                     href={`${import.meta.env.BASE_URL}taraweeh_master.pdf#page=${targetPage}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="w-full group relative p-6 rounded-[2rem] bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white overflow-hidden shadow-2xl hover:scale-[1.02] transition-all cursor-pointer block text-left border border-white/5 no-underline"
+                                    className="w-full group relative p-6 rounded-[2rem] bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 text-white overflow-hidden shadow-2xl hover:scale-[1.02] transition-all cursor-pointer block text-left border border-white/5 no-underline"
                                 >
                                     <div className="absolute top-0 right-0 p-8 opacity-10 rotate-12 group-hover:rotate-45 transition-transform">
                                         <FileText className="w-24 h-24" />
@@ -394,12 +394,12 @@ const TaraweehGuide = ({ ramadanDay, taraweehData, tarawihRakats, onUpdate, onTa
                                             {t('viewChapterPdf')}
                                         </h3>
 
-                                        <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-white bg-indigo-600 group-hover:bg-indigo-500 w-fit px-5 py-2.5 rounded-full shadow-lg shadow-indigo-900/50 transition-all">
+                                        <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-white bg-indigo-600 group-hover:bg-indigo-500 w-fit px-5 py-2.5 rounded-full shadow-lg shadow-indigo-900/50 dark:shadow-indigo-950/20 transition-all">
                                             {t('openPdfSummary')} <ExternalLink className="w-3.5 h-3.5 ml-1" />
                                         </div>
                                     </div>
                                 </a>
-                                <p className="text-[10px] sm:text-xs text-slate-400 font-bold text-center px-4 leading-relaxed">
+                                <p className="text-[10px] sm:text-xs text-slate-400 dark:text-slate-500 font-bold text-center px-4 leading-relaxed">
                                     <Info className="w-3 h-3 inline mr-1 mb-0.5" />
                                     {t('pdfInstruction')}
                                 </p>
@@ -407,12 +407,12 @@ const TaraweehGuide = ({ ramadanDay, taraweehData, tarawihRakats, onUpdate, onTa
 
                             {/* Keywords Grid */}
                             <div>
-                                <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-amber-600 mb-3 flex items-center gap-2">
+                                <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-amber-600 dark:text-amber-500 mb-3 flex items-center gap-2">
                                     <Star className="w-4 h-4" /> {t('keyWordsLabel')}
                                 </h4>
                                 <div className="flex flex-wrap gap-2">
                                     {keyWords.map((word, i) => (
-                                        <span key={i} className="px-4 py-2 rounded-xl bg-amber-50/50 text-amber-700 text-xs font-black border border-amber-100/50 shadow-sm">
+                                        <span key={i} className="px-4 py-2 rounded-xl bg-amber-50/50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400 text-xs font-black border border-amber-100/50 dark:border-amber-800/40 shadow-sm">
                                             {word}
                                         </span>
                                     ))}
@@ -420,7 +420,7 @@ const TaraweehGuide = ({ ramadanDay, taraweehData, tarawihRakats, onUpdate, onTa
                             </div>
 
                             {/* Featured Ayah - High Design */}
-                            <div className="bg-stone-50 rounded-[2rem] p-7 border-2 border-stone-100 relative group/ayah">
+                            <div className="bg-stone-50 dark:bg-slate-800/50 rounded-[2rem] p-7 border-2 border-stone-100 dark:border-slate-700 relative group/ayah">
                                 <div className="absolute top-0 right-0 p-5 opacity-[0.03] group-hover/ayah:scale-110 transition-transform">
                                     <Moon className="w-24 h-24" />
                                 </div>
@@ -428,14 +428,14 @@ const TaraweehGuide = ({ ramadanDay, taraweehData, tarawihRakats, onUpdate, onTa
                                     {t('featuredAyah')}
                                 </h4>
                                 <div className="relative z-10">
-                                    <p className="text-lg sm:text-xl font-serif font-bold text-stone-800 leading-snug mb-5 tracking-tight">
+                                    <p className="text-lg sm:text-xl font-serif font-bold text-stone-800 dark:text-slate-100 leading-snug mb-5 tracking-tight">
                                         “{ayah.text}”
                                     </p>
                                     <div className="flex items-center gap-3">
-                                        <div className="w-8 h-8 rounded-lg bg-stone-800 text-white flex items-center justify-center font-black text-[10px]">
+                                        <div className="w-8 h-8 rounded-lg bg-stone-800 dark:bg-slate-700 text-white flex items-center justify-center font-black text-[10px]">
                                             📖
                                         </div>
-                                        <p className="text-xs font-black text-stone-500 uppercase tracking-widest">
+                                        <p className="text-xs font-black text-stone-500 dark:text-stone-400 uppercase tracking-widest">
                                             {ayah.surah} • {ayah.ayahNum}
                                         </p>
                                     </div>
@@ -445,21 +445,21 @@ const TaraweehGuide = ({ ramadanDay, taraweehData, tarawihRakats, onUpdate, onTa
                             {/* Extra Ayats Accordion-style */}
                             {extraAyats.length > 0 && (
                                 <div className="pt-4">
-                                    <h4 className="text-[10px] font-black uppercase tracking-[0.1em] text-slate-400 mb-4 flex items-center gap-2 bg-slate-50 px-3 py-1.5 rounded-lg w-fit">
+                                    <h4 className="text-[10px] font-black uppercase tracking-[0.1em] text-slate-400 dark:text-slate-500 mb-4 flex items-center gap-2 bg-slate-50 dark:bg-slate-800/50 px-3 py-1.5 rounded-lg w-fit">
                                         {t('extraAyatsLabel')}
                                     </h4>
                                     <div className="grid grid-cols-1 gap-4">
                                         {extraAyats.map((ex, i) => {
                                             const exAyah = ex[lang] || ex.en;
                                             return (
-                                                <div key={i} className="p-5 rounded-2xl border border-slate-100 bg-white hover:shadow-lg hover:shadow-indigo-50 transition-all group">
+                                                <div key={i} className="p-5 rounded-2xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 hover:shadow-lg hover:shadow-indigo-50 dark:hover:shadow-indigo-950/20 transition-all group">
                                                     <div className="flex items-start gap-3">
-                                                        <div className="w-2 h-2 rounded-full bg-indigo-200 mt-2 group-hover:bg-indigo-500 transition-colors" />
+                                                        <div className="w-2 h-2 rounded-full bg-indigo-200 dark:bg-indigo-900/50 mt-2 group-hover:bg-indigo-500 transition-colors" />
                                                         <div>
-                                                            <p className="text-xs sm:text-sm font-bold text-slate-700 mb-2 leading-relaxed">
+                                                            <p className="text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-200 mb-2 leading-relaxed">
                                                                 {exAyah.text}
                                                             </p>
-                                                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                                                            <p className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">
                                                                 {exAyah.surah} • {exAyah.ayahNum}
                                                             </p>
                                                         </div>
@@ -472,19 +472,19 @@ const TaraweehGuide = ({ ramadanDay, taraweehData, tarawihRakats, onUpdate, onTa
                             )}
 
                             {/* Actionable Deed Section */}
-                            <div className="flex flex-col sm:flex-row items-center gap-4 p-6 rounded-[2rem] bg-rose-50 border-2 border-rose-100 shadow-xl shadow-rose-100/20">
-                                <div className="w-16 h-16 rounded-[1.5rem] bg-white flex items-center justify-center text-4xl shadow-inner flex-shrink-0 border border-rose-100">
+                            <div className="flex flex-col sm:flex-row items-center gap-4 p-6 rounded-[2rem] bg-rose-50 dark:bg-rose-950/20 border-2 border-rose-100 dark:border-rose-900/30 shadow-xl shadow-rose-100/20 dark:shadow-rose-950/20">
+                                <div className="w-16 h-16 rounded-[1.5rem] bg-white dark:bg-slate-800 flex items-center justify-center text-4xl shadow-inner flex-shrink-0 border border-rose-100 dark:border-rose-900/40">
                                     ❤️
                                 </div>
                                 <div className="flex-1 text-center sm:text-left">
                                     <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-rose-400 mb-1">{t('smallAmol')}</h4>
-                                    <p className="text-sm sm:text-base font-black text-rose-900 tracking-tight">{amol}</p>
+                                    <p className="text-sm sm:text-base font-black text-rose-900 dark:text-rose-100 tracking-tight">{amol}</p>
                                 </div>
                                 <button
                                     onClick={(e) => { e.stopPropagation(); handleUpdate('amolDone', !data.amolDone); }}
                                     className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all shadow-xl active:scale-95 ${data.amolDone
-                                        ? 'bg-rose-500 text-white shadow-rose-200'
-                                        : 'bg-white border-2 border-rose-200 text-rose-300'}`}
+                                        ? 'bg-rose-500 text-white shadow-rose-200 dark:shadow-rose-900/40'
+                                        : 'bg-white dark:bg-slate-900 border-2 border-rose-200 dark:border-rose-800/50 text-rose-300 dark:text-rose-700'}`}
                                 >
                                     <CheckCircle className="w-7 h-7" />
                                 </button>
@@ -495,44 +495,44 @@ const TaraweehGuide = ({ ramadanDay, taraweehData, tarawihRakats, onUpdate, onTa
 
                 {/* ── REFLECTION HIGHLIGHT ── */}
                 {tarawihRakats > 0 && (
-                    <div className="rounded-[2.5rem] border-2 border-slate-100 overflow-hidden bg-white hover:border-purple-200 transition-all shadow-sm">
+                    <div className="rounded-[2.5rem] border-2 border-slate-100 dark:border-slate-800 overflow-hidden bg-white dark:bg-slate-900 hover:border-purple-200 dark:hover:border-purple-900 transition-all shadow-sm">
                         <button
                             onClick={() => setReflectOpen(!reflectOpen)}
-                            className={`w-full flex items-center justify-between p-6 sm:p-7 transition-all ${reflectOpen ? 'bg-purple-50/30' : 'bg-white'}`}
+                            className={`w-full flex items-center justify-between p-6 sm:p-7 transition-all ${reflectOpen ? 'bg-purple-50/30 dark:bg-purple-950/20' : 'bg-white dark:bg-slate-900'}`}
                         >
                             <div className="flex items-center gap-4">
-                                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-lg transition-transform ${reflectOpen ? 'bg-purple-600 text-white -rotate-6' : 'bg-purple-100 text-purple-600'}`}>
+                                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-lg transition-transform ${reflectOpen ? 'bg-purple-600 text-white -rotate-6' : 'bg-purple-100 dark:bg-purple-900 text-purple-600 dark:text-purple-400'}`}>
                                     <MessageCircle className="w-6 h-6" />
                                 </div>
                                 <div className="text-left">
-                                    <h3 className="font-black text-slate-800 text-base">{t('reflectTitle')}</h3>
-                                    <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.1em]">
+                                    <h3 className="font-black text-slate-800 dark:text-white text-base">{t('reflectTitle')}</h3>
+                                    <p className="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase tracking-[0.1em]">
                                         {lang === 'bn' ? 'তারাবীহের পর ২ মিনিট আক্ষেপ' : '2 min post-prayer reflection'}
                                     </p>
                                 </div>
                             </div>
                             <div className="flex items-center gap-3">
-                                {data.reflectionDone && <CheckCircle className="w-4 h-4 text-emerald-500" />}
-                                {reflectOpen ? <ChevronUp className="w-6 h-6 text-slate-300" /> : <ChevronDown className="w-6 h-6 text-slate-300" />}
+                                {data.reflectionDone && <CheckCircle className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />}
+                                {reflectOpen ? <ChevronUp className="w-6 h-6 text-slate-300 dark:text-slate-700" /> : <ChevronDown className="w-6 h-6 text-slate-300 dark:text-slate-700" />}
                             </div>
                         </button>
 
                         {reflectOpen && (
-                            <div className="p-6 sm:p-8 space-y-6 bg-white border-t border-purple-50 animate-fade-in">
+                            <div className="p-6 sm:p-8 space-y-6 bg-white dark:bg-slate-900 border-t border-purple-50 dark:border-purple-800 animate-fade-in">
 
                                 {/* Sacred Question */}
                                 <div>
                                     <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-purple-400 mb-3 flex items-center gap-2">
                                         <Pen className="w-4 h-4" /> {t('reflectionQuestion')}
                                     </h4>
-                                    <p className="text-base font-black text-purple-950 bg-purple-50 p-5 rounded-[1.5rem] border border-purple-100 mb-5 relative group/q">
-                                        <Sparkles className="absolute -top-2 -right-2 w-6 h-6 text-purple-300 animate-pulse" />
+                                    <p className="text-base font-black text-purple-950 dark:text-purple-100 bg-purple-50 dark:bg-purple-950/20 p-5 rounded-[1.5rem] border border-purple-100 dark:border-purple-900/50 mb-5 relative group/q">
+                                        <Sparkles className="absolute -top-2 -right-2 w-6 h-6 text-purple-300 dark:text-purple-700 animate-pulse" />
                                         {reflQ}
                                     </p>
 
                                     {/* Focus Reminder */}
                                     {data.selectedTheme && (
-                                        <div className="flex items-center gap-3 mb-5 p-4 bg-slate-50 border-2 border-slate-100 rounded-2xl border-dotted font-bold text-xs text-slate-600">
+                                        <div className="flex items-center gap-3 mb-5 p-4 bg-slate-50 dark:bg-slate-800/50 border-2 border-slate-100 dark:border-slate-800 rounded-2xl border-dotted font-bold text-xs text-slate-600 dark:text-slate-400">
                                             <div className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse" />
                                             {t('themeSelectionReflection')}: <span className="bg-indigo-600 text-white px-2 py-0.5 rounded-lg text-[10px] font-black">{data.selectedTheme}</span>
                                         </div>
@@ -543,21 +543,21 @@ const TaraweehGuide = ({ ramadanDay, taraweehData, tarawihRakats, onUpdate, onTa
                                         onChange={(e) => handleTextChange('reflectionNote', e.target.value)}
                                         onBlur={() => { if (data.reflectionNote.trim()) handleUpdate('reflectionDone', true); }}
                                         placeholder={t('reflectionNotePlaceholder')}
-                                        className="w-full p-4 rounded-2xl border-2 border-purple-100 text-sm font-bold text-slate-700 placeholder:text-slate-300 focus:border-purple-300 focus:ring-4 focus:ring-purple-100 transition-all resize-none shadow-inner"
+                                        className="w-full p-4 rounded-2xl border-2 border-purple-100 dark:border-slate-800 bg-white dark:bg-slate-950 text-sm font-bold text-slate-700 dark:text-slate-200 placeholder:text-slate-300 dark:placeholder:text-slate-700 focus:border-purple-300 dark:focus:border-purple-800 focus:ring-4 focus:ring-purple-100 dark:focus:ring-purple-900/30 transition-all resize-none shadow-inner"
                                         rows={3}
                                     />
                                 </div>
 
                                 {/* Next Day Intent */}
                                 <div>
-                                    <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-amber-500 mb-3 flex items-center gap-2">
+                                    <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-amber-500 dark:text-amber-400 mb-3 flex items-center gap-2">
                                         <Flame className="w-4 h-4" /> {t('tomorrowNiyyah')}
                                     </h4>
                                     <textarea
                                         value={data.tomorrowNiyyah}
                                         onChange={(e) => handleTextChange('tomorrowNiyyah', e.target.value)}
                                         placeholder={t('niyyahPlaceholder')}
-                                        className="w-full p-4 rounded-2xl border-2 border-amber-100 text-sm font-bold text-slate-700 placeholder:text-slate-300 focus:border-amber-300 focus:ring-4 focus:ring-amber-100 transition-all resize-none shadow-inner"
+                                        className="w-full p-4 rounded-2xl border-2 border-amber-100 dark:border-slate-800 bg-white dark:bg-slate-950 text-sm font-bold text-slate-700 dark:text-slate-200 placeholder:text-slate-300 dark:placeholder:text-slate-700 focus:border-amber-300 dark:focus:border-amber-800 focus:ring-4 focus:ring-amber-100 dark:focus:ring-amber-900/30 transition-all resize-none shadow-inner"
                                         rows={2}
                                     />
                                 </div>
@@ -569,10 +569,10 @@ const TaraweehGuide = ({ ramadanDay, taraweehData, tarawihRakats, onUpdate, onTa
                 {/* ── SACRED 30-DAY JOURNEY MAP ── */}
                 <div className="pt-4 px-2">
                     <div className="flex items-center justify-between mb-5">
-                        <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 flex items-center gap-2">
+                        <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 dark:text-slate-500 flex items-center gap-2">
                             <CalendarIcon className="w-4 h-4" /> {lang === 'bn' ? '৩০ দিনের পবিত্র সফর' : 'The 30-Day Journey'}
                         </h4>
-                        <div className="h-0.5 flex-1 mx-4 bg-slate-100 rounded-full" />
+                        <div className="h-0.5 flex-1 mx-4 bg-slate-100 dark:bg-slate-800 rounded-full" />
                     </div>
                     <div className="grid grid-cols-6 sm:grid-cols-10 gap-2 sm:gap-3">
                         {Array.from({ length: 30 }, (_, i) => i + 1).map(d => {
@@ -583,12 +583,12 @@ const TaraweehGuide = ({ ramadanDay, taraweehData, tarawihRakats, onUpdate, onTa
                                 <div
                                     key={d}
                                     className={`relative aspect-square rounded-xl sm:rounded-2xl flex flex-col items-center justify-center text-[11px] font-black transition-all group overflow-hidden border-2 cursor-default ${isToday
-                                        ? `bg-gradient-to-br ${ps.header} text-white border-transparent shadow-xl scale-110 ring-4 ring-white ring-inset`
+                                        ? `bg-gradient-to-br ${ps.header} text-white border-transparent shadow-xl scale-110 ring-4 ring-white dark:ring-slate-900 ring-inset`
                                         : isPast
-                                            ? 'bg-white text-emerald-600 border-emerald-100 shadow-sm'
+                                            ? 'bg-white dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 border-emerald-100 dark:border-emerald-900/30 shadow-sm'
                                             : isBuffer
-                                                ? 'bg-white text-slate-300 border-purple-50 border-dotted'
-                                                : 'bg-white text-slate-200 border-slate-50'
+                                                ? 'bg-white dark:bg-slate-900 text-slate-300 dark:text-slate-700 border-purple-50 dark:border-purple-900/30 border-dotted'
+                                                : 'bg-white dark:bg-slate-900 text-slate-200 dark:text-slate-800 border-slate-50 dark:border-slate-800'
                                         }`}
                                 >
                                     {isPast && (

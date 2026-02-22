@@ -59,17 +59,17 @@ const DhikrCounters = ({ dhikrData, onUpdate }) => {
     };
 
     return (
-        <section className="card !p-4 sm:!p-8 border-transparent bg-slate-50/50">
+        <section className="card !p-4 sm:!p-8 border-transparent bg-slate-50/50 dark:bg-slate-800/30">
             <header className="flex items-center justify-between mb-6 sm:mb-10 px-1 sm:px-2">
                 <div>
-                    <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">{t('dhikr')}</h2>
-                    <p className="text-slate-400 text-xs font-bold uppercase tracking-widest">
+                    <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">{t('dhikr')}</h2>
+                    <p className="text-slate-400 dark:text-slate-500 text-xs font-bold uppercase tracking-widest">
                         {language === 'bn' ? 'স্মরণ ও তাসবিহ' : 'Remembrance'}
                     </p>
                 </div>
                 <button
                     onClick={() => setShowResetConfirm(true)}
-                    className="p-3 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-2xl transition-all group"
+                    className="p-3 text-slate-400 dark:text-slate-500 hover:text-red-500 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-2xl transition-all group"
                     title={t('resetAll')}
                 >
                     <RotateCcw className="w-5 h-5 group-hover:-rotate-90 transition-transform" />
@@ -119,17 +119,17 @@ const DhikrCounters = ({ dhikrData, onUpdate }) => {
 
 const TasbihCard = ({ label, count, color, icon, onUpdate, onManual, language, sawabKey }) => {
     const colorMap = {
-        emerald: 'from-emerald-400 to-teal-500 shadow-emerald-100',
-        teal: 'from-teal-400 to-cyan-500 shadow-teal-100',
-        blue: 'from-blue-400 to-indigo-500 shadow-blue-100',
-        purple: 'from-purple-400 to-fuchsia-500 shadow-purple-100'
+        emerald: 'from-emerald-400 to-teal-500 shadow-emerald-100 dark:shadow-emerald-900/20',
+        teal: 'from-teal-400 to-cyan-500 shadow-teal-100 dark:shadow-teal-900/20',
+        blue: 'from-blue-400 to-indigo-500 shadow-blue-100 dark:shadow-blue-900/20',
+        purple: 'from-purple-400 to-fuchsia-500 shadow-purple-100 dark:shadow-purple-900/20'
     };
 
     return (
-        <div className="group bg-white rounded-[2rem] p-4 sm:p-6 border border-slate-100 shadow-xl shadow-slate-200/40 hover:shadow-2xl hover:shadow-slate-300/50 transition-all duration-500">
+        <div className="group bg-white dark:bg-slate-900 rounded-[2rem] p-4 sm:p-6 border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/40 dark:shadow-slate-950/20 hover:shadow-2xl hover:shadow-slate-300/50 dark:hover:shadow-slate-950 transition-all duration-500">
             <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3 px-1 sm:px-2">
                 <span className="text-xl sm:text-2xl drop-shadow-sm">{icon}</span>
-                <h4 className="text-xs sm:text-sm font-black text-slate-900 group-hover:text-emerald-600 transition-colors uppercase tracking-tight">{label}</h4>
+                <h4 className="text-xs sm:text-sm font-black text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors uppercase tracking-tight">{label}</h4>
             </div>
             {sawabKey && (() => {
                 const s = getSawab(sawabKey, language);
@@ -152,7 +152,7 @@ const TasbihCard = ({ label, count, color, icon, onUpdate, onManual, language, s
                 <div className="flex items-center justify-between w-full gap-2 sm:gap-4">
                     <button
                         onClick={() => onUpdate(-1)}
-                        className="w-9 h-9 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-slate-50 text-slate-400 flex items-center justify-center font-black text-xl sm:text-2xl hover:bg-slate-100 transition-colors active:scale-95"
+                        className="w-9 h-9 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-slate-50 dark:bg-slate-800 text-slate-400 dark:text-slate-500 flex items-center justify-center font-black text-xl sm:text-2xl hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors active:scale-95"
                     >
                         -
                     </button>
@@ -163,13 +163,13 @@ const TasbihCard = ({ label, count, color, icon, onUpdate, onManual, language, s
                             min="0"
                             value={count}
                             onChange={(e) => onManual(e.target.value)}
-                            className="w-full text-3xl sm:text-5xl font-black text-slate-900 bg-transparent text-center outline-none"
+                            className="w-full text-3xl sm:text-5xl font-black text-slate-900 dark:text-white bg-transparent text-center outline-none"
                         />
                     </div>
 
                     <button
                         onClick={() => onUpdate(1)}
-                        className="w-9 h-9 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-slate-50 text-slate-400 flex items-center justify-center font-black text-xl sm:text-2xl hover:bg-slate-100 transition-colors active:scale-95"
+                        className="w-9 h-9 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-slate-50 dark:bg-slate-800 text-slate-400 dark:text-slate-500 flex items-center justify-center font-black text-xl sm:text-2xl hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors active:scale-95"
                     >
                         +
                     </button>

@@ -112,15 +112,15 @@ const TodayDashboard = () => {
 
             {/* Welcome-back banner for users who skipped days */}
             {hasSkippedDays && (
-                <div className="bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-100 rounded-[2rem] p-5 flex items-start gap-4 animate-fade-in">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-emerald-100 flex items-center justify-center flex-shrink-0 text-xl sm:text-2xl">
+                <div className="bg-gradient-to-r from-emerald-50 to-teal-50 dark:from-emerald-900/10 dark:to-teal-900/10 border border-emerald-100 dark:border-emerald-800/30 rounded-[2rem] p-5 flex items-start gap-4 animate-fade-in">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-emerald-100 dark:bg-emerald-900/40 flex items-center justify-center flex-shrink-0 text-xl sm:text-2xl">
                         🌙
                     </div>
                     <div>
-                        <p className="font-black text-emerald-800 text-base sm:text-lg">
+                        <p className="font-black text-emerald-800 dark:text-emerald-400 text-base sm:text-lg">
                             {language === 'bn' ? 'আলহামদুলিল্লাহ, আপনি ফিরে এসেছেন!' : 'Alhamdulillah, you\'re back!'}
                         </p>
-                        <p className="text-emerald-600 text-sm font-medium mt-1">
+                        <p className="text-emerald-600 dark:text-emerald-500 text-sm font-medium mt-1">
                             {language === 'bn'
                                 ? 'আজ থেকে নতুন করে শুরু করুন। ছোট আমলও আল্লাহর কাছে মূল্যবান।'
                                 : 'Start fresh from today. Even small deeds are precious to Allah.'}
@@ -134,7 +134,7 @@ const TodayDashboard = () => {
                 {!isToday && (
                     <Link
                         to="/calendar"
-                        className="absolute -left-1 sm:-left-2 top-0 p-2 sm:p-3 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-2xl transition-all flex items-center gap-1 sm:gap-2 text-sm font-bold group"
+                        className="absolute -left-1 sm:-left-2 top-0 p-2 sm:p-3 text-slate-400 dark:text-slate-500 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 rounded-2xl transition-all flex items-center gap-1 sm:gap-2 text-sm font-bold group"
                     >
                         <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
                         <span className="hidden sm:inline">{language === 'bn' ? 'পিছনে' : 'Back'}</span>
@@ -143,18 +143,18 @@ const TodayDashboard = () => {
 
                 {/* Auto-save indicator */}
                 <div className={`absolute right-0 top-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all duration-500 ${savedIndicator
-                    ? 'opacity-100 bg-emerald-50 text-emerald-600 border border-emerald-100'
+                    ? 'opacity-100 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-800/30'
                     : 'opacity-0'
                     }`}>
                     <CheckCircle className="w-3.5 h-3.5" />
                     {language === 'bn' ? 'সংরক্ষিত' : 'Saved'}
                 </div>
 
-                <h1 className="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight mb-3 sm:mb-4 animate-float">
-                    {t('ramadanDay')} <span className="text-gradient underline decoration-emerald-200 underline-offset-8 decoration-4">{ramadanDay}</span>
+                <h1 className="text-4xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight mb-3 sm:mb-4 animate-float">
+                    {t('ramadanDay')} <span className="text-gradient underline decoration-emerald-200 dark:decoration-emerald-900/50 underline-offset-8 decoration-4">{ramadanDay}</span>
                 </h1>
 
-                <div className="inline-flex items-center gap-2 px-4 sm:px-6 py-2 bg-emerald-50 text-emerald-700 rounded-full font-bold text-xs sm:text-sm shadow-sm border border-emerald-100/50">
+                <div className="inline-flex items-center gap-2 px-4 sm:px-6 py-2 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 rounded-full font-bold text-xs sm:text-sm shadow-sm border border-emerald-100/50 dark:border-emerald-800/30">
                     <CalendarIcon size={14} />
                     {format(new Date(activeDateKey), 'EEEE, dd MMMM yyyy', { locale: language === 'bn' ? bn : undefined })}
                 </div>
@@ -162,15 +162,15 @@ const TodayDashboard = () => {
                 {/* Progress Hub */}
                 <div className="mt-8 sm:mt-12 group cursor-pointer">
                     <div className="flex justify-between items-end mb-3 px-2">
-                        <span className="text-slate-400 text-xs font-black uppercase tracking-widest leading-none">
+                        <span className="text-slate-400 dark:text-slate-500 text-xs font-black uppercase tracking-widest leading-none">
                             {language === 'bn' ? 'আজকের আমল' : 'Daily Completion'}
                         </span>
-                        <span className="text-3xl sm:text-4xl font-black text-slate-900 leading-none">
+                        <span className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white leading-none">
                             {progress}<small className="text-lg opacity-30">%</small>
                         </span>
                     </div>
                     <ProgressBar progress={progress} />
-                    <p className="mt-4 text-sm font-bold text-slate-400">
+                    <p className="mt-4 text-sm font-bold text-slate-400 dark:text-slate-500">
                         {progress >= 80 ? t('excellentProgress') :
                             progress >= 50 ? t('goodProgress') :
                                 progress > 0 ? t('keepGoing') : t('startToday')}
@@ -196,9 +196,9 @@ const TodayDashboard = () => {
 
             {/* Gentle nudge when progress < 75 and user hasn't completed */}
             {!dayData.isCompleted && progress > 0 && progress < 75 && (
-                <div className="bg-amber-50 border border-amber-100 rounded-[2rem] p-5 flex items-center gap-4">
-                    <Sparkles className="w-6 h-6 text-amber-500 flex-shrink-0" />
-                    <p className="text-amber-800 font-bold text-sm">
+                <div className="bg-amber-50 dark:bg-amber-900/10 border border-amber-100 dark:border-amber-900/30 rounded-[2rem] p-5 flex items-center gap-4">
+                    <Sparkles className="w-6 h-6 text-amber-500 dark:text-amber-400 flex-shrink-0" />
+                    <p className="text-amber-800 dark:text-amber-400 font-bold text-sm">
                         {language === 'bn'
                             ? `আপনি অনেক কিছু করেছেন! আরেকটু বাকি—চেষ্টা করুন। (${progress}% সম্পন্ন)`
                             : `You've done a lot! Just a bit more—keep going. (${progress}% done)`}
@@ -208,12 +208,12 @@ const TodayDashboard = () => {
 
             {/* Completed Badge */}
             {dayData.isCompleted && (
-                <div className="bg-gradient-to-r from-emerald-50 to-teal-50 border-2 border-emerald-200 rounded-[2rem] p-5 text-center animate-fade-in">
-                    <p className="text-emerald-800 font-black flex items-center justify-center gap-2 text-lg">
-                        <Trophy className="w-6 h-6 text-amber-500" />
+                <div className="bg-gradient-to-r from-emerald-50 to-teal-50 dark:from-emerald-900/10 dark:to-teal-900/10 border-2 border-emerald-200 dark:border-emerald-800 rounded-[2rem] p-5 text-center animate-fade-in">
+                    <p className="text-emerald-800 dark:text-emerald-400 font-black flex items-center justify-center gap-2 text-lg">
+                        <Trophy className="w-6 h-6 text-amber-500 dark:text-amber-400" />
                         {t('rewardClaimed')}
                     </p>
-                    <p className="text-emerald-600 text-sm font-medium mt-1">
+                    <p className="text-emerald-600 dark:text-emerald-500 text-sm font-medium mt-1">
                         {language === 'bn' ? 'আলহামদুলিল্লাহ! এই দিনটি সম্পন্ন হয়েছে।' : 'Alhamdulillah! This day is complete.'}
                     </p>
                 </div>
@@ -251,15 +251,15 @@ const TodayDashboard = () => {
                 >
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-4">
-                            <div className={`w-14 h-14 rounded-2xl flex items-center justify-center text-3xl shadow-inner ${dayData.roza ? 'bg-white/20' : 'bg-teal-100'
+                            <div className={`w-14 h-14 rounded-2xl flex items-center justify-center text-3xl shadow-inner ${dayData.roza ? 'bg-white/20' : 'bg-teal-100 dark:bg-emerald-900/40'
                                 }`}>
                                 🌙
                             </div>
                             <div>
-                                <h3 className={`text-2xl font-black ${dayData.roza ? 'text-white' : 'text-slate-800'}`}>
+                                <h3 className={`text-2xl font-black ${dayData.roza ? 'text-white' : 'text-slate-800 dark:text-slate-100'}`}>
                                     {t('roza')}
                                 </h3>
-                                <p className={`text-sm font-bold ${dayData.roza ? 'text-teal-100' : 'text-slate-400'}`}>
+                                <p className={`text-sm font-bold ${dayData.roza ? 'text-teal-100' : 'text-slate-400 dark:text-slate-500'}`}>
                                     {dayData.roza
                                         ? (language === 'bn' ? '🤲 রোজা মোবারক! আল্লাহ কবুল করুন।' : '🤲 Roza Mubarak! May Allah accept it.')
                                         : (language === 'bn' ? 'আজ কি রোজা রেখেছেন?' : 'Did you fast today?')}
@@ -267,7 +267,7 @@ const TodayDashboard = () => {
                             </div>
                         </div>
 
-                        <div className={`w-16 h-9 rounded-full transition-all duration-500 flex items-center px-1 shadow-inner ${dayData.roza ? 'bg-white/30' : 'bg-slate-200'
+                        <div className={`w-16 h-9 rounded-full transition-all duration-500 flex items-center px-1 shadow-inner ${dayData.roza ? 'bg-white/30' : 'bg-slate-200 dark:bg-slate-800'
                             }`}>
                             <div className={`w-7 h-7 rounded-full bg-white shadow-lg transform transition-transform duration-500 ${dayData.roza ? 'translate-x-7' : 'translate-x-0'
                                 }`} />
@@ -365,16 +365,16 @@ const DailySummaryCard = ({ dayData, language, t }) => {
     ];
 
     return (
-        <div className="card !p-6 bg-gradient-to-br from-slate-50 to-slate-100 border-slate-100">
-            <h3 className="text-xs font-black uppercase tracking-widest text-slate-400 mb-4 text-center">
+        <div className="card !p-6 bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-950 border-slate-100 dark:border-slate-800/50 shadow-inner">
+            <h3 className="text-xs font-black uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-4 text-center">
                 {language === 'bn' ? 'আজকের সারসংক্ষেপ' : "Today's Summary"}
             </h3>
             <div className="grid grid-cols-4 gap-3">
                 {stats.map((s, i) => (
-                    <div key={i} className="flex flex-col items-center gap-1 bg-white rounded-2xl p-3 shadow-sm border border-slate-100">
+                    <div key={i} className="flex flex-col items-center gap-1 bg-white dark:bg-slate-900 rounded-2xl p-3 shadow-sm border border-slate-100 dark:border-slate-800/50">
                         <span className="text-xl">{s.icon}</span>
-                        <span className="text-lg font-black text-slate-800">{s.value}</span>
-                        <span className="text-[10px] font-bold text-slate-400 text-center leading-tight">{s.label}</span>
+                        <span className="text-lg font-black text-slate-800 dark:text-white">{s.value}</span>
+                        <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 text-center leading-tight">{s.label}</span>
                     </div>
                 ))}
             </div>

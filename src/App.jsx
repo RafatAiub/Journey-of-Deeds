@@ -30,6 +30,14 @@ function App() {
         const saved = localStorage.getItem('language');
         return saved || 'bn';
     });
+    const [isDarkMode, setIsDarkMode] = useState(() => {
+        const saved = localStorage.getItem('darkMode');
+        if (saved !== null) {
+            return saved === 'true';
+        }
+        return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    });
+
     const [loading, setLoading] = useState(true);
 
     // Load data on mount
@@ -37,6 +45,13 @@ function App() {
         const data = loadData();
         setAppData(data);
         setLoading(false);
+
+        // Apply dark mode on mount
+        if (isDarkMode) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
     }, []);
 
     // Save data whenever it changes
@@ -45,6 +60,18 @@ function App() {
             saveData(appData);
         }
     }, [appData]);
+
+    // Handle dark mode changes
+    useEffect(() => {
+        if (isDarkMode) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+        localStorage.setItem('darkMode', isDarkMode);
+    }, [isDarkMode]);
+
+    const toggleDarkMode = () => setIsDarkMode(prev => !prev);
 
     // Change language
     const changeLanguage = (lang) => {
@@ -59,10 +86,10 @@ function App() {
 
     if (loading) {
         return (
-            <div className="min-h-screen flex items-center justify-center">
+            <div className="min-h-screen flex items-center justify-center bg-[#fcfdfd] dark:bg-slate-950">
                 <div className="text-center">
                     <div className="w-16 h-16 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-                    <p className="text-emerald-700 font-medium">Loading...</p>
+                    <p className="text-emerald-700 dark:text-emerald-400 font-medium">Loading...</p>
                 </div>
             </div>
         );
@@ -73,7 +100,9 @@ function App() {
         setAppData,
         updateData,
         language,
-        changeLanguage
+        changeLanguage,
+        isDarkMode,
+        toggleDarkMode
     };
 
     return (
