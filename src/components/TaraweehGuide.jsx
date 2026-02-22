@@ -3,7 +3,6 @@ import { useApp } from '../App';
 import { translations } from '../utils/language';
 import { getTaraweehDay, getPhaseInfo, getJuzProgress } from '../data/taraweehPlanData';
 import SawabBadge from './SawabBadge';
-import PdfViewer from './PdfViewer';
 import { getSawab } from '../data/sawabData';
 import { useToast } from './Toast';
 import {
@@ -20,10 +19,25 @@ const TaraweehGuide = ({ ramadanDay, taraweehData, tarawihRakats, onUpdate, onTa
     const { language } = useApp();
     const { showToast } = useToast();
     const t = (key) => translations[language][key] || key;
+    const lang = language;
 
     const [previewOpen, setPreviewOpen] = useState(true);
     const [reflectOpen, setReflectOpen] = useState(true);
-    const [showPdf, setShowPdf] = useState(false);
+
+    // Exact page mapping from Shaykh Ahmadullah's TOC photos
+    const taraweehPdfPages = {
+        1: 7, 2: 12, 3: 18, 4: 24, 5: 29, 6: 34, 7: 39, 8: 43, 9: 47, 10: 52,
+        11: 56, 12: 62, 13: 68, 14: 73, 15: 80, 16: 87, 17: 92, 18: 97, 19: 103, 20: 109,
+        21: 114, 22: 120, 23: 125, 24: 133, 25: 140, 26: 147, 27: 153
+    };
+
+    const getTargetPdfPage = (day) => {
+        // ramadanDay in the app is 1-indexed for the component logic usually, 
+        // but let's be careful. if ramadanDay=1 is 1st Taraweeh...
+        return taraweehPdfPages[day] || (7 + (day - 1) * 5); // Fallback to formula
+    };
+
+    const targetPage = getTargetPdfPage(ramadanDay);
 
     const dayPlan = getTaraweehDay(ramadanDay);
     const phaseInfo = dayPlan ? getPhaseInfo(dayPlan.phase, language) : null;
@@ -59,7 +73,7 @@ const TaraweehGuide = ({ ramadanDay, taraweehData, tarawihRakats, onUpdate, onTa
 
     if (!dayPlan) return null;
 
-    const lang = language;
+
     const themes = dayPlan.themes[lang] || dayPlan.themes.en;
     const keyWords = dayPlan.keyWords[lang] || dayPlan.keyWords.en;
     const ayah = dayPlan.featuredAyah[lang] || dayPlan.featuredAyah.en;
@@ -343,11 +357,13 @@ const TaraweehGuide = ({ ramadanDay, taraweehData, tarawihRakats, onUpdate, onTa
                                 </div>
                             </div>
 
-                            {/* PDF Summary Feature - SMART VIEWER */}
+                            {/* PDF Summary Feature - SMART LINK (NEW TAB) */}
                             <div className="space-y-3">
-                                <button
-                                    onClick={() => setShowPdf(true)}
-                                    className="w-full group relative p-6 rounded-[2rem] bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white overflow-hidden shadow-2xl hover:scale-[1.02] transition-all cursor-pointer block text-left border border-white/5"
+                                <a
+                                    href={`${import.meta.env.BASE_URL}taraweeh_master.pdf#page=${targetPage}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="w-full group relative p-6 rounded-[2rem] bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white overflow-hidden shadow-2xl hover:scale-[1.02] transition-all cursor-pointer block text-left border border-white/5 no-underline"
                                 >
                                     <div className="absolute top-0 right-0 p-8 opacity-10 rotate-12 group-hover:rotate-45 transition-transform">
                                         <FileText className="w-24 h-24" />
@@ -370,7 +386,7 @@ const TaraweehGuide = ({ ramadanDay, taraweehData, tarawihRakats, onUpdate, onTa
                                             {/* Explicit Page Badge for Mobile Users */}
                                             <div className="px-3 py-1.5 rounded-xl bg-white/10 border border-white/10 backdrop-blur-md">
                                                 <span className="text-[10px] font-black text-amber-400 uppercase tracking-widest mr-1.5">{t('pdfPageLabel')}</span>
-                                                <span className="text-sm font-black text-white">{7 + (ramadanDay - 1) * 5}</span>
+                                                <span className="text-sm font-black text-white">{targetPage}</span>
                                             </div>
                                         </div>
 
@@ -382,21 +398,12 @@ const TaraweehGuide = ({ ramadanDay, taraweehData, tarawihRakats, onUpdate, onTa
                                             {t('openPdfSummary')} <ExternalLink className="w-3.5 h-3.5 ml-1" />
                                         </div>
                                     </div>
-                                </button>
+                                </a>
                                 <p className="text-[10px] sm:text-xs text-slate-400 font-bold text-center px-4 leading-relaxed">
                                     <Info className="w-3 h-3 inline mr-1 mb-0.5" />
                                     {t('pdfInstruction')}
                                 </p>
                             </div>
-
-                            {showPdf && (
-                                <PdfViewer
-                                    file={`${import.meta.env.BASE_URL}taraweeh_master.pdf`}
-                                    initialPage={7 + (ramadanDay - 1) * 5}
-                                    title={t('viewChapterPdf')}
-                                    onClose={() => setShowPdf(false)}
-                                />
-                            )}
 
                             {/* Keywords Grid */}
                             <div>
