@@ -137,6 +137,8 @@ export const translations = {
         pdfSummaryLabel: 'শায়খ আহমাদুল্লাহর সারসংক্ষেপ',
         openPdfSummary: 'পিডিএফ সারসংক্ষেপ পড়ুন',
         viewChapterPdf: 'আজকের বার্তার বিস্তারিত',
+        pdfPageLabel: 'পৃষ্ঠা নম্বর:',
+        pdfInstruction: 'ব্রাউজারে সরাসরি না খুললে ম্যানুয়ালি এই পৃষ্ঠায় যান',
 
         // Daily Self-Assessment
         dailySelfAssessment: 'দৈনিক আত্ম-মূল্যায়ন',
@@ -368,6 +370,8 @@ export const translations = {
         pdfSummaryLabel: 'Shaykh Ahmadullah\'s Summary',
         openPdfSummary: 'Read PDF Summary',
         viewChapterPdf: 'Chapter Details',
+        pdfPageLabel: 'Page Number:',
+        pdfInstruction: 'If it doesn\'t auto-jump, go to this page manually',
 
         // Daily Self-Assessment
         dailySelfAssessment: 'Daily Self-Assessment',
