@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
-import { ChevronLeft, ChevronRight, X, ZoomIn, ZoomOut, Download, Loader2, ExternalLink } from 'lucide-react';
+import { ChevronLeft, ChevronRight, X, ZoomIn, ZoomOut, Download, Loader2, ExternalLink, FileText } from 'lucide-react';
 import { useApp } from '../App';
 import { translations } from '../utils/language';
 
