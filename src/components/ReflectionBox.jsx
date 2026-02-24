@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useRef } from 'react';
-import { useApp } from '../App';
+import { useApp } from '../utils/AppContext';
 import { translations } from '../utils/language';
 import { PenLine, Heart, Trophy, BookOpen, CheckCircle, Shield } from 'lucide-react';
 import SawabBadge from './SawabBadge';

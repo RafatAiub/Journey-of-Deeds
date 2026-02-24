@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { useApp } from '../App';
+import { useApp } from '../utils/AppContext';
 import { translations } from '../utils/language';
 import { exportData, importData, resetData } from '../utils/storage';
 import { Settings as SettingsIcon, Download, Upload, Trash2, Globe, Info, Palette } from 'lucide-react';

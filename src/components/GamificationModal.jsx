@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useApp } from '../App';
+import { useApp } from '../utils/AppContext';
 import { translations } from '../utils/language';
 import { Trophy, Star, X, Zap } from 'lucide-react';
 import confetti from 'canvas-confetti';

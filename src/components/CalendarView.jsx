@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { useApp } from '../App';
+import { useApp } from '../utils/AppContext';
 import { translations } from '../utils/language';
 import { getRamadanDayNumber, getDateKey, calculateDayProgress, calculateDayProgressBreakdown } from '../utils/quranCalculator';
 import { Link } from 'react-router-dom';

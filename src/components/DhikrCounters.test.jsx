@@ -4,7 +4,7 @@ import React from 'react';
 import DhikrCounters from '../components/DhikrCounters';
 
 // Mock useApp
-vi.mock('../App', () => ({
+vi.mock('../utils/AppContext', () => ({
     useApp: () => ({
         language: 'en'
     })

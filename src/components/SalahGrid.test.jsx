@@ -4,7 +4,7 @@ import React from 'react';
 import SalahGrid from '../components/SalahGrid';
 
 // Mock useApp
-vi.mock('../App', () => ({
+vi.mock('../utils/AppContext', () => ({
     useApp: () => ({
         language: 'en'
     })

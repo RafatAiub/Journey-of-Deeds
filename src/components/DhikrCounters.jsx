@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useApp } from '../App';
+import { useApp } from '../utils/AppContext';
 import { translations } from '../utils/language';
 import { RotateCcw, Sparkles } from 'lucide-react';
 import ConfirmModal from './ConfirmModal';

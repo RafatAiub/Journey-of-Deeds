@@ -1,5 +1,5 @@
 import React from 'react';
-import { useApp } from '../App';
+import { useApp } from '../utils/AppContext';
 import { translations } from '../utils/language';
 import { Check, Users, Moon, Star, Sun, Sparkles, History } from 'lucide-react';
 import SawabBadge from './SawabBadge';

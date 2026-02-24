@@ -1,5 +1,5 @@
 import React from 'react';
-import { useApp } from '../App';
+import { useApp } from '../utils/AppContext';
 import { translations } from '../utils/language';
 import { MessageCircle, Smartphone, Heart, Brain, Check } from 'lucide-react';
 

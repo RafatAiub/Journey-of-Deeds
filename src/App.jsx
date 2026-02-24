@@ -9,19 +9,7 @@ import Navigation from './components/Navigation';
 
 import { ToastProvider } from './components/Toast';
 
-// Create App Context
-export const AppContext = createContext();
-
-export const useApp = () => {
-    const context = useContext(AppContext);
-    if (!context) {
-        throw new Error('useApp must be used within AppProvider');
-    }
-    return context;
-};
-
-// Re-export useToast for convenience, or just let components import it directly.
-// We'll let components import useToast directly from ./components/Toast
+import { AppContext } from './utils/AppContext';
 
 
 function App() {

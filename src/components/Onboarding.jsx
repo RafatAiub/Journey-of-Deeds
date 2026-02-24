@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useApp } from '../App';
+import { useApp } from '../utils/AppContext';
 import { translations } from '../utils/language';
 import { Sparkles, Calendar, BookOpen, Check } from 'lucide-react';
 

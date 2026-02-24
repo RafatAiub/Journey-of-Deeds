@@ -1,5 +1,5 @@
 import React from 'react';
-import { useApp } from '../App';
+import { useApp } from '../utils/AppContext';
 import { translations } from '../utils/language';
 import { BookOpen, Scroll, Moon, Sun, Heart, AlertCircle } from 'lucide-react';
 import SawabBadge from './SawabBadge';
