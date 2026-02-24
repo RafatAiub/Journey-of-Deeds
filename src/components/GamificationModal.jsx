@@ -64,8 +64,8 @@ export const BADGES = [
             return Object.values(appData.days || {}).some(d => {
                 const prayers = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'];
                 return prayers.every(p => {
-                    const pd = d.salah?.[p];
-                    return (typeof pd === 'object' && pd?.fard) || pd === true;
+                    const prayerStatus = d.salah?.[p];
+                    return (typeof prayerStatus === 'object' && prayerStatus !== null && prayerStatus?.fard) || prayerStatus === true;
                 });
             });
         },

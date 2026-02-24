@@ -59,19 +59,24 @@ const TodayDashboard = () => {
     }, []);
 
     const updateDay = useCallback((updates) => {
-        const updatedDay = { ...dayData, ...updates };
-        setDayData(updatedDay);
+        // 1. Update local state for immediate UI response
+        setDayData(prev => ({ ...prev, ...updates }));
 
-        // Update central app state via functional update to avoid race conditions
-        updateData({
-            days: {
-                ...appData.days,
-                [activeDateKey]: updatedDay
-            }
+        // 2. Update global app state functionally to avoid stale state issues.
+        // This is now called outside the setDayData updater.
+        updateData(prevApp => {
+            const dayData = getDayData(prevApp, activeDateKey);
+            const updatedDay = { ...dayData, ...updates };
+            return {
+                days: {
+                    ...prevApp.days,
+                    [activeDateKey]: updatedDay
+                }
+            };
         });
 
         flashSaved();
-    }, [dayData, appData, activeDateKey, updateData, flashSaved]);
+    }, [activeDateKey, updateData, flashSaved]);
 
     const progress = calculateDayProgress(dayData, appData, activeDateKey);
 
@@ -348,9 +353,12 @@ const TodayDashboard = () => {
  */
 const DailySummaryCard = ({ dayData, language, t }) => {
     const prayers = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'];
-    const prayersDone = prayers.filter(p => {
-        const pd = dayData.salah?.[p];
-        return (typeof pd === 'object' && pd?.fard) || pd === true;
+    const prayersDone = prayers.filter(prayerKey => {
+        const prayerStatus = dayData?.salah?.[prayerKey];
+        if (typeof prayerStatus === 'object' && prayerStatus !== null) {
+            return prayerStatus.fard || prayerStatus.qaza;
+        }
+        return prayerStatus === true;
     }).length;
 
     const pagesRead = Number(dayData.quran?.pagesRead) || 0;

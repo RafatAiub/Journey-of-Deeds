@@ -1,7 +1,7 @@
 import React from 'react';
 import { useApp } from '../App';
 import { translations } from '../utils/language';
-import { Check, Users, Moon, Star, Sun, Sparkles } from 'lucide-react';
+import { Check, Users, Moon, Star, Sun, Sparkles, History } from 'lucide-react';
 import SawabBadge from './SawabBadge';
 import { getSawab } from '../data/sawabData';
 
@@ -17,8 +17,8 @@ const SalahGrid = ({ salahData, extraPrayers, onUpdate, onExtraUpdate }) => {
 
     const getPrayerData = (key) => {
         const data = salahData[key];
-        if (typeof data === 'boolean') return { fard: data, sunnah: false, jamaat: false };
-        return data || { fard: false, sunnah: false, jamaat: false };
+        if (typeof data === 'boolean') return { fard: data, sunnah: false, jamaat: false, qaza: false };
+        return { fard: false, sunnah: false, jamaat: false, qaza: false, ...(data || {}) };
     };
 
     const handlePrayerToggle = (prayerKey, type) => {
@@ -26,12 +26,25 @@ const SalahGrid = ({ salahData, extraPrayers, onUpdate, onExtraUpdate }) => {
         let updated = { ...current };
         if (type === 'fard') {
             updated.fard = !current.fard;
-            if (!updated.fard) updated.jamaat = false;
+            if (updated.fard) {
+                updated.qaza = false;
+            } else {
+                updated.jamaat = false;
+            }
         } else if (type === 'jamaat') {
             updated.jamaat = !current.jamaat;
-            if (updated.jamaat) updated.fard = true;
+            if (updated.jamaat) {
+                updated.fard = true;
+                updated.qaza = false;
+            }
         } else if (type === 'sunnah') {
             updated.sunnah = !current.sunnah;
+        } else if (type === 'qaza') {
+            updated.qaza = !current.qaza;
+            if (updated.qaza) {
+                updated.fard = false;
+                updated.jamaat = false;
+            }
         }
         onUpdate({ ...salahData, [prayerKey]: updated });
     };
@@ -103,6 +116,13 @@ const SalahGrid = ({ salahData, extraPrayers, onUpdate, onExtraUpdate }) => {
                                         icon={<Users size={16} />}
                                         label={t('jamaat')}
                                         color="blue"
+                                    />
+                                    <PrayerCircle
+                                        active={data.qaza}
+                                        onClick={() => handlePrayerToggle(prayer, 'qaza')}
+                                        icon={<History size={16} />}
+                                        label={t('qaza')}
+                                        color="red"
                                     />
                                     <button
                                         onClick={() => handlePrayerToggle(prayer, 'sunnah')}
@@ -257,7 +277,8 @@ const SalahGrid = ({ salahData, extraPrayers, onUpdate, onExtraUpdate }) => {
 const PrayerCircle = ({ active, onClick, icon, label, color }) => {
     const colors = {
         emerald: 'bg-emerald-500 shadow-emerald-200 border-emerald-400',
-        blue: 'bg-blue-500 shadow-blue-200 border-blue-400 text-white'
+        blue: 'bg-blue-500 shadow-blue-200 border-blue-400 text-white',
+        red: 'bg-red-500 shadow-red-200 border-red-400 text-white'
     };
 
     return (

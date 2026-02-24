@@ -26,11 +26,11 @@ export const getDefaultData = () => ({
 export const getDefaultDayData = () => ({
     isCompleted: false, // For gamification
     salah: {
-        fajr: { fard: false, sunnah: false, jamaat: false },
-        dhuhr: { fard: false, sunnah: false, jamaat: false },
-        asr: { fard: false, sunnah: false, jamaat: false },
-        maghrib: { fard: false, sunnah: false, jamaat: false },
-        isha: { fard: false, sunnah: false, jamaat: false }
+        fajr: { fard: false, sunnah: false, jamaat: false, qaza: false },
+        dhuhr: { fard: false, sunnah: false, jamaat: false, qaza: false },
+        asr: { fard: false, sunnah: false, jamaat: false, qaza: false },
+        maghrib: { fard: false, sunnah: false, jamaat: false, qaza: false },
+        isha: { fard: false, sunnah: false, jamaat: false, qaza: false }
     },
     // Legacy support: extraPrayers replaced individual fields
     extraPrayers: {
@@ -165,13 +165,13 @@ export const saveData = (data) => {
     }
 };
 
-// Get data for a specific date
+// Get data for a specific date (pure version)
 export const getDayData = (data, dateKey) => {
     const defaultData = getDefaultDayData();
     const storedData = data.days[dateKey] || {};
 
     // Deep merge to ensure all new fields are present even in old data
-    const mergedData = {
+    return {
         ...defaultData,
         ...storedData,
         salah: { ...defaultData.salah, ...(storedData.salah || {}) },
@@ -183,13 +183,6 @@ export const getDayData = (data, dateKey) => {
         selfAssessment: { ...defaultData.selfAssessment, ...(storedData.selfAssessment || {}) },
         taraweehGuide: { ...defaultData.taraweehGuide, ...(storedData.taraweehGuide || {}) },
     };
-
-    // Store back if it was missing to fill gaps immediately
-    if (!data.days[dateKey]) {
-        data.days[dateKey] = mergedData;
-    }
-
-    return mergedData;
 };
 
 // Update day data

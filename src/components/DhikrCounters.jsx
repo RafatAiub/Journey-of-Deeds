@@ -71,6 +71,7 @@ const DhikrCounters = ({ dhikrData, onUpdate }) => {
                     onClick={() => setShowResetConfirm(true)}
                     className="p-3 text-slate-400 dark:text-slate-500 hover:text-red-500 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-2xl transition-all group"
                     title={t('resetAll')}
+                    aria-label={t('resetAll')}
                 >
                     <RotateCcw className="w-5 h-5 group-hover:-rotate-90 transition-transform" />
                 </button>

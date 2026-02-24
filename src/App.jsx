@@ -80,8 +80,11 @@ function App() {
     };
 
     // Update app data
-    const updateData = (updates) => {
-        setAppData(prev => ({ ...prev, ...updates }));
+    const updateData = (updatesOrFn) => {
+        setAppData(prev => {
+            const updates = typeof updatesOrFn === 'function' ? updatesOrFn(prev) : updatesOrFn;
+            return { ...prev, ...updates };
+        });
     };
 
     if (loading) {
