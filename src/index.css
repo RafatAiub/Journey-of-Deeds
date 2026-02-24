@@ -112,10 +112,30 @@
   .animate-slide-up {
     animation: slideUp 0.4s ease-out;
   }
+
+  .animate-progress-glow {
+    animation: progressGlow 2s ease-in-out infinite;
+  }
 }
 
 .btn-secondary {
   @apply rounded-2xl px-6 py-3 font-bold bg-slate-50 dark:bg-slate-800/50 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 active:scale-95 transition-all duration-200;
+}
+
+@keyframes progressGlow {
+
+  0%,
+  100% {
+    width: 20%;
+    opacity: 0.3;
+    transform: translateX(-50%);
+  }
+
+  50% {
+    width: 60%;
+    opacity: 1;
+    transform: translateX(0%);
+  }
 }
 
 @keyframes float {

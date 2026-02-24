@@ -68,14 +68,20 @@ const Settings = () => {
     };
 
     return (
-        <div className="max-w-2xl mx-auto p-4 space-y-6 animate-fade-in pb-32">
+        <div className="max-w-2xl mx-auto p-4 space-y-8 animate-fade-in pb-32">
             {/* Header */}
-            <div className="text-center mb-8">
-                <div className="flex items-center justify-center gap-3 mb-4">
-                    <SettingsIcon className="w-8 h-8 text-emerald-600" />
-                    <h1 className="text-4xl font-bold text-gradient">
+            <div className="text-center pt-8 pb-4">
+                <div className="flex flex-col items-center mb-6">
+                    <div className="relative w-16 h-16 mb-4">
+                        <div className="absolute inset-0 bg-emerald-500/10 dark:bg-emerald-500/20 rounded-full blur-xl scale-125"></div>
+                        <div className="relative w-full h-full bg-gradient-to-br from-emerald-500 to-teal-500 rounded-2xl rotate-6 flex items-center justify-center shadow-lg">
+                            <img src="/icon.svg" alt="Logo" className="w-8 h-8 -rotate-6" />
+                        </div>
+                    </div>
+                    <h1 className="text-4xl font-black text-slate-900 dark:text-white tracking-tight">
                         {t('settings')}
                     </h1>
+                    <div className="h-1 w-12 bg-emerald-500 rounded-full mt-3 opacity-50"></div>
                 </div>
             </div>
 

@@ -77,10 +77,22 @@ function App() {
 
     if (loading) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-[#fcfdfd] dark:bg-slate-950">
-                <div className="text-center">
-                    <div className="w-16 h-16 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-                    <p className="text-emerald-700 dark:text-emerald-400 font-medium">Loading...</p>
+            <div className="min-h-screen flex items-center justify-center bg-[#020617]">
+                <div className="relative">
+                    {/* Pulsing Glow */}
+                    <div className="absolute inset-0 bg-emerald-500/20 rounded-full blur-3xl animate-pulse scale-150"></div>
+
+                    <div className="relative flex flex-col items-center">
+                        <div className="w-24 h-24 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-3xl rotate-12 flex items-center justify-center shadow-2xl animate-bounce">
+                            <img src="/icon.svg" alt="Loading" className="w-14 h-14 -rotate-12" />
+                        </div>
+                        <div className="mt-8 flex flex-col items-center">
+                            <h2 className="text-white font-black tracking-widest text-xl mb-2 animate-pulse">
+                                RAMADAN PLANNER
+                            </h2>
+                            <div className="w-12 h-1 bg-emerald-500 rounded-full animate-progress-glow"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         );

@@ -134,8 +134,8 @@ const TodayDashboard = () => {
                 </div>
             )}
 
-            {/* Header with Date & Progress */}
-            <div className="text-center relative pt-2">
+            {/* Header with Logo, Date & Progress */}
+            <div className="text-center relative pt-8 sm:pt-12">
                 {!isToday && (
                     <Link
                         to="/calendar"
@@ -146,6 +146,27 @@ const TodayDashboard = () => {
                     </Link>
                 )}
 
+                {/* Logo and App Title */}
+                <div className="flex flex-col items-center mb-8 relative">
+                    <div className="relative w-20 h-20 mb-4 group cursor-pointer">
+                        <div className="absolute inset-0 bg-emerald-500/10 dark:bg-emerald-500/20 rounded-full blur-2xl group-hover:blur-3xl transition-all duration-500 opacity-0 group-hover:opacity-100 scale-150"></div>
+                        <div className="relative w-full h-full bg-gradient-to-br from-emerald-500 to-teal-500 rounded-2xl rotate-12 flex items-center justify-center shadow-xl shadow-emerald-500/10 group-hover:rotate-0 transition-transform duration-500 overflow-hidden">
+                            <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                            <img src="/icon.svg" alt="App Logo" className="w-10 h-10 -rotate-12 group-hover:rotate-0 transition-transform duration-500" />
+                        </div>
+                    </div>
+                    <span className="text-[10px] font-black uppercase tracking-[0.3em] text-emerald-600 dark:text-emerald-500 mb-1 opacity-60">
+                        {language === 'bn' ? 'রমজান প্ল্যানার' : 'Ramadan Planner'}
+                    </span>
+                    <h1 className="text-4xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight mb-3 sm:mb-4">
+                        {t('ramadanDay')} <span className="text-gradient underline decoration-emerald-200 dark:decoration-emerald-900/50 underline-offset-8 decoration-4">{ramadanDay}</span>
+                    </h1>
+                    <div className="inline-flex items-center gap-2 px-4 sm:px-6 py-2 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 rounded-full font-bold text-xs sm:text-sm shadow-sm border border-slate-100 dark:border-slate-800 animate-fade-in">
+                        <CalendarIcon size={14} className="text-emerald-500" />
+                        {format(new Date(activeDateKey), 'EEEE, dd MMMM yyyy', { locale: language === 'bn' ? bn : undefined })}
+                    </div>
+                </div>
+
                 {/* Auto-save indicator */}
                 <div className={`absolute right-0 top-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all duration-500 ${savedIndicator
                     ? 'opacity-100 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-800/30'
@@ -155,17 +176,8 @@ const TodayDashboard = () => {
                     {language === 'bn' ? 'সংরক্ষিত' : 'Saved'}
                 </div>
 
-                <h1 className="text-4xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight mb-3 sm:mb-4 animate-float">
-                    {t('ramadanDay')} <span className="text-gradient underline decoration-emerald-200 dark:decoration-emerald-900/50 underline-offset-8 decoration-4">{ramadanDay}</span>
-                </h1>
-
-                <div className="inline-flex items-center gap-2 px-4 sm:px-6 py-2 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 rounded-full font-bold text-xs sm:text-sm shadow-sm border border-emerald-100/50 dark:border-emerald-800/30">
-                    <CalendarIcon size={14} />
-                    {format(new Date(activeDateKey), 'EEEE, dd MMMM yyyy', { locale: language === 'bn' ? bn : undefined })}
-                </div>
-
                 {/* Progress Hub */}
-                <div className="mt-8 sm:mt-12 group cursor-pointer">
+                <div className="mt-6 sm:mt-10 group cursor-pointer bg-white/50 dark:bg-slate-900/30 backdrop-blur-sm p-6 sm:p-8 rounded-[2.5rem] border border-white dark:border-white/5 shadow-xl shadow-slate-200/50 dark:shadow-none transition-all duration-500 hover:shadow-2xl">
                     <div className="flex justify-between items-end mb-3 px-2">
                         <span className="text-slate-400 dark:text-slate-500 text-xs font-black uppercase tracking-widest leading-none">
                             {language === 'bn' ? 'আজকের আমল' : 'Daily Completion'}
