@@ -83,7 +83,7 @@ export const calculateAnalytics = (blocks) => {
 
         if (startMin > currentTime) {
             const gapDuration = startMin - currentTime;
-            if (gapDuration > 45) {
+            if (gapDuration >= 5) {
                 unplannedMinutes += gapDuration;
                 gaps.push({
                     start: minutesToTime(currentTime),
@@ -103,7 +103,7 @@ export const calculateAnalytics = (blocks) => {
     // Check gap at the end of the day
     if (currentTime < (24 * 60)) {
         const gapDuration = (24 * 60) - currentTime;
-        if (gapDuration > 45) {
+        if (gapDuration >= 5) {
             unplannedMinutes += gapDuration;
             gaps.push({
                 start: minutesToTime(currentTime),
