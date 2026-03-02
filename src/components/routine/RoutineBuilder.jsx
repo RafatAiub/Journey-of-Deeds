@@ -1,9 +1,10 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { useRoutineManager } from '../../hooks/useRoutineManager';
 import TimelineView from './TimelineView';
 import { routineTemplates } from '../../data/routineTemplates';
 import { useApp } from '../../utils/AppContext';
 import { translations } from '../../utils/language';
+import { getCurrentBlock, formatTime12h } from '../../utils/routineAnalytics';
 
 const CATEGORIES = [
     { id: 'ibadah', labelKey: 'catIbadah', color: 'bg-emerald-500' },
@@ -62,6 +63,38 @@ const RoutineBuilder = ({ dateStr, onClose }) => {
             pct: Math.round((completed / routine.blocks.length) * 100)
         };
     }, [routine.blocks]);
+
+    // Current task tracking with live countdown
+    const [currentTask, setCurrentTask] = useState(null);
+    const [countdown, setCountdown] = useState('');
+    const timelineRef = useRef(null);
+
+    useEffect(() => {
+        const update = () => {
+            const result = getCurrentBlock(routine.blocks);
+            setCurrentTask(result);
+            if (result) {
+                const h = Math.floor(result.remainingMinutes / 60);
+                const m = result.remainingMinutes % 60;
+                setCountdown(h > 0 ? `${h}h ${m}m` : `${m}m`);
+            } else {
+                setCountdown('');
+            }
+        };
+        update();
+        const interval = setInterval(update, 30000); // update every 30s
+        return () => clearInterval(interval);
+    }, [routine.blocks]);
+
+    // Auto-scroll to current block on load
+    useEffect(() => {
+        if (currentTask) {
+            setTimeout(() => {
+                const el = document.getElementById('current-block');
+                if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 500);
+        }
+    }, [currentTask?.block?.id]);
 
     const openAddModal = (defaultTime = null) => {
         setFormData({
@@ -173,6 +206,36 @@ const RoutineBuilder = ({ dateStr, onClose }) => {
                     </div>
                 </div>
             </div>
+
+            {/* Current Task Focus Banner */}
+            {currentTask && !currentTask.block.isCompleted && (
+                <div className="mb-5 bg-gradient-to-r from-emerald-500/15 via-teal-500/10 to-emerald-500/15 border border-emerald-500/30 rounded-2xl p-4 relative overflow-hidden">
+                    <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-emerald-400 to-transparent"></div>
+                    <div className="flex items-start gap-3">
+                        <div className="relative mt-0.5">
+                            <span className="relative flex h-3 w-3">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+                            </span>
+                        </div>
+                        <div className="flex-1 min-w-0">
+                            <p className="text-[10px] text-emerald-400 uppercase font-bold tracking-widest mb-1">{t('currentlyDoing')}</p>
+                            <h3 className="text-white font-bold text-lg leading-tight truncate">{currentTask.block.title}</h3>
+                            {currentTask.block.intention && (
+                                <p className="text-emerald-300/70 text-xs italic mt-0.5">"{currentTask.block.intention}"</p>
+                            )}
+                            <div className="flex items-center gap-3 mt-2">
+                                <span className="text-xs text-slate-400">
+                                    {formatTime12h(currentTask.block.startTime)} — {formatTime12h(currentTask.block.endTime)}
+                                </span>
+                                <span className="text-xs font-bold text-emerald-400 bg-emerald-500/20 px-2 py-0.5 rounded-full">
+                                    ⏱ {countdown} {t('remaining')}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             {/* Category Breakdown Bar */}
             {routine.blocks.length > 0 && (

@@ -238,6 +238,9 @@ export const translations = {
         resetConfirm: 'আপনি কি নিশ্চিত?',
         yes: 'হ্যাঁ',
         no: 'না',
+        currentlyDoing: 'এখন করছেন',
+        remaining: 'বাকি',
+        noCurrentTask: 'এখন কোনো কাজ নেই',
 
         // Settings
         exportData: 'ডেটা এক্সপোর্ট',
@@ -524,6 +527,9 @@ export const translations = {
         resetConfirm: 'Are you sure?',
         yes: 'Yes',
         no: 'No',
+        currentlyDoing: 'Currently Doing',
+        remaining: 'remaining',
+        noCurrentTask: 'No current task',
 
         // Settings
         exportData: 'Export Data',

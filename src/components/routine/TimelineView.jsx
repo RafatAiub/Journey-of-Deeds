@@ -1,5 +1,5 @@
-import React from 'react';
-import { timeToMinutes } from '../../utils/routineAnalytics';
+import React, { useState, useEffect } from 'react';
+import { timeToMinutes, formatTime12h, getCurrentBlock } from '../../utils/routineAnalytics';
 import { useApp } from '../../utils/AppContext';
 import { translations } from '../../utils/language';
 
@@ -14,11 +14,23 @@ const formatDuration = (minutes) => {
 const TimelineView = ({ blocks, gaps, onEditBlock, onToggleComplete }) => {
     const { language } = useApp();
     const t = (key) => translations[language]?.[key] || translations['en'][key] || key;
+    const [currentBlockId, setCurrentBlockId] = useState(null);
 
     const getCategoryLabel = (cat) => {
         if (!cat) return '';
         return t('cat' + cat.charAt(0).toUpperCase() + cat.slice(1));
     };
+
+    // Update current block every 30 seconds
+    useEffect(() => {
+        const update = () => {
+            const current = getCurrentBlock(blocks);
+            setCurrentBlockId(current?.block?.id || null);
+        };
+        update();
+        const interval = setInterval(update, 30000);
+        return () => clearInterval(interval);
+    }, [blocks]);
 
     const timelineItems = [];
 
@@ -66,8 +78,8 @@ const TimelineView = ({ blocks, gaps, onEditBlock, onToggleComplete }) => {
                                 onClick={() => onEditBlock(item)}
                                 className="flex items-center gap-3 cursor-pointer group"
                             >
-                                <div className="w-12 flex flex-col items-end text-rose-400/80 shrink-0">
-                                    <span className="text-[11px] font-medium">{item.startTime}</span>
+                                <div className="w-[70px] flex flex-col items-end text-rose-400/80 shrink-0">
+                                    <span className="text-[11px] font-medium">{formatTime12h(item.startTime)}</span>
                                 </div>
                                 <div className="flex-1 relative">
                                     <div className="absolute left-[-19px] top-1/2 bottom-[-50%] w-0.5 border-l-2 border-dotted border-rose-500/30"></div>
@@ -85,35 +97,52 @@ const TimelineView = ({ blocks, gaps, onEditBlock, onToggleComplete }) => {
                     const colorClass = item.colorTag || 'bg-emerald-500';
                     const isLast = index === timelineItems.length - 1;
                     const isDone = item.isCompleted;
+                    const isCurrent = item.id === currentBlockId;
 
                     return (
-                        <div key={item.id} className="flex gap-3 group">
-                            <div className="w-12 flex flex-col items-end pt-3 shrink-0">
-                                <span className={`text-sm font-bold ${isDone ? 'text-slate-500' : 'text-slate-200'}`}>{item.startTime}</span>
-                                <span className="text-[10px] text-slate-500 mt-0.5">{item.endTime}</span>
+                        <div key={item.id} className={`flex gap-3 group ${isCurrent ? 'relative' : ''}`} id={isCurrent ? 'current-block' : undefined}>
+                            <div className="w-[70px] flex flex-col items-end pt-3 shrink-0">
+                                <span className={`text-[13px] font-bold ${isCurrent ? 'text-emerald-400' : isDone ? 'text-slate-500' : 'text-slate-200'}`}>
+                                    {formatTime12h(item.startTime)}
+                                </span>
+                                <span className="text-[10px] text-slate-500 mt-0.5">{formatTime12h(item.endTime)}</span>
                             </div>
 
                             <div className="flex-1 relative">
                                 {!isLast && (
-                                    <div className={`absolute left-[-19px] top-8 bottom-[-20px] w-0.5 ${isDone ? 'bg-emerald-500/30' : 'bg-slate-700/50'} transition-colors`}></div>
+                                    <div className={`absolute left-[-19px] top-8 bottom-[-20px] w-0.5 ${isCurrent ? 'bg-emerald-500/50' : isDone ? 'bg-emerald-500/30' : 'bg-slate-700/50'} transition-colors`}></div>
                                 )}
-                                <div className={`absolute left-[-22px] top-4 w-2 h-2 rounded-full ring-2 ring-[#020617] ${isDone ? 'bg-emerald-400' : colorClass}`}></div>
+                                <div className={`absolute left-[-22px] top-4 w-2.5 h-2.5 rounded-full ring-2 ring-[#020617] ${isCurrent ? 'bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.6)] animate-pulse' : isDone ? 'bg-emerald-400' : colorClass}`}></div>
 
                                 <div
-                                    className={`p-3.5 rounded-xl transition-all bg-slate-800/80 border flex flex-col gap-1.5 relative overflow-hidden ${isDone ? 'border-emerald-500/20 opacity-75' : 'border-slate-700/50'
+                                    className={`p-3.5 rounded-xl transition-all flex flex-col gap-1.5 relative overflow-hidden ${isCurrent
+                                            ? 'bg-emerald-500/10 border-2 border-emerald-500/40 shadow-[0_0_20px_rgba(52,211,153,0.15)]'
+                                            : isDone
+                                                ? 'bg-slate-800/80 border border-emerald-500/20 opacity-75'
+                                                : 'bg-slate-800/80 border border-slate-700/50'
                                         }`}
                                 >
-                                    <div className={`absolute left-0 top-0 bottom-0 w-1.5 ${isDone ? 'bg-emerald-500/50' : colorClass}`}></div>
+                                    <div className={`absolute left-0 top-0 bottom-0 w-1.5 ${isCurrent ? 'bg-emerald-400' : isDone ? 'bg-emerald-500/50' : colorClass}`}></div>
+
+                                    {isCurrent && (
+                                        <div className="absolute top-2 right-2">
+                                            <span className="relative flex h-2.5 w-2.5">
+                                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                                            </span>
+                                        </div>
+                                    )}
 
                                     <div className="flex justify-between items-start pl-2">
                                         <div className="flex-1 cursor-pointer" onClick={() => onEditBlock(item)}>
-                                            <h4 className={`font-bold text-[15px] leading-tight pr-2 ${isDone ? 'text-slate-400 line-through' : 'text-slate-100'}`}>{item.title}</h4>
+                                            <h4 className={`font-bold text-[15px] leading-tight pr-2 ${isCurrent ? 'text-emerald-100' : isDone ? 'text-slate-400 line-through' : 'text-slate-100'}`}>
+                                                {item.title}
+                                            </h4>
                                         </div>
                                         <div className="flex items-center gap-2 shrink-0">
-                                            <span className="text-[11px] font-bold text-slate-400 bg-slate-900/80 px-2 py-0.5 rounded-md border border-slate-700">
+                                            <span className={`text-[11px] font-bold px-2 py-0.5 rounded-md border ${isCurrent ? 'text-emerald-300 bg-emerald-900/50 border-emerald-500/30' : 'text-slate-400 bg-slate-900/80 border-slate-700'}`}>
                                                 {formatDuration(item.duration)}
                                             </span>
-                                            {/* Complete checkbox */}
                                             <button
                                                 onClick={(e) => { e.stopPropagation(); onToggleComplete(item.id); }}
                                                 className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all ${isDone
@@ -129,7 +158,7 @@ const TimelineView = ({ blocks, gaps, onEditBlock, onToggleComplete }) => {
                                     </div>
 
                                     {item.intention && (
-                                        <p className={`text-xs italic pl-2 leading-snug ${isDone ? 'text-slate-500' : 'text-slate-400'}`}>"{item.intention}"</p>
+                                        <p className={`text-xs italic pl-2 leading-snug ${isCurrent ? 'text-emerald-300/80' : isDone ? 'text-slate-500' : 'text-slate-400'}`}>"{item.intention}"</p>
                                     )}
 
                                     <div className="pl-2 flex items-center gap-2 flex-wrap">

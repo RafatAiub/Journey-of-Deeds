@@ -10,6 +10,39 @@ export const minutesToTime = (minutes) => {
     return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`;
 };
 
+export const formatTime12h = (timeStr) => {
+    if (!timeStr) return '';
+    const [hours, minutes] = timeStr.split(':').map(Number);
+    const period = hours >= 12 ? 'PM' : 'AM';
+    const h12 = hours === 0 ? 12 : hours > 12 ? hours - 12 : hours;
+    return `${h12}:${minutes.toString().padStart(2, '0')} ${period}`;
+};
+
+export const getCurrentBlock = (blocks) => {
+    const now = new Date();
+    const nowMin = now.getHours() * 60 + now.getMinutes();
+
+    for (const block of blocks) {
+        const startMin = timeToMinutes(block.startTime);
+        let endMin = timeToMinutes(block.endTime);
+
+        // Handle midnight crossing
+        if (endMin <= startMin) {
+            if (nowMin >= startMin || nowMin < endMin) {
+                const remaining = nowMin >= startMin
+                    ? (24 * 60 - nowMin) + endMin
+                    : endMin - nowMin;
+                return { block, remainingMinutes: remaining };
+            }
+        } else {
+            if (nowMin >= startMin && nowMin < endMin) {
+                return { block, remainingMinutes: endMin - nowMin };
+            }
+        }
+    }
+    return null;
+};
+
 export const calculateAnalytics = (blocks) => {
     const totalMinutes = {
         ibadah: 0,
