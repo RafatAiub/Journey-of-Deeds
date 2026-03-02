@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useApp } from '../utils/AppContext';
 import { translations } from '../utils/language';
-import { Home, Calendar, Settings } from 'lucide-react';
+import { Home, Calendar, Settings, Clock } from 'lucide-react';
 
 const Navigation = () => {
     const { language } = useApp();
@@ -11,6 +11,7 @@ const Navigation = () => {
     const navItems = [
         { path: '/', icon: Home, label: t('home') },
         { path: '/calendar', icon: Calendar, label: t('calendar') },
+        { path: '/routine', icon: Clock, label: t('routine') },
         { path: '/settings', icon: Settings, label: t('settings') },
     ];
 

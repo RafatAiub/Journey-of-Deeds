@@ -6,6 +6,7 @@ import TodayDashboard from './components/TodayDashboard';
 import CalendarView from './components/CalendarView';
 import Settings from './components/Settings';
 import Navigation from './components/Navigation';
+import RoutineBuilder from './components/routine/RoutineBuilder';
 
 import { ToastProvider } from './components/Toast';
 
@@ -121,6 +122,7 @@ function App() {
                                     <Route path="/" element={<TodayDashboard />} />
                                     <Route path="/day/:dateKey" element={<TodayDashboard />} />
                                     <Route path="/calendar" element={<CalendarView />} />
+                                    <Route path="/routine" element={<RoutineBuilder />} />
                                     <Route path="/settings" element={<Settings />} />
                                     <Route path="*" element={<Navigate to="/" replace />} />
                                 </Routes>

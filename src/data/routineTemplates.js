@@ -1,0 +1,80 @@
+export const routineTemplates = {
+    student: {
+        id: 'student',
+        name: 'Student Routine',
+        description: 'Balanced routine for studying and Ibadah.',
+        blocks: [
+            { id: 's1', title: 'Tahajjud & Suhoor', category: 'ibadah', startTime: '03:30', endTime: '05:00', duration: 90, intention: 'Start the day with purity', focusLevel: 'high', isCompleted: false, colorTag: 'bg-emerald-500', isFlexible: false, notes: '' },
+            { id: 's2', title: 'Fajr & Morning Adhkar', category: 'ibadah', startTime: '05:00', endTime: '05:30', duration: 30, intention: 'Morning remembrance', focusLevel: 'high', isCompleted: false, colorTag: 'bg-emerald-500', isFlexible: false, notes: '' },
+            { id: 's3', title: 'Sleep', category: 'sleep', startTime: '05:30', endTime: '08:00', duration: 150, intention: 'Rest for energy', focusLevel: 'low', isCompleted: false, colorTag: 'bg-slate-600', isFlexible: true, notes: '' },
+            { id: 's4', title: 'Study Session 1', category: 'study', startTime: '09:00', endTime: '12:00', duration: 180, intention: 'Focus on core subjects', focusLevel: 'high', isCompleted: false, colorTag: 'bg-blue-500', isFlexible: true, notes: '' },
+            { id: 's5', title: 'Zuhr & Quran', category: 'ibadah', startTime: '12:30', endTime: '13:30', duration: 60, intention: 'Midday connection', focusLevel: 'high', isCompleted: false, colorTag: 'bg-emerald-500', isFlexible: false, notes: '' },
+            { id: 's6', title: 'Study Session 2', category: 'study', startTime: '14:00', endTime: '16:00', duration: 120, intention: 'Deep study', focusLevel: 'high', isCompleted: false, colorTag: 'bg-blue-500', isFlexible: true, notes: '' },
+            { id: 's7', title: 'Asr & Break', category: 'ibadah', startTime: '16:00', endTime: '16:30', duration: 30, intention: 'Refresh', focusLevel: 'medium', isCompleted: false, colorTag: 'bg-emerald-500', isFlexible: false, notes: '' },
+            { id: 's8', title: 'Family Time', category: 'family', startTime: '16:30', endTime: '18:00', duration: 90, intention: 'Bonding', focusLevel: 'medium', isCompleted: false, colorTag: 'bg-pink-500', isFlexible: true, notes: '' },
+            { id: 's9', title: 'Iftar & Maghrib', category: 'ibadah', startTime: '18:00', endTime: '19:00', duration: 60, intention: 'Break the fast with gratitude', focusLevel: 'high', isCompleted: false, colorTag: 'bg-emerald-500', isFlexible: false, notes: '' },
+            { id: 's10', title: 'Isha & Tarawih', category: 'ibadah', startTime: '19:30', endTime: '21:00', duration: 90, intention: 'Night prayers', focusLevel: 'high', isCompleted: false, colorTag: 'bg-emerald-500', isFlexible: false, notes: '' },
+            { id: 's11', title: 'Light Review', category: 'study', startTime: '21:00', endTime: '22:00', duration: 60, intention: 'Revision', focusLevel: 'medium', isCompleted: false, colorTag: 'bg-blue-500', isFlexible: true, notes: '' },
+            { id: 's12', title: 'Sleep', category: 'sleep', startTime: '22:00', endTime: '03:30', duration: 330, intention: 'Rest', focusLevel: 'low', isCompleted: false, colorTag: 'bg-slate-600', isFlexible: false, notes: '' },
+        ]
+    },
+    officeWorker: {
+        id: 'officeWorker',
+        name: 'Office Worker Routine',
+        description: 'Managing work hours with spiritual focus.',
+        blocks: [
+            { id: 'o1', title: 'Suhoor & Fajr', category: 'ibadah', startTime: '04:00', endTime: '05:30', duration: 90, intention: 'Blessings of early hours', focusLevel: 'high', isCompleted: false, colorTag: 'bg-emerald-500', isFlexible: false, notes: '' },
+            { id: 'o2', title: 'Sleep', category: 'sleep', startTime: '05:30', endTime: '07:30', duration: 120, intention: 'Rest', focusLevel: 'low', isCompleted: false, colorTag: 'bg-slate-600', isFlexible: true, notes: '' },
+            { id: 'o3', title: 'Get Ready & Commute', category: 'personal', startTime: '07:30', endTime: '09:00', duration: 90, intention: 'Prepare mindfully', focusLevel: 'medium', isCompleted: false, colorTag: 'bg-purple-500', isFlexible: false, notes: '' },
+            { id: 'o4', title: 'Work Block 1', category: 'work', startTime: '09:00', endTime: '13:00', duration: 240, intention: 'Halal earning', focusLevel: 'high', isCompleted: false, colorTag: 'bg-amber-500', isFlexible: false, notes: '' },
+            { id: 'o5', title: 'Zuhr Break', category: 'ibadah', startTime: '13:00', endTime: '13:30', duration: 30, intention: 'Midday prayer', focusLevel: 'high', isCompleted: false, colorTag: 'bg-emerald-500', isFlexible: false, notes: '' },
+            { id: 'o6', title: 'Work Block 2', category: 'work', startTime: '13:30', endTime: '17:00', duration: 210, intention: 'Productive afternoon', focusLevel: 'high', isCompleted: false, colorTag: 'bg-amber-500', isFlexible: false, notes: '' },
+            { id: 'o7', title: 'Asr & Quran', category: 'ibadah', startTime: '17:00', endTime: '17:45', duration: 45, intention: 'Afternoon worship', focusLevel: 'high', isCompleted: false, colorTag: 'bg-emerald-500', isFlexible: false, notes: '' },
+            { id: 'o8', title: 'Family / Iftar Prep', category: 'family', startTime: '17:45', endTime: '18:30', duration: 45, intention: 'Quality time', focusLevel: 'medium', isCompleted: false, colorTag: 'bg-pink-500', isFlexible: true, notes: '' },
+            { id: 'o9', title: 'Iftar & Maghrib', category: 'ibadah', startTime: '18:30', endTime: '19:30', duration: 60, intention: 'Breaking fast', focusLevel: 'high', isCompleted: false, colorTag: 'bg-emerald-500', isFlexible: false, notes: '' },
+            { id: 'o10', title: 'Isha & Tarawih', category: 'ibadah', startTime: '19:30', endTime: '21:00', duration: 90, intention: 'Night prayers', focusLevel: 'high', isCompleted: false, colorTag: 'bg-emerald-500', isFlexible: false, notes: '' },
+            { id: 'o11', title: 'Personal Time', category: 'personal', startTime: '21:00', endTime: '22:30', duration: 90, intention: 'Relax', focusLevel: 'low', isCompleted: false, colorTag: 'bg-purple-500', isFlexible: true, notes: '' },
+            { id: 'o12', title: 'Sleep', category: 'sleep', startTime: '22:30', endTime: '04:00', duration: 330, intention: 'Rest', focusLevel: 'low', isCompleted: false, colorTag: 'bg-slate-600', isFlexible: false, notes: '' },
+        ]
+    },
+    freelancer: {
+        id: 'freelancer',
+        name: 'Freelancer Routine',
+        description: 'Flexible schedule with deep work and Ibadah blocks.',
+        blocks: [
+            { id: 'f1', title: 'Tahajjud & Suhoor', category: 'ibadah', startTime: '03:30', endTime: '05:00', duration: 90, intention: 'Night devotion', focusLevel: 'high', isCompleted: false, colorTag: 'bg-emerald-500', isFlexible: false, notes: '' },
+            { id: 'f2', title: 'Fajr & Quran', category: 'ibadah', startTime: '05:00', endTime: '06:00', duration: 60, intention: 'Morning light', focusLevel: 'high', isCompleted: false, colorTag: 'bg-emerald-500', isFlexible: false, notes: '' },
+            { id: 'f3', title: 'Sleep', category: 'sleep', startTime: '06:00', endTime: '09:00', duration: 180, intention: 'Recovery', focusLevel: 'low', isCompleted: false, colorTag: 'bg-slate-600', isFlexible: true, notes: '' },
+            { id: 'f4', title: 'Deep Work Sprint 1', category: 'work', startTime: '09:30', endTime: '12:30', duration: 180, intention: 'High-focus client work', focusLevel: 'high', isCompleted: false, colorTag: 'bg-amber-500', isFlexible: true, notes: '' },
+            { id: 'f5', title: 'Zuhr & Lunch', category: 'ibadah', startTime: '12:30', endTime: '13:30', duration: 60, intention: 'Midday reset', focusLevel: 'high', isCompleted: false, colorTag: 'bg-emerald-500', isFlexible: false, notes: '' },
+            { id: 'f6', title: 'Deep Work Sprint 2', category: 'work', startTime: '14:00', endTime: '16:30', duration: 150, intention: 'Finish deliverables', focusLevel: 'high', isCompleted: false, colorTag: 'bg-amber-500', isFlexible: true, notes: '' },
+            { id: 'f7', title: 'Asr & Break', category: 'ibadah', startTime: '16:30', endTime: '17:00', duration: 30, intention: 'Afternoon prayer', focusLevel: 'high', isCompleted: false, colorTag: 'bg-emerald-500', isFlexible: false, notes: '' },
+            { id: 'f8', title: 'Personal / Exercise', category: 'personal', startTime: '17:00', endTime: '18:00', duration: 60, intention: 'Self-care', focusLevel: 'medium', isCompleted: false, colorTag: 'bg-purple-500', isFlexible: true, notes: '' },
+            { id: 'f9', title: 'Iftar & Maghrib', category: 'ibadah', startTime: '18:00', endTime: '19:00', duration: 60, intention: 'Gratitude', focusLevel: 'high', isCompleted: false, colorTag: 'bg-emerald-500', isFlexible: false, notes: '' },
+            { id: 'f10', title: 'Isha & Tarawih', category: 'ibadah', startTime: '19:30', endTime: '21:00', duration: 90, intention: 'Night prayers', focusLevel: 'high', isCompleted: false, colorTag: 'bg-emerald-500', isFlexible: false, notes: '' },
+            { id: 'f11', title: 'Learning / Side Project', category: 'study', startTime: '21:00', endTime: '22:30', duration: 90, intention: 'Growth', focusLevel: 'medium', isCompleted: false, colorTag: 'bg-blue-500', isFlexible: true, notes: '' },
+            { id: 'f12', title: 'Sleep', category: 'sleep', startTime: '22:30', endTime: '03:30', duration: 300, intention: 'Rest', focusLevel: 'low', isCompleted: false, colorTag: 'bg-slate-600', isFlexible: false, notes: '' },
+        ]
+    },
+    homemaker: {
+        id: 'homemaker',
+        name: 'Homemaker Routine',
+        description: 'Family-centered routine with spiritual grounding.',
+        blocks: [
+            { id: 'h1', title: 'Tahajjud & Suhoor Prep', category: 'ibadah', startTime: '03:30', endTime: '05:00', duration: 90, intention: 'Serve the family with love', focusLevel: 'high', isCompleted: false, colorTag: 'bg-emerald-500', isFlexible: false, notes: '' },
+            { id: 'h2', title: 'Fajr & Dua', category: 'ibadah', startTime: '05:00', endTime: '05:30', duration: 30, intention: 'Morning peace', focusLevel: 'high', isCompleted: false, colorTag: 'bg-emerald-500', isFlexible: false, notes: '' },
+            { id: 'h3', title: 'Sleep', category: 'sleep', startTime: '05:30', endTime: '08:00', duration: 150, intention: 'Rest', focusLevel: 'low', isCompleted: false, colorTag: 'bg-slate-600', isFlexible: true, notes: '' },
+            { id: 'h4', title: 'Household Chores', category: 'work', startTime: '08:00', endTime: '10:00', duration: 120, intention: 'Clean home is Ibadah', focusLevel: 'medium', isCompleted: false, colorTag: 'bg-amber-500', isFlexible: true, notes: '' },
+            { id: 'h5', title: 'Quran & Learning', category: 'ibadah', startTime: '10:00', endTime: '11:00', duration: 60, intention: 'Seeking knowledge', focusLevel: 'high', isCompleted: false, colorTag: 'bg-emerald-500', isFlexible: false, notes: '' },
+            { id: 'h6', title: 'Cooking / Iftar Prep', category: 'family', startTime: '11:00', endTime: '13:00', duration: 120, intention: 'Feeding the fasting is Sadaqah', focusLevel: 'medium', isCompleted: false, colorTag: 'bg-pink-500', isFlexible: true, notes: '' },
+            { id: 'h7', title: 'Zuhr & Rest', category: 'ibadah', startTime: '13:00', endTime: '14:00', duration: 60, intention: 'Afternoon prayer', focusLevel: 'high', isCompleted: false, colorTag: 'bg-emerald-500', isFlexible: false, notes: '' },
+            { id: 'h8', title: 'Kids / Family Time', category: 'family', startTime: '14:00', endTime: '16:00', duration: 120, intention: 'Nurturing', focusLevel: 'medium', isCompleted: false, colorTag: 'bg-pink-500', isFlexible: true, notes: '' },
+            { id: 'h9', title: 'Asr & Dhikr', category: 'ibadah', startTime: '16:00', endTime: '16:30', duration: 30, intention: 'Remembrance', focusLevel: 'high', isCompleted: false, colorTag: 'bg-emerald-500', isFlexible: false, notes: '' },
+            { id: 'h10', title: 'Final Iftar Prep', category: 'family', startTime: '16:30', endTime: '18:00', duration: 90, intention: 'Serving with love', focusLevel: 'medium', isCompleted: false, colorTag: 'bg-pink-500', isFlexible: true, notes: '' },
+            { id: 'h11', title: 'Iftar & Maghrib', category: 'ibadah', startTime: '18:00', endTime: '19:00', duration: 60, intention: 'Gratitude', focusLevel: 'high', isCompleted: false, colorTag: 'bg-emerald-500', isFlexible: false, notes: '' },
+            { id: 'h12', title: 'Isha & Tarawih', category: 'ibadah', startTime: '19:30', endTime: '21:00', duration: 90, intention: 'Night devotion', focusLevel: 'high', isCompleted: false, colorTag: 'bg-emerald-500', isFlexible: false, notes: '' },
+            { id: 'h13', title: 'Personal Time', category: 'personal', startTime: '21:00', endTime: '22:00', duration: 60, intention: 'Self-care', focusLevel: 'low', isCompleted: false, colorTag: 'bg-purple-500', isFlexible: true, notes: '' },
+            { id: 'h14', title: 'Sleep', category: 'sleep', startTime: '22:00', endTime: '03:30', duration: 330, intention: 'Rest', focusLevel: 'low', isCompleted: false, colorTag: 'bg-slate-600', isFlexible: false, notes: '' },
+        ]
+    }
+};
