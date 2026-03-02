@@ -11,7 +11,7 @@ const formatDuration = (minutes) => {
     return `${m}m`;
 };
 
-const TimelineView = ({ blocks, gaps, onEditBlock, onToggleComplete }) => {
+const TimelineView = ({ blocks, gaps, onEditBlock, onToggleComplete, onDeleteBlock }) => {
     const { language } = useApp();
     const t = (key) => translations[language]?.[key] || translations['en'][key] || key;
     const [currentBlockId, setCurrentBlockId] = useState(null);
@@ -116,10 +116,10 @@ const TimelineView = ({ blocks, gaps, onEditBlock, onToggleComplete }) => {
 
                                 <div
                                     className={`p-3.5 rounded-xl transition-all flex flex-col gap-1.5 relative overflow-hidden ${isCurrent
-                                            ? 'bg-emerald-500/10 border-2 border-emerald-500/40 shadow-[0_0_20px_rgba(52,211,153,0.15)]'
-                                            : isDone
-                                                ? 'bg-slate-800/80 border border-emerald-500/20 opacity-75'
-                                                : 'bg-slate-800/80 border border-slate-700/50'
+                                        ? 'bg-emerald-500/10 border-2 border-emerald-500/40 shadow-[0_0_20px_rgba(52,211,153,0.15)]'
+                                        : isDone
+                                            ? 'bg-slate-800/80 border border-emerald-500/20 opacity-75'
+                                            : 'bg-slate-800/80 border border-slate-700/50'
                                         }`}
                                 >
                                     <div className={`absolute left-0 top-0 bottom-0 w-1.5 ${isCurrent ? 'bg-emerald-400' : isDone ? 'bg-emerald-500/50' : colorClass}`}></div>
@@ -146,8 +146,8 @@ const TimelineView = ({ blocks, gaps, onEditBlock, onToggleComplete }) => {
                                             <button
                                                 onClick={(e) => { e.stopPropagation(); onToggleComplete(item.id); }}
                                                 className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all ${isDone
-                                                        ? 'bg-emerald-500 border-emerald-500 text-white'
-                                                        : 'border-slate-600 hover:border-emerald-500/50 text-transparent hover:text-emerald-500/50'
+                                                    ? 'bg-emerald-500 border-emerald-500 text-white'
+                                                    : 'border-slate-600 hover:border-emerald-500/50 text-transparent hover:text-emerald-500/50'
                                                     }`}
                                             >
                                                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -167,8 +167,8 @@ const TimelineView = ({ blocks, gaps, onEditBlock, onToggleComplete }) => {
                                         </span>
                                         {item.focusLevel && (
                                             <span className={`text-[10px] uppercase font-bold px-1.5 py-0.5 rounded-md border ${item.focusLevel === 'high' ? 'text-emerald-400 border-emerald-500/30' :
-                                                    item.focusLevel === 'medium' ? 'text-amber-400 border-amber-500/30' :
-                                                        'text-slate-400 border-slate-600'
+                                                item.focusLevel === 'medium' ? 'text-amber-400 border-amber-500/30' :
+                                                    'text-slate-400 border-slate-600'
                                                 }`}>
                                                 {t('focus' + item.focusLevel.charAt(0).toUpperCase() + item.focusLevel.slice(1))}
                                             </span>
@@ -181,6 +181,24 @@ const TimelineView = ({ blocks, gaps, onEditBlock, onToggleComplete }) => {
                                     {item.notes && (
                                         <p className="text-[11px] text-slate-500 pl-2 mt-0.5">📝 {item.notes}</p>
                                     )}
+
+                                    {/* Action buttons */}
+                                    <div className="pl-2 pt-1 flex items-center gap-1.5 border-t border-slate-700/30 mt-1.5">
+                                        <button
+                                            onClick={(e) => { e.stopPropagation(); onEditBlock(item); }}
+                                            className="flex items-center gap-1 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-slate-400 hover:text-sky-400 hover:bg-sky-500/10 rounded-lg transition-all"
+                                        >
+                                            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
+                                            {t('editBlock')}
+                                        </button>
+                                        <button
+                                            onClick={(e) => { e.stopPropagation(); onDeleteBlock(item.id); }}
+                                            className="flex items-center gap-1 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 rounded-lg transition-all"
+                                        >
+                                            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                                            {t('delete')}
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>

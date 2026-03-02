@@ -311,6 +311,7 @@ const RoutineBuilder = ({ dateStr, onClose }) => {
                     gaps={analytics.gaps}
                     onEditBlock={openEditModal}
                     onToggleComplete={toggleComplete}
+                    onDeleteBlock={deleteBlock}
                 />
             </div>
 
