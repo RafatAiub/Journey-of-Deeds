@@ -58,10 +58,10 @@ const TimelineView = ({ blocks, gaps, onEditBlock, onToggleComplete, onDeleteBlo
     if (timelineItems.length === 0) {
         return (
             <div className="flex flex-col items-center justify-center h-[300px] text-center">
-                <div className="bg-slate-800/50 p-6 rounded-2xl border border-slate-700/50 max-w-xs">
+                <div className="bg-white dark:bg-slate-800/50 p-6 rounded-2xl border border-slate-200 dark:border-slate-700/50 max-w-xs shadow-sm dark:shadow-none">
                     <span className="text-4xl block mb-3">🕌</span>
-                    <p className="text-slate-300 font-medium text-sm mb-1">{t('designPerfectDay')}</p>
-                    <p className="text-slate-500 text-xs">{t('quickStartTemplates')}</p>
+                    <p className="text-slate-700 dark:text-slate-300 font-medium text-sm mb-1">{t('designPerfectDay')}</p>
+                    <p className="text-slate-400 dark:text-slate-500 text-xs">{t('quickStartTemplates')}</p>
                 </div>
             </div>
         );
@@ -78,16 +78,16 @@ const TimelineView = ({ blocks, gaps, onEditBlock, onToggleComplete, onDeleteBlo
                                 onClick={() => onEditBlock(item)}
                                 className="flex items-center gap-3 cursor-pointer group"
                             >
-                                <div className="w-[70px] flex flex-col items-end text-rose-400/80 shrink-0">
+                                <div className="w-[70px] flex flex-col items-end text-rose-500 dark:text-rose-400/80 shrink-0">
                                     <span className="text-[11px] font-medium">{formatTime12h(item.startTime)}</span>
                                 </div>
                                 <div className="flex-1 relative">
-                                    <div className="absolute left-[-19px] top-1/2 bottom-[-50%] w-0.5 border-l-2 border-dotted border-rose-500/30"></div>
-                                    <div className="absolute left-[-22px] top-1/2 -translate-y-1/2 w-2 h-2 rounded-full border border-rose-500/50 bg-[#020617] group-hover:bg-rose-500/50 transition-colors"></div>
+                                    <div className="absolute left-[-19px] top-1/2 bottom-[-50%] w-0.5 border-l-2 border-dotted border-rose-300 dark:border-rose-500/30"></div>
+                                    <div className="absolute left-[-22px] top-1/2 -translate-y-1/2 w-2 h-2 rounded-full border border-rose-400 dark:border-rose-500/50 bg-slate-50 dark:bg-[#020617] group-hover:bg-rose-400 dark:group-hover:bg-rose-500/50 transition-colors"></div>
 
-                                    <div className="bg-rose-500/10 border border-rose-500/20 rounded-xl p-2.5 flex justify-between items-center group-hover:bg-rose-500/20 transition-all">
-                                        <span className="text-rose-400 text-xs font-semibold">{t('unplannedTime')}</span>
-                                        <span className="text-rose-400/90 text-[11px] font-medium">{formatDuration(item.duration)}</span>
+                                    <div className="bg-rose-50 dark:bg-rose-500/10 border border-rose-200 dark:border-rose-500/20 rounded-xl p-2.5 flex justify-between items-center group-hover:bg-rose-100 dark:group-hover:bg-rose-500/20 transition-all">
+                                        <span className="text-rose-600 dark:text-rose-400 text-xs font-semibold">{t('unplannedTime')}</span>
+                                        <span className="text-rose-500 dark:text-rose-400/90 text-[11px] font-medium">{formatDuration(item.duration)}</span>
                                     </div>
                                 </div>
                             </div>
@@ -102,27 +102,27 @@ const TimelineView = ({ blocks, gaps, onEditBlock, onToggleComplete, onDeleteBlo
                     return (
                         <div key={item.id} className={`flex gap-3 group ${isCurrent ? 'relative' : ''}`} id={isCurrent ? 'current-block' : undefined}>
                             <div className="w-[70px] flex flex-col items-end pt-3 shrink-0">
-                                <span className={`text-[13px] font-bold ${isCurrent ? 'text-emerald-400' : isDone ? 'text-slate-500' : 'text-slate-200'}`}>
+                                <span className={`text-[13px] font-bold ${isCurrent ? 'text-emerald-600 dark:text-emerald-400' : isDone ? 'text-slate-400 dark:text-slate-500' : 'text-slate-700 dark:text-slate-200'}`}>
                                     {formatTime12h(item.startTime)}
                                 </span>
-                                <span className="text-[10px] text-slate-500 mt-0.5">{formatTime12h(item.endTime)}</span>
+                                <span className="text-[10px] text-slate-400 dark:text-slate-500 mt-0.5">{formatTime12h(item.endTime)}</span>
                             </div>
 
                             <div className="flex-1 relative">
                                 {!isLast && (
-                                    <div className={`absolute left-[-19px] top-8 bottom-[-20px] w-0.5 ${isCurrent ? 'bg-emerald-500/50' : isDone ? 'bg-emerald-500/30' : 'bg-slate-700/50'} transition-colors`}></div>
+                                    <div className={`absolute left-[-19px] top-8 bottom-[-20px] w-0.5 ${isCurrent ? 'bg-emerald-300 dark:bg-emerald-500/50' : isDone ? 'bg-emerald-200 dark:bg-emerald-500/30' : 'bg-slate-200 dark:bg-slate-700/50'} transition-colors`}></div>
                                 )}
-                                <div className={`absolute left-[-22px] top-4 w-2.5 h-2.5 rounded-full ring-2 ring-[#020617] ${isCurrent ? 'bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.6)] animate-pulse' : isDone ? 'bg-emerald-400' : colorClass}`}></div>
+                                <div className={`absolute left-[-22px] top-4 w-2.5 h-2.5 rounded-full ring-2 ring-slate-50 dark:ring-[#020617] ${isCurrent ? 'bg-emerald-500 dark:bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.6)] animate-pulse' : isDone ? 'bg-emerald-400' : colorClass}`}></div>
 
                                 <div
                                     className={`p-3.5 rounded-xl transition-all flex flex-col gap-1.5 relative overflow-hidden ${isCurrent
-                                        ? 'bg-emerald-500/10 border-2 border-emerald-500/40 shadow-[0_0_20px_rgba(52,211,153,0.15)]'
-                                        : isDone
-                                            ? 'bg-slate-800/80 border border-emerald-500/20 opacity-75'
-                                            : 'bg-slate-800/80 border border-slate-700/50'
+                                            ? 'bg-emerald-50 dark:bg-emerald-500/10 border-2 border-emerald-300 dark:border-emerald-500/40 shadow-md dark:shadow-[0_0_20px_rgba(52,211,153,0.15)]'
+                                            : isDone
+                                                ? 'bg-slate-50 dark:bg-slate-800/80 border border-emerald-200 dark:border-emerald-500/20 opacity-75'
+                                                : 'bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/50 shadow-sm dark:shadow-none'
                                         }`}
                                 >
-                                    <div className={`absolute left-0 top-0 bottom-0 w-1.5 ${isCurrent ? 'bg-emerald-400' : isDone ? 'bg-emerald-500/50' : colorClass}`}></div>
+                                    <div className={`absolute left-0 top-0 bottom-0 w-1.5 ${isCurrent ? 'bg-emerald-500 dark:bg-emerald-400' : isDone ? 'bg-emerald-300 dark:bg-emerald-500/50' : colorClass}`}></div>
 
                                     {isCurrent && (
                                         <div className="absolute top-2 right-2">
@@ -135,19 +135,19 @@ const TimelineView = ({ blocks, gaps, onEditBlock, onToggleComplete, onDeleteBlo
 
                                     <div className="flex justify-between items-start pl-2">
                                         <div className="flex-1 cursor-pointer" onClick={() => onEditBlock(item)}>
-                                            <h4 className={`font-bold text-[15px] leading-tight pr-2 ${isCurrent ? 'text-emerald-100' : isDone ? 'text-slate-400 line-through' : 'text-slate-100'}`}>
+                                            <h4 className={`font-bold text-[15px] leading-tight pr-2 ${isCurrent ? 'text-emerald-800 dark:text-emerald-100' : isDone ? 'text-slate-400 line-through' : 'text-slate-800 dark:text-slate-100'}`}>
                                                 {item.title}
                                             </h4>
                                         </div>
                                         <div className="flex items-center gap-2 shrink-0">
-                                            <span className={`text-[11px] font-bold px-2 py-0.5 rounded-md border ${isCurrent ? 'text-emerald-300 bg-emerald-900/50 border-emerald-500/30' : 'text-slate-400 bg-slate-900/80 border-slate-700'}`}>
+                                            <span className={`text-[11px] font-bold px-2 py-0.5 rounded-md border ${isCurrent ? 'text-emerald-700 dark:text-emerald-300 bg-emerald-100 dark:bg-emerald-900/50 border-emerald-300 dark:border-emerald-500/30' : 'text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-900/80 border-slate-200 dark:border-slate-700'}`}>
                                                 {formatDuration(item.duration)}
                                             </span>
                                             <button
                                                 onClick={(e) => { e.stopPropagation(); onToggleComplete(item.id); }}
                                                 className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all ${isDone
-                                                    ? 'bg-emerald-500 border-emerald-500 text-white'
-                                                    : 'border-slate-600 hover:border-emerald-500/50 text-transparent hover:text-emerald-500/50'
+                                                        ? 'bg-emerald-500 border-emerald-500 text-white'
+                                                        : 'border-slate-300 dark:border-slate-600 hover:border-emerald-400 dark:hover:border-emerald-500/50 text-transparent hover:text-emerald-400 dark:hover:text-emerald-500/50'
                                                     }`}
                                             >
                                                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -158,42 +158,42 @@ const TimelineView = ({ blocks, gaps, onEditBlock, onToggleComplete, onDeleteBlo
                                     </div>
 
                                     {item.intention && (
-                                        <p className={`text-xs italic pl-2 leading-snug ${isCurrent ? 'text-emerald-300/80' : isDone ? 'text-slate-500' : 'text-slate-400'}`}>"{item.intention}"</p>
+                                        <p className={`text-xs italic pl-2 leading-snug ${isCurrent ? 'text-emerald-600/70 dark:text-emerald-300/80' : isDone ? 'text-slate-400 dark:text-slate-500' : 'text-slate-500 dark:text-slate-400'}`}>"{item.intention}"</p>
                                     )}
 
                                     <div className="pl-2 flex items-center gap-2 flex-wrap">
-                                        <span className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded-md text-white/90 ${isDone ? 'bg-slate-600/50' : colorClass}`}>
+                                        <span className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded-md text-white/90 ${isDone ? 'bg-slate-400 dark:bg-slate-600/50' : colorClass}`}>
                                             {getCategoryLabel(item.category)}
                                         </span>
                                         {item.focusLevel && (
-                                            <span className={`text-[10px] uppercase font-bold px-1.5 py-0.5 rounded-md border ${item.focusLevel === 'high' ? 'text-emerald-400 border-emerald-500/30' :
-                                                item.focusLevel === 'medium' ? 'text-amber-400 border-amber-500/30' :
-                                                    'text-slate-400 border-slate-600'
+                                            <span className={`text-[10px] uppercase font-bold px-1.5 py-0.5 rounded-md border ${item.focusLevel === 'high' ? 'text-emerald-600 dark:text-emerald-400 border-emerald-300 dark:border-emerald-500/30' :
+                                                    item.focusLevel === 'medium' ? 'text-amber-600 dark:text-amber-400 border-amber-300 dark:border-amber-500/30' :
+                                                        'text-slate-500 dark:text-slate-400 border-slate-300 dark:border-slate-600'
                                                 }`}>
                                                 {t('focus' + item.focusLevel.charAt(0).toUpperCase() + item.focusLevel.slice(1))}
                                             </span>
                                         )}
                                         {item.isFlexible && (
-                                            <span className="text-[10px] text-slate-500 uppercase font-bold">⏳ {t('flexibleLbl')}</span>
+                                            <span className="text-[10px] text-slate-400 dark:text-slate-500 uppercase font-bold">⏳ {t('flexibleLbl')}</span>
                                         )}
                                     </div>
 
                                     {item.notes && (
-                                        <p className="text-[11px] text-slate-500 pl-2 mt-0.5">📝 {item.notes}</p>
+                                        <p className="text-[11px] text-slate-400 dark:text-slate-500 pl-2 mt-0.5">📝 {item.notes}</p>
                                     )}
 
                                     {/* Action buttons */}
-                                    <div className="pl-2 pt-1 flex items-center gap-1.5 border-t border-slate-700/30 mt-1.5">
+                                    <div className="pl-2 pt-1 flex items-center gap-1.5 border-t border-slate-100 dark:border-slate-700/30 mt-1.5">
                                         <button
                                             onClick={(e) => { e.stopPropagation(); onEditBlock(item); }}
-                                            className="flex items-center gap-1 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-slate-400 hover:text-sky-400 hover:bg-sky-500/10 rounded-lg transition-all"
+                                            className="flex items-center gap-1 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 hover:bg-sky-50 dark:hover:bg-sky-500/10 rounded-lg transition-all"
                                         >
                                             <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
                                             {t('editBlock')}
                                         </button>
                                         <button
                                             onClick={(e) => { e.stopPropagation(); onDeleteBlock(item.id); }}
-                                            className="flex items-center gap-1 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 rounded-lg transition-all"
+                                            className="flex items-center gap-1 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-500/10 rounded-lg transition-all"
                                         >
                                             <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
                                             {t('delete')}

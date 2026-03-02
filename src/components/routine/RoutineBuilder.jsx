@@ -82,7 +82,7 @@ const RoutineBuilder = ({ dateStr, onClose }) => {
             }
         };
         update();
-        const interval = setInterval(update, 30000); // update every 30s
+        const interval = setInterval(update, 30000);
         return () => clearInterval(interval);
     }, [routine.blocks]);
 
@@ -154,27 +154,27 @@ const RoutineBuilder = ({ dateStr, onClose }) => {
     };
 
     return (
-        <div className="flex flex-col min-h-screen bg-[#020617] text-white p-4 max-w-lg mx-auto relative pb-28">
+        <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-[#020617] text-slate-800 dark:text-white p-4 max-w-lg mx-auto relative pb-28 transition-colors">
             {/* Header */}
             <div className="flex justify-between items-center mb-5">
                 <div>
-                    <h2 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-teal-400">
+                    <h2 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-600 to-teal-600 dark:from-emerald-400 dark:to-teal-400">
                         {t('planner24h')}
                     </h2>
-                    <p className="text-slate-400 text-sm">{t('designPerfectDay')}</p>
+                    <p className="text-slate-500 dark:text-slate-400 text-sm">{t('designPerfectDay')}</p>
                 </div>
                 <div className="flex items-center gap-2">
                     {routine.blocks.length > 0 && (
                         <button
                             onClick={() => setShowResetConfirm(true)}
-                            className="p-2 bg-slate-800/50 hover:bg-rose-500/20 rounded-full text-slate-400 hover:text-rose-400 transition-colors text-xs"
+                            className="p-2 bg-slate-100 dark:bg-slate-800/50 hover:bg-rose-100 dark:hover:bg-rose-500/20 rounded-full text-slate-400 hover:text-rose-500 dark:hover:text-rose-400 transition-colors text-xs"
                             title={t('resetRoutine')}
                         >
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
                         </button>
                     )}
                     {onClose && (
-                        <button onClick={onClose} className="p-2 bg-slate-800/50 hover:bg-slate-700/50 rounded-full text-slate-300 transition-colors">
+                        <button onClick={onClose} className="p-2 bg-slate-100 dark:bg-slate-800/50 hover:bg-slate-200 dark:hover:bg-slate-700/50 rounded-full text-slate-500 dark:text-slate-300 transition-colors">
                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                         </button>
                     )}
@@ -183,34 +183,34 @@ const RoutineBuilder = ({ dateStr, onClose }) => {
 
             {/* Stats Row */}
             <div className="grid grid-cols-3 gap-2 mb-5">
-                <div className="bg-slate-800/50 p-3 rounded-xl border border-slate-700/50">
-                    <p className="text-[10px] text-slate-400 uppercase font-bold tracking-wider mb-1">{t('ibadahTime')}</p>
+                <div className="bg-white dark:bg-slate-800/50 p-3 rounded-xl border border-slate-200 dark:border-slate-700/50 shadow-sm dark:shadow-none">
+                    <p className="text-[10px] text-slate-500 dark:text-slate-400 uppercase font-bold tracking-wider mb-1">{t('ibadahTime')}</p>
                     <div className="flex items-baseline gap-1.5">
-                        <span className="text-xl font-bold text-emerald-400">{analytics.totalHours.ibadah || 0}h</span>
-                        <span className="text-[10px] font-bold text-emerald-900 bg-emerald-400 px-1.5 py-0.5 rounded-full">{analytics.ibadahPercentage}%</span>
+                        <span className="text-xl font-bold text-emerald-600 dark:text-emerald-400">{analytics.totalHours.ibadah || 0}h</span>
+                        <span className="text-[10px] font-bold text-white bg-emerald-500 dark:text-emerald-900 dark:bg-emerald-400 px-1.5 py-0.5 rounded-full">{analytics.ibadahPercentage}%</span>
                     </div>
                 </div>
-                <div className="bg-slate-800/50 p-3 rounded-xl border border-slate-700/50">
-                    <p className="text-[10px] text-slate-400 uppercase font-bold tracking-wider mb-1">{t('unplanned')}</p>
-                    <span className={`text-xl font-bold ${analytics.unplannedHours > 0 ? 'text-rose-400' : 'text-slate-300'}`}>
+                <div className="bg-white dark:bg-slate-800/50 p-3 rounded-xl border border-slate-200 dark:border-slate-700/50 shadow-sm dark:shadow-none">
+                    <p className="text-[10px] text-slate-500 dark:text-slate-400 uppercase font-bold tracking-wider mb-1">{t('unplanned')}</p>
+                    <span className={`text-xl font-bold ${analytics.unplannedHours > 0 ? 'text-rose-500 dark:text-rose-400' : 'text-slate-400 dark:text-slate-300'}`}>
                         {analytics.unplannedHours}h
                     </span>
                 </div>
-                <div className="bg-slate-800/50 p-3 rounded-xl border border-slate-700/50">
-                    <p className="text-[10px] text-slate-400 uppercase font-bold tracking-wider mb-1">{t('completionPct')}</p>
+                <div className="bg-white dark:bg-slate-800/50 p-3 rounded-xl border border-slate-200 dark:border-slate-700/50 shadow-sm dark:shadow-none">
+                    <p className="text-[10px] text-slate-500 dark:text-slate-400 uppercase font-bold tracking-wider mb-1">{t('completionPct')}</p>
                     <div className="flex items-baseline gap-1.5">
-                        <span className={`text-xl font-bold ${completionStats.pct >= 80 ? 'text-emerald-400' : completionStats.pct >= 50 ? 'text-amber-400' : 'text-slate-300'}`}>
+                        <span className={`text-xl font-bold ${completionStats.pct >= 80 ? 'text-emerald-500 dark:text-emerald-400' : completionStats.pct >= 50 ? 'text-amber-500 dark:text-amber-400' : 'text-slate-400 dark:text-slate-300'}`}>
                             {completionStats.pct}%
                         </span>
-                        <span className="text-[10px] text-slate-500">{completionStats.completed}/{completionStats.total}</span>
+                        <span className="text-[10px] text-slate-400 dark:text-slate-500">{completionStats.completed}/{completionStats.total}</span>
                     </div>
                 </div>
             </div>
 
             {/* Current Task Focus Banner */}
             {currentTask && !currentTask.block.isCompleted && (
-                <div className="mb-5 bg-gradient-to-r from-emerald-500/15 via-teal-500/10 to-emerald-500/15 border border-emerald-500/30 rounded-2xl p-4 relative overflow-hidden">
-                    <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-emerald-400 to-transparent"></div>
+                <div className="mb-5 bg-emerald-50 dark:bg-gradient-to-r dark:from-emerald-500/15 dark:via-teal-500/10 dark:to-emerald-500/15 border border-emerald-200 dark:border-emerald-500/30 rounded-2xl p-4 relative overflow-hidden">
+                    <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-emerald-500 dark:via-emerald-400 to-transparent"></div>
                     <div className="flex items-start gap-3">
                         <div className="relative mt-0.5">
                             <span className="relative flex h-3 w-3">
@@ -219,16 +219,16 @@ const RoutineBuilder = ({ dateStr, onClose }) => {
                             </span>
                         </div>
                         <div className="flex-1 min-w-0">
-                            <p className="text-[10px] text-emerald-400 uppercase font-bold tracking-widest mb-1">{t('currentlyDoing')}</p>
-                            <h3 className="text-white font-bold text-lg leading-tight truncate">{currentTask.block.title}</h3>
+                            <p className="text-[10px] text-emerald-600 dark:text-emerald-400 uppercase font-bold tracking-widest mb-1">{t('currentlyDoing')}</p>
+                            <h3 className="text-slate-800 dark:text-white font-bold text-lg leading-tight truncate">{currentTask.block.title}</h3>
                             {currentTask.block.intention && (
-                                <p className="text-emerald-300/70 text-xs italic mt-0.5">"{currentTask.block.intention}"</p>
+                                <p className="text-emerald-600/60 dark:text-emerald-300/70 text-xs italic mt-0.5">"{currentTask.block.intention}"</p>
                             )}
                             <div className="flex items-center gap-3 mt-2">
-                                <span className="text-xs text-slate-400">
+                                <span className="text-xs text-slate-500 dark:text-slate-400">
                                     {formatTime12h(currentTask.block.startTime)} — {formatTime12h(currentTask.block.endTime)}
                                 </span>
-                                <span className="text-xs font-bold text-emerald-400 bg-emerald-500/20 px-2 py-0.5 rounded-full">
+                                <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-500/20 px-2 py-0.5 rounded-full">
                                     ⏱ {countdown} {t('remaining')}
                                 </span>
                             </div>
@@ -241,7 +241,7 @@ const RoutineBuilder = ({ dateStr, onClose }) => {
             {routine.blocks.length > 0 && (
                 <div className="mb-5">
                     <p className="text-[10px] text-slate-500 uppercase font-bold tracking-wider mb-2">{t('categoryBreakdown')}</p>
-                    <div className="flex h-3 rounded-full overflow-hidden bg-slate-800">
+                    <div className="flex h-3 rounded-full overflow-hidden bg-slate-200 dark:bg-slate-800">
                         {CATEGORIES.filter(c => analytics.totalHours[c.id] > 0).map(c => {
                             const pct = ((analytics.totalHours[c.id] || 0) / 24) * 100;
                             return (
@@ -258,7 +258,7 @@ const RoutineBuilder = ({ dateStr, onClose }) => {
                         {CATEGORIES.filter(c => analytics.totalHours[c.id] > 0).map(c => (
                             <div key={c.id} className="flex items-center gap-1.5">
                                 <div className={`w-2 h-2 rounded-full ${c.color}`}></div>
-                                <span className="text-[10px] text-slate-400">{t(c.labelKey)} {analytics.totalHours[c.id]}h</span>
+                                <span className="text-[10px] text-slate-500 dark:text-slate-400">{t(c.labelKey)} {analytics.totalHours[c.id]}h</span>
                             </div>
                         ))}
                     </div>
@@ -267,21 +267,21 @@ const RoutineBuilder = ({ dateStr, onClose }) => {
 
             {/* Gamification Badge */}
             {analytics.focusedDayAchieved && (
-                <div className="mb-5 bg-gradient-to-r from-amber-500/10 to-emerald-500/10 border border-amber-500/20 rounded-xl p-3.5 flex items-center gap-3 shadow-lg">
+                <div className="mb-5 bg-gradient-to-r from-amber-50 to-emerald-50 dark:from-amber-500/10 dark:to-emerald-500/10 border border-amber-200 dark:border-amber-500/20 rounded-xl p-3.5 flex items-center gap-3 shadow-sm dark:shadow-lg">
                     <div className="bg-gradient-to-br from-amber-400 to-amber-600 p-2 rounded-full shadow-[0_0_15px_rgba(251,191,36,0.4)]">
                         <span className="text-lg block">🌟</span>
                     </div>
                     <div>
-                        <h4 className="text-amber-400 font-bold text-sm">{t('focusedDayAchieved')}</h4>
-                        <p className="text-xs text-slate-300 mt-0.5">{t('focusedDayMsg')}</p>
+                        <h4 className="text-amber-600 dark:text-amber-400 font-bold text-sm">{t('focusedDayAchieved')}</h4>
+                        <p className="text-xs text-slate-600 dark:text-slate-300 mt-0.5">{t('focusedDayMsg')}</p>
                     </div>
                 </div>
             )}
 
             {!analytics.focusedDayAchieved && (analytics.totalHours.ibadah < 1) && routine.blocks.length > 0 && (
-                <div className="mb-4 bg-slate-800/50 border border-emerald-500/20 rounded-xl p-3 flex items-center gap-3">
+                <div className="mb-4 bg-emerald-50 dark:bg-slate-800/50 border border-emerald-200 dark:border-emerald-500/20 rounded-xl p-3 flex items-center gap-3">
                     <span className="text-lg">🌿</span>
-                    <p className="text-xs text-slate-400">{t('addMoreIbadah')}</p>
+                    <p className="text-xs text-slate-600 dark:text-slate-400">{t('addMoreIbadah')}</p>
                 </div>
             )}
 
@@ -294,10 +294,10 @@ const RoutineBuilder = ({ dateStr, onClose }) => {
                             <button
                                 key={tpl.id}
                                 onClick={() => loadTemplate(tpl.id)}
-                                className="px-3 py-3 bg-slate-800/80 border border-slate-700/80 rounded-xl text-sm hover:bg-slate-700 hover:border-emerald-500/50 transition-all font-medium text-slate-200 text-left"
+                                className="px-3 py-3 bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 rounded-xl text-sm hover:bg-emerald-50 dark:hover:bg-slate-700 hover:border-emerald-300 dark:hover:border-emerald-500/50 transition-all font-medium text-slate-700 dark:text-slate-200 text-left shadow-sm dark:shadow-none"
                             >
                                 <span className="block text-sm font-bold">{t(tpl.id + 'Template') || tpl.name}</span>
-                                <span className="block text-[10px] text-slate-500 mt-0.5">{tpl.blocks.length} blocks</span>
+                                <span className="block text-[10px] text-slate-400 dark:text-slate-500 mt-0.5">{tpl.blocks.length} blocks</span>
                             </button>
                         ))}
                     </div>
@@ -325,13 +325,13 @@ const RoutineBuilder = ({ dateStr, onClose }) => {
 
             {/* Reset Confirm */}
             {showResetConfirm && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-                    <div className="bg-[#0f172a] w-full max-w-sm rounded-2xl p-6 border border-slate-800 text-center shadow-2xl">
-                        <p className="text-white font-bold mb-1">{t('resetRoutine')}</p>
-                        <p className="text-slate-400 text-sm mb-5">{t('resetConfirm')}</p>
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 dark:bg-black/60 backdrop-blur-sm p-4">
+                    <div className="bg-white dark:bg-[#0f172a] w-full max-w-sm rounded-2xl p-6 border border-slate-200 dark:border-slate-800 text-center shadow-2xl">
+                        <p className="text-slate-800 dark:text-white font-bold mb-1">{t('resetRoutine')}</p>
+                        <p className="text-slate-500 dark:text-slate-400 text-sm mb-5">{t('resetConfirm')}</p>
                         <div className="flex gap-3">
-                            <button onClick={() => setShowResetConfirm(false)} className="flex-1 bg-slate-800 text-slate-300 py-3 rounded-xl font-medium">{t('no')}</button>
-                            <button onClick={handleReset} className="flex-1 bg-rose-500/20 text-rose-400 border border-rose-500/30 py-3 rounded-xl font-medium">{t('yes')}</button>
+                            <button onClick={() => setShowResetConfirm(false)} className="flex-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 py-3 rounded-xl font-medium">{t('no')}</button>
+                            <button onClick={handleReset} className="flex-1 bg-rose-50 dark:bg-rose-500/20 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-500/30 py-3 rounded-xl font-medium">{t('yes')}</button>
                         </div>
                     </div>
                 </div>
@@ -339,17 +339,17 @@ const RoutineBuilder = ({ dateStr, onClose }) => {
 
             {/* Add/Edit Modal */}
             {isModalOpen && (
-                <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-fade-in">
-                    <div className="bg-[#0f172a] w-full max-w-md rounded-3xl p-6 border border-slate-800 relative shadow-2xl pb-8 max-h-[85vh] overflow-y-auto">
-                        <button onClick={() => setIsModalOpen(false)} className="absolute top-5 right-5 text-slate-500 hover:text-slate-300 transition-colors p-1 bg-slate-800/50 rounded-full">
+                <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/40 dark:bg-black/60 backdrop-blur-sm p-4 animate-fade-in">
+                    <div className="bg-white dark:bg-[#0f172a] w-full max-w-md rounded-3xl p-6 border border-slate-200 dark:border-slate-800 relative shadow-2xl pb-8 max-h-[85vh] overflow-y-auto">
+                        <button onClick={() => setIsModalOpen(false)} className="absolute top-5 right-5 text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 transition-colors p-1 bg-slate-100 dark:bg-slate-800/50 rounded-full">
                             ✕
                         </button>
-                        <h3 className="text-xl font-bold text-white mb-5">
+                        <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-5">
                             {editingBlock ? t('editBlock') : t('addTimeBlock')}
                         </h3>
 
                         {errorMsg && (
-                            <div className="bg-rose-500/10 border border-rose-500/20 text-rose-400 p-3 rounded-xl text-sm mb-4 font-medium flex items-center gap-2">
+                            <div className="bg-rose-50 dark:bg-rose-500/10 border border-rose-200 dark:border-rose-500/20 text-rose-600 dark:text-rose-400 p-3 rounded-xl text-sm mb-4 font-medium flex items-center gap-2">
                                 <span>⚠️</span> {errorMsg}
                             </div>
                         )}
@@ -357,19 +357,19 @@ const RoutineBuilder = ({ dateStr, onClose }) => {
                         <div className="space-y-4">
                             {/* Title */}
                             <div>
-                                <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">{t('activityTitle')}</label>
+                                <label className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 block mb-1">{t('activityTitle')}</label>
                                 <input
                                     type="text"
                                     value={formData.title}
                                     onChange={e => setFormData({ ...formData, title: e.target.value })}
-                                    className="w-full bg-[#1e293b] border border-slate-700/50 rounded-xl p-3 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all placeholder:text-slate-600"
+                                    className="w-full bg-slate-50 dark:bg-[#1e293b] border border-slate-200 dark:border-slate-700/50 rounded-xl p-3 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all placeholder:text-slate-400 dark:placeholder:text-slate-600"
                                     placeholder={t('titlePlaceholder')}
                                 />
                             </div>
 
                             {/* Category */}
                             <div>
-                                <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">{t('categoryLbl')}</label>
+                                <label className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 block mb-1">{t('categoryLbl')}</label>
                                 <div className="flex flex-wrap gap-1.5">
                                     {CATEGORIES.map(c => (
                                         <button
@@ -378,7 +378,7 @@ const RoutineBuilder = ({ dateStr, onClose }) => {
                                             onClick={() => setFormData({ ...formData, category: c.id })}
                                             className={`px-3 py-1.5 text-xs font-bold rounded-lg border transition-all ${formData.category === c.id
                                                 ? `${c.color} text-white border-transparent shadow-lg`
-                                                : 'bg-slate-800 text-slate-400 border-slate-700 hover:border-slate-500'
+                                                : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:border-slate-400 dark:hover:border-slate-500'
                                                 }`}
                                         >
                                             {t(c.labelKey)}
@@ -390,40 +390,40 @@ const RoutineBuilder = ({ dateStr, onClose }) => {
                             {/* Times */}
                             <div className="grid grid-cols-2 gap-3">
                                 <div>
-                                    <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">{t('startTime')}</label>
+                                    <label className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 block mb-1">{t('startTime')}</label>
                                     <input
                                         type="time"
                                         value={formData.startTime}
                                         onChange={e => setFormData({ ...formData, startTime: e.target.value })}
-                                        className="w-full bg-[#1e293b] border border-slate-700/50 rounded-xl p-3 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all font-mono"
+                                        className="w-full bg-slate-50 dark:bg-[#1e293b] border border-slate-200 dark:border-slate-700/50 rounded-xl p-3 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all font-mono"
                                     />
                                 </div>
                                 <div>
-                                    <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">{t('endTime')}</label>
+                                    <label className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 block mb-1">{t('endTime')}</label>
                                     <input
                                         type="time"
                                         value={formData.endTime}
                                         onChange={e => setFormData({ ...formData, endTime: e.target.value })}
-                                        className="w-full bg-[#1e293b] border border-slate-700/50 rounded-xl p-3 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all font-mono"
+                                        className="w-full bg-slate-50 dark:bg-[#1e293b] border border-slate-200 dark:border-slate-700/50 rounded-xl p-3 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all font-mono"
                                     />
                                 </div>
                             </div>
 
                             {/* Intention */}
                             <div>
-                                <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">{t('intentionOpt')}</label>
+                                <label className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 block mb-1">{t('intentionOpt')}</label>
                                 <input
                                     type="text"
                                     value={formData.intention}
                                     onChange={e => setFormData({ ...formData, intention: e.target.value })}
-                                    className="w-full bg-[#1e293b] border border-slate-700/50 rounded-xl p-3 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all placeholder:text-slate-600"
+                                    className="w-full bg-slate-50 dark:bg-[#1e293b] border border-slate-200 dark:border-slate-700/50 rounded-xl p-3 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all placeholder:text-slate-400 dark:placeholder:text-slate-600"
                                     placeholder={t('intentionPlaceholder')}
                                 />
                             </div>
 
                             {/* Focus Level */}
                             <div>
-                                <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">{t('focusLevelLbl')}</label>
+                                <label className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 block mb-1">{t('focusLevelLbl')}</label>
                                 <div className="flex gap-2">
                                     {FOCUS_LEVELS.map(fl => (
                                         <button
@@ -431,10 +431,10 @@ const RoutineBuilder = ({ dateStr, onClose }) => {
                                             type="button"
                                             onClick={() => setFormData({ ...formData, focusLevel: fl.id })}
                                             className={`flex-1 py-2 text-xs font-bold rounded-lg border transition-all ${formData.focusLevel === fl.id
-                                                ? fl.id === 'high' ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/50'
-                                                    : fl.id === 'medium' ? 'bg-amber-500/20 text-amber-400 border-amber-500/50'
-                                                        : 'bg-slate-600/20 text-slate-300 border-slate-500/50'
-                                                : 'bg-slate-800 text-slate-500 border-slate-700'
+                                                ? fl.id === 'high' ? 'bg-emerald-50 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border-emerald-300 dark:border-emerald-500/50'
+                                                    : fl.id === 'medium' ? 'bg-amber-50 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400 border-amber-300 dark:border-amber-500/50'
+                                                        : 'bg-slate-100 dark:bg-slate-600/20 text-slate-600 dark:text-slate-300 border-slate-300 dark:border-slate-500/50'
+                                                : 'bg-slate-50 dark:bg-slate-800 text-slate-400 dark:text-slate-500 border-slate-200 dark:border-slate-700'
                                                 }`}
                                         >
                                             {t(fl.labelKey)}
@@ -444,12 +444,12 @@ const RoutineBuilder = ({ dateStr, onClose }) => {
                             </div>
 
                             {/* Flexible toggle */}
-                            <div className="flex items-center justify-between bg-[#1e293b] rounded-xl p-3 border border-slate-700/50">
-                                <span className="text-xs font-medium text-slate-300">{t('flexibleLbl')}</span>
+                            <div className="flex items-center justify-between bg-slate-50 dark:bg-[#1e293b] rounded-xl p-3 border border-slate-200 dark:border-slate-700/50">
+                                <span className="text-xs font-medium text-slate-600 dark:text-slate-300">{t('flexibleLbl')}</span>
                                 <button
                                     type="button"
                                     onClick={() => setFormData({ ...formData, isFlexible: !formData.isFlexible })}
-                                    className={`relative w-10 h-5 rounded-full transition-colors ${formData.isFlexible ? 'bg-emerald-500' : 'bg-slate-600'}`}
+                                    className={`relative w-10 h-5 rounded-full transition-colors ${formData.isFlexible ? 'bg-emerald-500' : 'bg-slate-300 dark:bg-slate-600'}`}
                                 >
                                     <div className={`absolute top-0.5 w-4 h-4 bg-white rounded-full shadow transition-transform ${formData.isFlexible ? 'translate-x-5' : 'translate-x-0.5'}`} />
                                 </button>
@@ -457,12 +457,12 @@ const RoutineBuilder = ({ dateStr, onClose }) => {
 
                             {/* Notes */}
                             <div>
-                                <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">{t('notesLbl')}</label>
+                                <label className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 block mb-1">{t('notesLbl')}</label>
                                 <textarea
                                     value={formData.notes || ''}
                                     onChange={e => setFormData({ ...formData, notes: e.target.value })}
                                     rows={2}
-                                    className="w-full bg-[#1e293b] border border-slate-700/50 rounded-xl p-3 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all placeholder:text-slate-600 resize-none text-sm"
+                                    className="w-full bg-slate-50 dark:bg-[#1e293b] border border-slate-200 dark:border-slate-700/50 rounded-xl p-3 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all placeholder:text-slate-400 dark:placeholder:text-slate-600 resize-none text-sm"
                                     placeholder={t('notesPlaceholder')}
                                 />
                             </div>
@@ -472,7 +472,7 @@ const RoutineBuilder = ({ dateStr, onClose }) => {
                                 {editingBlock && (
                                     <button
                                         onClick={handleDelete}
-                                        className="flex-1 bg-rose-500/10 text-rose-500 border border-rose-500/30 py-3 rounded-xl font-medium hover:bg-rose-500/20 transition-all"
+                                        className="flex-1 bg-rose-50 dark:bg-rose-500/10 text-rose-600 dark:text-rose-500 border border-rose-200 dark:border-rose-500/30 py-3 rounded-xl font-medium hover:bg-rose-100 dark:hover:bg-rose-500/20 transition-all"
                                     >
                                         {t('delete')}
                                     </button>
